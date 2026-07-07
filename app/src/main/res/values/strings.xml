@@ -1,3 +1,10 @@
 <resources>
+    //Start Screen
     <string name="app_name">HealthTracker</string>
+    <string name="start_subtitle">CUỘC SỐNG KHỎE MẠNH BẮT ĐẦU TỪ HÔM NAY</string>
+    <string name="start_title">Làm Chủ Sức Khỏe Của Bạn</string>
+    <string name="start_description">Theo dõi lượng calo, hoạt động, cân nặng và sức khỏe mỗi ngày với trải nghiệm thông minh và hiện đại.</string>
+    <string name="btn_get_started">Bắt đầu</string>
+    <string name="login_prompt_prefix">Đã có tài khoản? </string>
+    <string name="login_prompt_action">Đăng nhập</string>
 </resources>

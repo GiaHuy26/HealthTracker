@@ -1,4 +1,7 @@
 package com.example.healthtracker
 
-class HealthTrackerApp {
-}
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class HealthTrackerApp : Application()
