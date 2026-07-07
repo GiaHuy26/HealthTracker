@@ -34,7 +34,7 @@ private fun getLightColorScheme(preset: ColorPreset): ColorScheme {
     return lightColorScheme(
         primary = primaryColor,
         onPrimary = Color.White,
-        secondary = if (preset == ColorPreset.GREEN) HealthGreenDark else primaryColor,
+        secondary = HealthGreenDark  ,
         onSecondary = Color.White,
         primaryContainer = primaryColor.copy(alpha = 0.2f),
         background = HealthBgLight,
@@ -42,7 +42,7 @@ private fun getLightColorScheme(preset: ColorPreset): ColorScheme {
         surface = HealthCardLight,
         onSurface = HealthTextDark,
         surfaceVariant = HealthContainerLight,
-        onSurfaceVariant = if (preset == ColorPreset.GREEN) HealthTextMutedGreen else HealthTextMuted,
+        onSurfaceVariant = HealthTextMutedGreen,
         outline = HealthDividerLight,
         error = HealthError,
         onError = Color.White

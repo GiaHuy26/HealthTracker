@@ -1,6 +1,8 @@
 package com.example.healthtracker.presentation.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthBlue
 import com.example.healthtracker.presentation.theme.HealthGreen
 
@@ -34,12 +37,12 @@ fun Button(
         ),
         contentPadding = PaddingValues(),
         modifier = Modifier
-            .height(52.dp)
+            .height(Dimens.ButtonHeight)
+            .clip(RoundedCornerShape(percent = 50))
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(HealthGreen, HealthBlue)
                 ),
-                shape = RoundedCornerShape(50)
             ),
 
         ) {

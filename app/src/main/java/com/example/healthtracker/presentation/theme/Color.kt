@@ -3,8 +3,10 @@ package com.example.healthtracker.presentation.theme
 import androidx.compose.ui.graphics.Color
 
 val HealthGreen = Color(0xFF00C853)
+val HealthLightGreen = Color(0xFF4ED37F)
 val HealthGreenDark = Color(0xFF006E2A)
 val HealthBlue = Color(0xFF42A5F5)
+val HealthLightBlue = Color(0xFF8BCCFF)
 val HealthPurple = Color(0xFF9C27B0)
 val HealthPink = Color(0xFFE91E63)
 val HealthOrange = Color(0xFFFF9800)
