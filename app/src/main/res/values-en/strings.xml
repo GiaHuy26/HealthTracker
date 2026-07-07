@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //Start Screen
+    <string name="app_name">HealthTracker</string>
+    <string name="start_subtitle">HEALTHY LIFE STARTS TODAY</string>
+    <string name="start_title">Take Control of Your Health</string>
+    <string name="start_description">Track calories, activity, weight, and health every day with a smart and modern experience.</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="login_prompt_prefix">Already have an account? </string>
+    <string name="login_prompt_action">Log in</string>
+</resources>

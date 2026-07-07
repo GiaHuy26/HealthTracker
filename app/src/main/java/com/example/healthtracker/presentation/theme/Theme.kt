@@ -1,5 +1,6 @@
 package com.example.healthtracker.presentation.theme
 
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -20,7 +21,7 @@ data class ThemeConfig(
     val textSizePreset: TextSizePreset = TextSizePreset.MEDIUM
 )
 
-private fun getLightColorScheme(preset: ColorPreset): androidx.compose.material3.ColorScheme {
+private fun getLightColorScheme(preset: ColorPreset): ColorScheme {
     val primaryColor = when (preset) {
         ColorPreset.GREEN -> HealthGreen
         ColorPreset.BLUE -> HealthBlue
@@ -33,7 +34,7 @@ private fun getLightColorScheme(preset: ColorPreset): androidx.compose.material3
     return lightColorScheme(
         primary = primaryColor,
         onPrimary = Color.White,
-        secondary = if (preset == ColorPreset.GREEN) HealthGreenDark else primaryColor,
+        secondary = HealthGreenDark  ,
         onSecondary = Color.White,
         primaryContainer = primaryColor.copy(alpha = 0.2f),
         background = HealthBgLight,
@@ -41,14 +42,14 @@ private fun getLightColorScheme(preset: ColorPreset): androidx.compose.material3
         surface = HealthCardLight,
         onSurface = HealthTextDark,
         surfaceVariant = HealthContainerLight,
-        onSurfaceVariant = if (preset == ColorPreset.GREEN) HealthTextMutedGreen else HealthTextMuted,
+        onSurfaceVariant = HealthTextMutedGreen,
         outline = HealthDividerLight,
         error = HealthError,
         onError = Color.White
     )
 }
 
-private fun getDarkColorScheme(preset: ColorPreset): androidx.compose.material3.ColorScheme {
+private fun getDarkColorScheme(preset: ColorPreset): ColorScheme {
     val primaryColor = when (preset) {
         ColorPreset.GREEN -> HealthGreen
         ColorPreset.BLUE -> HealthBlue

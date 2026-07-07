@@ -1,0 +1,26 @@
+package com.example.healthtracker.presentation.theme
+
+import androidx.compose.ui.unit.dp
+
+object Dimens {
+    val SpaceExtraSmall = 4.dp
+    val SpaceSmall = 8.dp
+    val SpaceMedium = 16.dp
+    val SpaceLarge = 24.dp
+    val SpaceExtraLarge = 32.dp
+
+    val ScreenPadding = 16.dp
+
+    val ButtonHeight = 52.dp
+    val IconSmall = 16.dp
+    val IconNormal = 24.dp
+    val IconLarge = 32.dp
+
+    val CornerSmall = 8.dp
+    val CornerMedium = 12.dp
+    val CornerLarge = 16.dp
+    val CornerExtraLarge = 28.dp
+
+    val ImageStart = 350.dp
+    val Logo = 80.dp
+}
