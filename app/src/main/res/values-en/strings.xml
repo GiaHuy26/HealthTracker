@@ -8,4 +8,25 @@
     <string name="btn_get_started">Get Started</string>
     <string name="login_prompt_prefix">Already have an account? </string>
     <string name="login_prompt_action">Log in</string>
+
+    //Login Screen
+    <string name="login_welcome">Welcome Back</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_button">Login</string>
+    <string name="login_prefix">Don\'t have an account? </string>
+    <string name="login_signUp">Sign up</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="user_name">Enter your name</string>
+    <string name="or">Or</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+
+    //SignUp
+    <string name="signup_title">Create account</string>
+    <string name="signup">Create account</string>
+
+    <string name="exist_email">This email address has already been used</string>
 </resources>
