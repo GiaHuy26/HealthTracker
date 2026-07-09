@@ -300,6 +300,6 @@ fun SignUpContent(
 @Composable
 fun PreviewSignUp() {
     HealthTrackerTheme() {
-        SignUpScreen()
+        SignUpContent()
     }
 }
