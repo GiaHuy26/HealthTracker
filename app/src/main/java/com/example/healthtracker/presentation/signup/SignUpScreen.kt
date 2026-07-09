@@ -22,39 +22,66 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
 import com.example.healthtracker.presentation.components.Button
 import com.example.healthtracker.presentation.components.Cards
 import com.example.healthtracker.presentation.components.TextFields
 import com.example.healthtracker.presentation.theme.Dimens
+import com.example.healthtracker.presentation.theme.HealthGreen
 import com.example.healthtracker.presentation.theme.HealthLightBlue
 import com.example.healthtracker.presentation.theme.HealthLightGreen
 import com.example.healthtracker.presentation.theme.HealthTextLight
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(
+    onNavigateToLogin: () -> Unit = {},
+    viewModel: SignUpViewModel = hiltViewModel()
+) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.navigationEvent.collect { event ->
+            when (event) {
+                SignUpViewModel.SignUpNavigationEvent.NavigateToLogin -> onNavigateToLogin()
+            }
+        }
+    }
+
+    SignUpContent(
+        uiState = uiState.value,
+        onEmailChange = viewModel::onEmailChange,
+        onPasswordChange = viewModel::onPasswordChange,
+        onConfirmPasswordChange = viewModel::onConfirmPasswordChange,
+        onTogglePasswordVisibility = viewModel::onTogglePasswordVisibility,
+        onSignUp = viewModel::onSignUp,
+        onLogin = onNavigateToLogin
+    )
 }
 
 @Composable
 fun SignUpContent(
     uiState: SignUpUiState = SignUpUiState(),
     onEmailChange: (String) -> Unit = {},
-    onUserNameChange: (String) -> Unit = {},
     onPasswordChange: (String) -> Unit = {},
     onConfirmPasswordChange: (String) -> Unit = {},
     onTogglePasswordVisibility: () -> Unit = {},
@@ -99,19 +126,21 @@ fun SignUpContent(
             Spacer(Modifier.height(Dimens.SpaceLarge))
             Cards {
                 TextFields(
-                    value = uiState.userName,
-                    onChangeValue = onUserNameChange,
-                    placeholder = stringResource(R.string.user_name),
-                    leadingIcon = Icons.Outlined.Person
-                )
-                Spacer(Modifier.height(Dimens.SpaceMedium))
-                TextFields(
                     value = uiState.email,
                     onChangeValue = onEmailChange,
                     placeholder = stringResource(R.string.email),
                     leadingIcon = Icons.Outlined.Email
                 )
-                Spacer(Modifier.height(Dimens.SpaceMedium))
+                if (uiState.errorResId != null) {
+                    Text(
+                        text = stringResource(id = uiState.errorResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+
+                        )
+                } else {
+                    Spacer(Modifier.height(Dimens.SpaceMedium))
+                }
                 TextFields(
                     value = uiState.password,
                     onChangeValue = onPasswordChange,
@@ -121,7 +150,16 @@ fun SignUpContent(
                     isPasswordVisible = uiState.isPasswordVisible,
                     onToggleVisibility = onTogglePasswordVisibility
                 )
-                Spacer(Modifier.height(Dimens.SpaceMedium))
+                if (uiState.errorResId != null) {
+                    Text(
+                        text = stringResource(id = uiState.errorResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+
+                        )
+                } else {
+                    Spacer(Modifier.height(Dimens.SpaceMedium))
+                }
                 TextFields(
                     value = uiState.confirmPassword,
                     onChangeValue = onConfirmPasswordChange,
@@ -131,12 +169,31 @@ fun SignUpContent(
                     isPasswordVisible = uiState.isPasswordVisible,
                     onToggleVisibility = onTogglePasswordVisibility
                 )
+                if (uiState.errorResId != null) {
+                    Text(
+                        text = stringResource(id = uiState.errorResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+
+                        )
+                }
             }
             Spacer(Modifier.height(Dimens.SpaceExtraLarge))
             Button(
                 text = stringResource(R.string.signup),
                 onClick = onSignUp
             )
+            if (uiState.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.3f))
+                        .pointerInput(Unit) {},
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = HealthGreen)
+                }
+            }
             Spacer(Modifier.height(Dimens.SpaceMedium))
             Row(
                 modifier = Modifier
@@ -243,6 +300,6 @@ fun SignUpContent(
 @Composable
 fun PreviewSignUp() {
     HealthTrackerTheme() {
-        SignUpContent()
+        SignUpScreen()
     }
 }

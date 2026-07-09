@@ -28,5 +28,12 @@
     <string name="signup_title">Create account</string>
     <string name="signup">Create account</string>
 
-    <string name="exist_email">This email address has already been used</string>
+    <string name="error_email_exists">This email is already in use!</string>
+    <string name="error_email_empty">Email cannot be empty!</string>
+    <string name="error_password_mismatch">Confirm password does not match!</string>
+    <string name="error_unknown">An unknown error occurred!</string>
+    <string name="error_password_empty">Password cannot be empty!</string>
+    <string name="error_password_too_short">Password too short (cannot less than 6 characters)!</string>
+
+
 </resources>

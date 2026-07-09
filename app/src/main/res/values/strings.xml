@@ -27,6 +27,11 @@
     <string name="signup_title">Tạo tài khoản</string>
     <string name="signup">Tạo tài khoản</string>
 
-    <string name="exist_email">Email này đã được sử dụng</string>
+    <string name="error_email_exists">Email này đã được sử dụng!</string>
+    <string name="error_email_empty">Email không được để trống!</string>
+    <string name="error_password_mismatch">Mật khẩu xác nhận không khớp!</string>
+    <string name="error_unknown">Đã xảy ra lỗi không xác định!</string>
+    <string name="error_password_empty">Password không được để trống!</string>
+    <string name="error_password_too_short">Password quá ngắn (không được ít hơn 6 ký tự)!</string>
 
 </resources>
