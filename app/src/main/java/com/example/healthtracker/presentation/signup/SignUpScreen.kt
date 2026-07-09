@@ -19,12 +19,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
+import com.example.healthtracker.navigation.NavigationManager
 import com.example.healthtracker.presentation.components.Button
 import com.example.healthtracker.presentation.components.Cards
 import com.example.healthtracker.presentation.components.TextFields
@@ -54,6 +53,7 @@ import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
 fun SignUpScreen(
+    navigationManager: NavigationManager,
     onNavigateToLogin: () -> Unit = {},
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
@@ -62,7 +62,7 @@ fun SignUpScreen(
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
             when (event) {
-                SignUpViewModel.SignUpNavigationEvent.NavigateToLogin -> onNavigateToLogin()
+                SignUpViewModel.SignUpNavigationEvent.NavigateToLogin -> navigationManager.navigateBack()
             }
         }
     }
@@ -74,7 +74,7 @@ fun SignUpScreen(
         onConfirmPasswordChange = viewModel::onConfirmPasswordChange,
         onTogglePasswordVisibility = viewModel::onTogglePasswordVisibility,
         onSignUp = viewModel::onSignUp,
-        onLogin = onNavigateToLogin
+        onLogin = { navigationManager.navigateBack() }
     )
 }
 

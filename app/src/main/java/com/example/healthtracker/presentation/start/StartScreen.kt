@@ -30,6 +30,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
+import com.example.healthtracker.navigation.LoginRoute
+import com.example.healthtracker.navigation.NavigationManager
+import com.example.healthtracker.navigation.SignUpRoute
 import com.example.healthtracker.presentation.theme.HealthTextDark
 import com.example.healthtracker.presentation.theme.HealthTextMutedGreen
 import com.example.healthtracker.presentation.components.Button
@@ -42,6 +45,7 @@ import com.example.healthtracker.presentation.theme.HealthLightGreen
 
 @Composable
 fun StartScreen(
+    navigationManager: NavigationManager,
     onStart: () -> Unit = {},
     onLogin: () -> Unit = {}
 ) {
@@ -112,7 +116,7 @@ fun StartScreen(
             Spacer(Modifier.height(Dimens.SpaceExtraLarge))
             Button(
                 text = stringResource(id = R.string.btn_get_started),
-                onClick = onStart
+                onClick = { navigationManager.navigateTo(SignUpRoute) }
             )
             Spacer(Modifier.height(Dimens.SpaceExtraLarge))
             Row() {
@@ -129,7 +133,7 @@ fun StartScreen(
                         fontWeight = FontWeight.Bold,
                     ),
                     color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.clickable(onClick = onLogin)
+                    modifier = Modifier.clickable { navigationManager.navigateTo(LoginRoute) }
                 )
             }
         }
@@ -140,7 +144,6 @@ fun StartScreen(
 @Composable
 fun PreviewStartScreen() {
     HealthTrackerTheme {
-        StartScreen()
     }
 }
 
