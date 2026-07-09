@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
+import com.example.healthtracker.navigation.LoginRoute
 import com.example.healthtracker.navigation.NavigationManager
 import com.example.healthtracker.presentation.components.Button
 import com.example.healthtracker.presentation.components.Cards
@@ -54,7 +55,6 @@ import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 @Composable
 fun SignUpScreen(
     navigationManager: NavigationManager,
-    onNavigateToLogin: () -> Unit = {},
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
@@ -74,7 +74,7 @@ fun SignUpScreen(
         onConfirmPasswordChange = viewModel::onConfirmPasswordChange,
         onTogglePasswordVisibility = viewModel::onTogglePasswordVisibility,
         onSignUp = viewModel::onSignUp,
-        onLogin = { navigationManager.navigateBack() }
+        onLogin = { navigationManager.navigateTo(LoginRoute) }
     )
 }
 
@@ -136,11 +136,11 @@ fun SignUpContent(
                         text = stringResource(id = uiState.errorResId),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodyMedium,
-
-                        )
+                    )
                 } else {
                     Spacer(Modifier.height(Dimens.SpaceMedium))
                 }
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 TextFields(
                     value = uiState.password,
                     onChangeValue = onPasswordChange,
@@ -155,11 +155,11 @@ fun SignUpContent(
                         text = stringResource(id = uiState.errorResId),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodyMedium,
-
-                        )
+                    )
                 } else {
                     Spacer(Modifier.height(Dimens.SpaceMedium))
                 }
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 TextFields(
                     value = uiState.confirmPassword,
                     onChangeValue = onConfirmPasswordChange,
@@ -174,10 +174,11 @@ fun SignUpContent(
                         text = stringResource(id = uiState.errorResId),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodyMedium,
-
-                        )
+                    )
                 }
+                Spacer(Modifier.height(Dimens.SpaceSmall))
             }
+
             Spacer(Modifier.height(Dimens.SpaceExtraLarge))
             Button(
                 text = stringResource(R.string.signup),

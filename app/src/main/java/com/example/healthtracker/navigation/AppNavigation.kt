@@ -24,7 +24,7 @@ fun AppNavigation(
                 }
 
                 is LoginRoute -> NavEntry(route) {
-                  //  LoginScreen(navigationManager = navigationManager)
+                  LoginScreen(navigationManager = navigationManager)
                 }
 
                 is SignUpRoute -> NavEntry(route) {

@@ -26,6 +26,7 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,29 +34,60 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
+import com.example.healthtracker.navigation.HomeRoute
+import com.example.healthtracker.navigation.NavigationManager
+import com.example.healthtracker.navigation.SignUpRoute
 import com.example.healthtracker.presentation.components.Button
 import com.example.healthtracker.presentation.components.Cards
 import com.example.healthtracker.presentation.components.TextFields
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthCardLight
+import com.example.healthtracker.presentation.theme.HealthGreen
 import com.example.healthtracker.presentation.theme.HealthLightBlue
 import com.example.healthtracker.presentation.theme.HealthLightGreen
 import com.example.healthtracker.presentation.theme.HealthTextLight
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navigationManager: NavigationManager,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.navigationEvent.collect { event ->
+            when (event) {
+                LoginViewModel.LoginNavigationEvent.NavigationToHome -> navigationManager.navigateAndClearStack(
+                    HomeRoute
+                )
+            }
+        }
+    }
+
+    LoginContent(
+        uiState = uiState.value,
+        onEmailChange = viewModel::onEmailChange,
+        onPasswordChange = viewModel::onPasswordChange,
+        onPasswordVisible = viewModel::onPasswordVisible,
+        onLogIn = viewModel::onLoginClick,
+        onSignIn = { navigationManager.navigateTo(SignUpRoute) }
+    )
 }
 
 @Composable
@@ -111,7 +143,16 @@ fun LoginContent(
                     placeholder = stringResource(R.string.email),
                     leadingIcon = Icons.Outlined.Email
                 )
-                Spacer(Modifier.height(Dimens.SpaceMedium))
+                if (uiState.errorResId != null) {
+                    Text(
+                        text = stringResource(id = uiState.errorResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                } else {
+                    Spacer(Modifier.height(Dimens.SpaceMedium))
+                }
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 TextFields(
                     value = uiState.password,
                     onChangeValue = onPasswordChange,
@@ -121,7 +162,16 @@ fun LoginContent(
                     isPasswordVisible = uiState.isPasswordVisible,
                     onToggleVisibility = onPasswordVisible
                 )
-                Spacer(Modifier.height(Dimens.SpaceMedium))
+                if (uiState.errorResId != null) {
+                    Text(
+                        text = stringResource(id = uiState.errorResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                } else {
+                    Spacer(Modifier.height(Dimens.SpaceMedium))
+                }
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 Text(
                     text = stringResource(R.string.login_forgot_password),
                     modifier = Modifier.align(alignment = Alignment.End),
@@ -136,6 +186,16 @@ fun LoginContent(
                 onClick = onLogIn,
                 text = stringResource(R.string.login_button)
             )
+            if (uiState.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.3f))
+                        .pointerInput(Unit) {}
+                ) {
+                    CircularProgressIndicator(color = HealthGreen)
+                }
+            }
             Spacer(Modifier.height(Dimens.SpaceExtraLarge))
             Row(
                 modifier = Modifier
@@ -222,7 +282,7 @@ fun LoginContent(
                 }
             }
             Spacer(Modifier.height(Dimens.SpaceExtraLarge))
-            Row{
+            Row {
                 Text(
                     text = stringResource(id = R.string.login_prefix),
                     style = MaterialTheme.typography.bodyMedium,
