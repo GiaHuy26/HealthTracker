@@ -8,4 +8,32 @@
     <string name="btn_get_started">Get Started</string>
     <string name="login_prompt_prefix">Already have an account? </string>
     <string name="login_prompt_action">Log in</string>
+
+    //Login Screen
+    <string name="login_welcome">Welcome Back</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_button">Login</string>
+    <string name="login_prefix">Don\'t have an account? </string>
+    <string name="login_signUp">Sign up</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="user_name">Enter your name</string>
+    <string name="or">Or</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+
+    //SignUp
+    <string name="signup_title">Create account</string>
+    <string name="signup">Create account</string>
+
+    <string name="error_email_exists">This email is already in use!</string>
+    <string name="error_email_empty">Email cannot be empty!</string>
+    <string name="error_password_mismatch">Confirm password does not match!</string>
+    <string name="error_unknown">An unknown error occurred!</string>
+    <string name="error_password_empty">Password cannot be empty!</string>
+    <string name="error_password_too_short">Password too short (cannot less than 6 characters)!</string>
+
+
 </resources>

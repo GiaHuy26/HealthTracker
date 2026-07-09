@@ -11,6 +11,10 @@ object Dimens {
 
     val ScreenPadding = 16.dp
 
+    val CardPadding = 25.dp
+
+    val Elevation=4.dp
+
     val ButtonHeight = 52.dp
     val IconSmall = 16.dp
     val IconNormal = 24.dp
@@ -18,7 +22,7 @@ object Dimens {
 
     val CornerSmall = 8.dp
     val CornerMedium = 12.dp
-    val CornerLarge = 16.dp
+    val CornerLarge = 20.dp
     val CornerExtraLarge = 28.dp
 
     val ImageStart = 350.dp

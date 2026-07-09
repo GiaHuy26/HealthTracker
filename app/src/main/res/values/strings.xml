@@ -7,4 +7,31 @@
     <string name="btn_get_started">Bắt đầu</string>
     <string name="login_prompt_prefix">Đã có tài khoản? </string>
     <string name="login_prompt_action">Đăng nhập</string>
+
+    //Login Screen
+    <string name="login_welcome">Chào mừng trở lại</string>
+    <string name="login_forgot_password">Quên mật khẩu?</string>
+    <string name="login_button">Đăng nhập</string>
+    <string name="login_prefix">Chưa có tài khoản?</string>
+    <string name="login_signUp">Đăng ký ngay</string>
+
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="user_name">Họ và tên</string>
+    <string name="or">Hoặc</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+
+    //SignUp
+    <string name="signup_title">Tạo tài khoản</string>
+    <string name="signup">Tạo tài khoản</string>
+
+    <string name="error_email_exists">Email này đã được sử dụng!</string>
+    <string name="error_email_empty">Email không được để trống!</string>
+    <string name="error_password_mismatch">Mật khẩu xác nhận không khớp!</string>
+    <string name="error_unknown">Đã xảy ra lỗi không xác định!</string>
+    <string name="error_password_empty">Password không được để trống!</string>
+    <string name="error_password_too_short">Password quá ngắn (không được ít hơn 6 ký tự)!</string>
+
 </resources>

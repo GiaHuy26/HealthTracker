@@ -69,4 +69,5 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.coil.compose)
     implementation(libs.androidx.compose.ui.text.google.fonts)
+    implementation("com.google.errorprone:error_prone_annotations:2.36.0")
 }
