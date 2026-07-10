@@ -16,6 +16,7 @@ object Dimens {
     val Elevation=4.dp
 
     val ButtonHeight = 52.dp
+    val ButtonHeightMedium = 58.dp
     val IconSmall = 16.dp
     val IconNormal = 24.dp
     val IconLarge = 32.dp
@@ -27,4 +28,9 @@ object Dimens {
 
     val ImageStart = 350.dp
     val Logo = 80.dp
+
+    val BorderStrokeSmall=1.dp
+    val BorderStrokeMedium=2.dp
+
+    val CardHeight = 80.dp
 }
