@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -73,6 +74,7 @@ fun SetupProfileContent(
             ),
             color = MaterialTheme.colorScheme.secondary
         )
+        Spacer(Modifier.height(Dimens.SpaceMedium))
         Cards(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -94,6 +96,7 @@ fun SetupProfileContent(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 Text(
                     text = stringResource(R.string.label_name),
                     style = MaterialTheme.typography.bodyMedium,
@@ -105,6 +108,7 @@ fun SetupProfileContent(
                     placeholder = stringResource(R.string.placeholder_name),
                     leadingIcon = Icons.Outlined.Person,
                 )
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 Text(
                     text = stringResource(R.string.label_birthday),
                     style = MaterialTheme.typography.bodyMedium,
@@ -121,6 +125,7 @@ fun SetupProfileContent(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.secondary
                 )
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 Text(
                     text = stringResource(R.string.label_gender),
                     style = MaterialTheme.typography.bodyMedium,
@@ -132,6 +137,7 @@ fun SetupProfileContent(
                 )
             }
         }
+        Spacer(Modifier.height(Dimens.SpaceSmall))
         Cards {
             Column {
                 Row(
@@ -150,6 +156,7 @@ fun SetupProfileContent(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -184,6 +191,7 @@ fun SetupProfileContent(
                 }
             }
         }
+        Spacer(Modifier.height(Dimens.SpaceSmall))
         Cards {
             Column {
                 Row(
@@ -202,6 +210,7 @@ fun SetupProfileContent(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 }
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 ActivityLevelSelector(
                     selectedLevel = uiState.activityLevel,
                     onSelectedLevel = onActivityLevelClick
