@@ -2,11 +2,13 @@ package com.example.healthtracker.presentation.setup_profile.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -23,12 +25,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.healthtracker.domain.model.GoalType
 import com.example.healthtracker.presentation.theme.Dimens
+import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
 fun GoalSelector(
-    selectedGoal: GoalType,
+    selectedGoal: GoalType?,
     onGoalSelected: (GoalType) -> Unit
 ) {
     Row(
@@ -48,11 +54,13 @@ fun GoalSelector(
                     color = if (isSelected) MaterialTheme.colorScheme.secondary else Color.Gray
                 ),
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isSelected) MaterialTheme.colorScheme.secondary.copy(alpha = 0.05f) else MaterialTheme.colorScheme.surface
+                    containerColor = if (isSelected) MaterialTheme.colorScheme.secondary.copy(alpha = 0.05f) else MaterialTheme.colorScheme.onSecondary
                 )
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(Dimens.SpaceSmall),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -63,17 +71,35 @@ fun GoalSelector(
                             GoalType.GAIN_WEIGHT -> Icons.AutoMirrored.Outlined.TrendingUp
                         },
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary,
+                        tint = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.size(Dimens.IconNormal)
                     )
                     Spacer(Modifier.height(Dimens.SpaceSmall))
                     Text(
                         text = stringResource(id = goal.titleResId),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurface
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        textAlign = TextAlign.Center
                     )
                 }
             }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewGoalSelector() {
+    HealthTrackerTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            GoalSelector(
+                selectedGoal = GoalType.LOSE_WEIGHT,
+                onGoalSelected = {}
+            )
         }
     }
 }

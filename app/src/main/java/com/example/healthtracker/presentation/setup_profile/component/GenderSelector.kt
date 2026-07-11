@@ -70,7 +70,8 @@ fun GenderSelector(
                         } else {
                             Icons.Outlined.Female
                         },
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier.width(Dimens.SpaceSmall))
                     Text(

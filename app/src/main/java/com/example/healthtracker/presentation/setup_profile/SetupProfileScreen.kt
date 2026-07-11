@@ -1,8 +1,6 @@
 package com.example.healthtracker.presentation.setup_profile
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,11 +10,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AlignVerticalBottom
-import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.outlined.CalendarMonth
-import androidx.compose.material.icons.outlined.FitnessCenter
+import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.Scale
@@ -27,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -36,13 +34,14 @@ import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.ActivityLevel
 import com.example.healthtracker.domain.model.Gender
 import com.example.healthtracker.domain.model.GoalType
+import com.example.healthtracker.presentation.components.Button
 import com.example.healthtracker.presentation.components.Cards
 import com.example.healthtracker.presentation.components.TextFields
 import com.example.healthtracker.presentation.setup_profile.component.ActivityLevelSelector
 import com.example.healthtracker.presentation.setup_profile.component.GenderSelector
+import com.example.healthtracker.presentation.setup_profile.component.GoalSelector
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
-import org.w3c.dom.Text
 
 @Composable
 fun SetupProfileScreen() {
@@ -60,10 +59,12 @@ fun SetupProfileContent(
     onGoalTypeClick: (GoalType) -> Unit = {},
     onContinueClick: () -> Unit = {}
 ) {
+    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.surface)
+            .verticalScroll(scrollState)
             .safeContentPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -102,6 +103,7 @@ fun SetupProfileContent(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 TextFields(
                     value = uiState.userName,
                     onChangeValue = onUserNameChange,
@@ -114,6 +116,7 @@ fun SetupProfileContent(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 TextFields(
                     value = uiState.birthDate,
                     onChangeValue = onBirthDateChange,
@@ -131,6 +134,7 @@ fun SetupProfileContent(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                Spacer(Modifier.height(Dimens.SpaceSmall))
                 GenderSelector(
                     selectedGender = uiState.gender,
                     onGenderSelected = onGenderClick
@@ -167,6 +171,7 @@ fun SetupProfileContent(
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
+                        Spacer(Modifier.height(Dimens.SpaceSmall))
                         TextFields(
                             value = uiState.weight,
                             onChangeValue = onWeightChange,
@@ -181,6 +186,7 @@ fun SetupProfileContent(
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
+                        Spacer(Modifier.height(Dimens.SpaceSmall))
                         TextFields(
                             value = uiState.height,
                             onChangeValue = onHeightChange,
@@ -217,6 +223,37 @@ fun SetupProfileContent(
                 )
             }
         }
+        Spacer(Modifier.height(Dimens.SpaceSmall))
+        Cards {
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        Icons.Outlined.Flag,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.secondary
+                    )
+                    Spacer(Modifier.width(Dimens.SpaceSmall))
+                    Text(
+                        text = stringResource(R.string.section_goal),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+                Spacer(Modifier.height(Dimens.SpaceSmall))
+                GoalSelector(
+                    selectedGoal = uiState.goalType,
+                    onGoalSelected = onGoalTypeClick
+                )
+            }
+        }
+        Spacer(Modifier.height(Dimens.SpaceMedium))
+        Button(
+            text = stringResource(R.string.btn_continue),
+            onClick = onContinueClick
+        )
     }
 }
 
