@@ -15,7 +15,7 @@ class SignUpRepositoryImpl @Inject constructor(
     ): User {
         val existUser = userDao.getUserByEmail(email)
         if (existUser != null) {
-            throw Exception("")
+            throw Exception("ERR_EMAIL_EXISTS")
         }
 
         val newUserEntity = UserEntity(

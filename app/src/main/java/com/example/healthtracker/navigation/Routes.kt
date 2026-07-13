@@ -18,3 +18,6 @@ data object SignUpRoute: AppNavKey
 @Serializable
 
 data object HomeRoute: AppNavKey
+
+@Serializable
+data object SetupProfileRoute: AppNavKey

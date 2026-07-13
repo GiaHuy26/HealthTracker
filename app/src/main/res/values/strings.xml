@@ -27,14 +27,20 @@
     <string name="signup_title">Tạo tài khoản</string>
     <string name="signup">Tạo tài khoản</string>
 
+    <!-- Error -->
     <string name="error_email_exists">Email này đã được sử dụng!</string>
     <string name="error_email_empty">Email không được để trống!</string>
     <string name="error_password_mismatch">Mật khẩu xác nhận không khớp!</string>
     <string name="error_unknown">Đã xảy ra lỗi không xác định!</string>
     <string name="error_password_empty">Password không được để trống!</string>
     <string name="error_password_too_short">Password quá ngắn (không được ít hơn 6 ký tự)!</string>
+    <string name="error_wrong_credentials">Email hoặc mật khẩu không chính xác!</string>
+    <string name="error_name_empty">Họ và tên không được để trống!</string>
+    <string name="error_birthday_empty">Ngày sinh không được để trống!</string>
+    <string name="error_weight_invalid">Cân nặng phải lớn hơn 0!</string>
+    <string name="error_height_invalid">Chiều cao phải lớn hơn 0!</string>
 
-    !-- SetupProfile -->
+    <!-- SetupProfile -->
     <string name="activity_sedentary_title">Ít vận động</string>
     <string name="activity_sedentary_desc">Ngồi nhiều, không tập thể dục</string>
     <string name="activity_light_title">Vận động nhẹ</string>
@@ -50,7 +56,7 @@
     <string name="goal_maintain_weight">Giữ cân</string>
     <string name="goal_gain_weight">Tăng cân</string>
 
-    <string name="btn_continue">Tiếp tục</string>
+    <string name="btn_saveProfile">Lưu hồ sơ</string>
     <string name="section_personal_info">Thông tin cá nhân</string>
     <string name="section_body_metrics">Chỉ số cơ thể</string>
     <string name="section_activity_level">Mức độ vận động</string>

@@ -28,14 +28,20 @@
     <string name="signup_title">Create account</string>
     <string name="signup">Create account</string>
 
+    <!-- Error -->
     <string name="error_email_exists">This email is already in use!</string>
     <string name="error_email_empty">Email cannot be empty!</string>
     <string name="error_password_mismatch">Confirm password does not match!</string>
     <string name="error_unknown">An unknown error occurred!</string>
     <string name="error_password_empty">Password cannot be empty!</string>
     <string name="error_password_too_short">Password too short (cannot less than 6 characters)!</string>
+    <string name="error_wrong_credentials">Invalid email or password!</string>
+    <string name="error_name_empty">Full name cannot be empty!</string>
+    <string name="error_birthday_empty">Date of birth cannot be empty!</string>
+    <string name="error_weight_invalid">Weight must be greater than 0!</string>
+    <string name="error_height_invalid">Height must be greater than 0!</string>
 
-    !-- SetupProfile -->
+    <!-- SetupProfile -->
     <string name="activity_sedentary_title">Sedentary</string>
     <string name="activity_sedentary_desc">Mainly sitting, no exercise</string>
     <string name="activity_light_title">Lightly active</string>
@@ -51,7 +57,7 @@
     <string name="goal_maintain_weight">Maintain weight</string>
     <string name="goal_gain_weight">Gain weight</string>
 
-    <string name="btn_continue">Continue</string>
+    <string name="btn_saveProfile">Save Profile</string>
     <string name="section_personal_info">Personal Information</string>
     <string name="section_body_metrics">Body Metrics</string>
     <string name="section_activity_level">Activity Level</string>

@@ -1,6 +1,7 @@
 package com.example.healthtracker.presentation.setup_profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,20 +21,28 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.Scale
 import androidx.compose.material.icons.outlined.Straighten
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.ActivityLevel
 import com.example.healthtracker.domain.model.Gender
 import com.example.healthtracker.domain.model.GoalType
+import com.example.healthtracker.navigation.HomeRoute
+import com.example.healthtracker.navigation.NavigationManager
 import com.example.healthtracker.presentation.components.Button
 import com.example.healthtracker.presentation.components.Cards
 import com.example.healthtracker.presentation.components.TextFields
@@ -41,10 +50,37 @@ import com.example.healthtracker.presentation.setup_profile.component.ActivityLe
 import com.example.healthtracker.presentation.setup_profile.component.GenderSelector
 import com.example.healthtracker.presentation.setup_profile.component.GoalSelector
 import com.example.healthtracker.presentation.theme.Dimens
+import com.example.healthtracker.presentation.theme.HealthGreen
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
-fun SetupProfileScreen() {
+fun SetupProfileScreen(
+    navigationManager: NavigationManager,
+    viewModel: SetupProfileViewModel = hiltViewModel()
+) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.navigationEvent.collect { event ->
+            when (event) {
+                SetupProfileViewModel.SetupProfileNavigationEvent.NavigateToHome -> {
+                    navigationManager.navigateAndClearStack(HomeRoute)
+                }
+            }
+        }
+    }
+
+    SetupProfileContent(
+        uiState = uiState.value,
+        onUserNameChange = viewModel::onUserNameChange,
+        onBirthDateChange = viewModel::onBirthDateChange,
+        onGenderClick = viewModel::onGenderChange,
+        onWeightChange = viewModel::onWeightChange,
+        onHeightChange = viewModel::onHeightChange,
+        onActivityLevelClick = viewModel::onActivityLevelChange,
+        onGoalTypeClick = viewModel::onGoalChange,
+        onSaveProfile = viewModel::onSaveProfile
+    )
 }
 
 @Composable
@@ -57,17 +93,18 @@ fun SetupProfileContent(
     onHeightChange: (String) -> Unit = {},
     onActivityLevelClick: (ActivityLevel) -> Unit = {},
     onGoalTypeClick: (GoalType) -> Unit = {},
-    onContinueClick: () -> Unit = {}
+    onSaveProfile: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.surface)
-            .verticalScroll(scrollState)
-            .safeContentPadding(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = MaterialTheme.colorScheme.surface)
+                .verticalScroll(scrollState)
+                .safeContentPadding(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
         Text(
             text = stringResource(id = R.string.setup_profile_title),
             style = MaterialTheme.typography.headlineLarge.copy(
@@ -75,6 +112,15 @@ fun SetupProfileContent(
             ),
             color = MaterialTheme.colorScheme.secondary
         )
+        if (uiState.errorResId != null) {
+            Text(
+                text = stringResource(id = uiState.errorResId),
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        } else {
+            Spacer(Modifier.height(Dimens.SpaceMedium))
+        }
         Spacer(Modifier.height(Dimens.SpaceMedium))
         Cards(
             modifier = Modifier.fillMaxWidth()
@@ -110,6 +156,15 @@ fun SetupProfileContent(
                     placeholder = stringResource(R.string.placeholder_name),
                     leadingIcon = Icons.Outlined.Person,
                 )
+                if (uiState.errorResId != null) {
+                    Text(
+                        text = stringResource(id = uiState.errorResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                } else {
+                    Spacer(Modifier.height(Dimens.SpaceMedium))
+                }
                 Spacer(Modifier.height(Dimens.SpaceSmall))
                 Text(
                     text = stringResource(R.string.label_birthday),
@@ -123,11 +178,18 @@ fun SetupProfileContent(
                     placeholder = stringResource(R.string.placeholder_date_format),
                     leadingIcon = Icons.Outlined.CalendarMonth
                 )
-                Text(
-                    text = stringResource(R.string.age_value),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.secondary
-                )
+                Row {
+                    Text(
+                        text = stringResource(R.string.age_value),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                    Text(
+                        text = stringResource(R.string.age_value, uiState.age ?: 0),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                }
                 Spacer(Modifier.height(Dimens.SpaceSmall))
                 Text(
                     text = stringResource(R.string.label_gender),
@@ -179,6 +241,15 @@ fun SetupProfileContent(
                             leadingIcon = Icons.Outlined.Scale
                         )
                     }
+                    if (uiState.errorResId != null) {
+                        Text(
+                            text = stringResource(id = uiState.errorResId),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    } else {
+                        Spacer(Modifier.height(Dimens.SpaceMedium))
+                    }
                     Spacer(Modifier.width(Dimens.SpaceSmall))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
@@ -193,6 +264,15 @@ fun SetupProfileContent(
                             placeholder = stringResource(R.string.height),
                             leadingIcon = Icons.Outlined.Straighten
                         )
+                    }
+                    if (uiState.errorResId != null) {
+                        Text(
+                            text = stringResource(id = uiState.errorResId),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    } else {
+                        Spacer(Modifier.height(Dimens.SpaceMedium))
                     }
                 }
             }
@@ -251,9 +331,21 @@ fun SetupProfileContent(
         }
         Spacer(Modifier.height(Dimens.SpaceMedium))
         Button(
-            text = stringResource(R.string.btn_continue),
-            onClick = onContinueClick
+            text = stringResource(R.string.btn_saveProfile),
+            onClick = onSaveProfile
         )
+        }
+        if (uiState.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.3f))
+                    .pointerInput(Unit) {},
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = HealthGreen)
+            }
+        }
     }
 }
 

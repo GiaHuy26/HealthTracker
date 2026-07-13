@@ -12,9 +12,9 @@ class LoginRepositoryImpl @Inject constructor(
         email: String,
         password: String
     ): User {
-        val userEntity = userDao.getUserByEmail(email) ?: throw Exception("")
+        val userEntity = userDao.getUserByEmail(email) ?: throw Exception("ERR_WRONG_CREDENTIALS")
         if (userEntity.password != password) {
-            throw Exception("")
+            throw Exception("ERR_WRONG_CREDENTIALS")
         }
         return User(
             id = userEntity.id,

@@ -112,11 +112,12 @@ fun LoginContent(
                     )
                 )
             )
-            .safeContentPadding()
 
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .safeContentPadding(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -186,16 +187,6 @@ fun LoginContent(
                 onClick = onLogIn,
                 text = stringResource(R.string.login_button)
             )
-            if (uiState.isLoading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.3f))
-                        .pointerInput(Unit) {}
-                ) {
-                    CircularProgressIndicator(color = HealthGreen)
-                }
-            }
             Spacer(Modifier.height(Dimens.SpaceExtraLarge))
             Row(
                 modifier = Modifier
@@ -297,6 +288,17 @@ fun LoginContent(
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.clickable(onClick = onSignIn)
                 )
+            }
+        }
+        if (uiState.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.3f))
+                    .pointerInput(Unit) {},
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = HealthGreen)
             }
         }
     }

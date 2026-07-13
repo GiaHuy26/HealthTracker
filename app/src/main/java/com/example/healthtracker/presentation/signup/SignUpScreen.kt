@@ -101,10 +101,11 @@ fun SignUpContent(
                     )
                 )
             )
-            .safeContentPadding()
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .safeContentPadding(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -184,17 +185,6 @@ fun SignUpContent(
                 text = stringResource(R.string.signup),
                 onClick = onSignUp
             )
-            if (uiState.isLoading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.3f))
-                        .pointerInput(Unit) {},
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = HealthGreen)
-                }
-            }
             Spacer(Modifier.height(Dimens.SpaceMedium))
             Row(
                 modifier = Modifier
@@ -292,6 +282,17 @@ fun SignUpContent(
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.clickable(onClick = onLogin)
                 )
+            }
+        }
+        if (uiState.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.3f))
+                    .pointerInput(Unit) {},
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = HealthGreen)
             }
         }
     }
