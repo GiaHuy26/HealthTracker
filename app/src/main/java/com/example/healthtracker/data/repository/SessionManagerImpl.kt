@@ -3,7 +3,7 @@ package com.example.healthtracker.data.repository
 import android.content.Context
 import com.example.healthtracker.di.SessionManager
 import dagger.hilt.android.qualifiers.ApplicationContext
-import jakarta.inject.Inject
+import javax.inject.Inject
 import androidx.core.content.edit
 
 class SessionManagerImpl @Inject constructor(
@@ -22,7 +22,7 @@ class SessionManagerImpl @Inject constructor(
 
     override suspend fun clearSession() {
         sharedPrefs.edit {
-            remove("KEY_USER_EMAIL").apply()
+            remove("KEY_USER_EMAIL")
         }
     }
 }

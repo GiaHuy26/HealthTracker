@@ -73,13 +73,13 @@ class SetupProfileViewModel @Inject constructor(
 
     fun onActivityLevelChange(value: ActivityLevel) {
         _uiState.update {
-            it.copy(activityLevel = value)
+            it.copy(activityLevel = value, errorResId = null)
         }
     }
 
     fun onGoalChange(value: GoalType) {
         _uiState.update {
-            it.copy(goalType = value)
+            it.copy(goalType = value, errorResId = null)
         }
     }
 
@@ -105,9 +105,16 @@ class SetupProfileViewModel @Inject constructor(
             val activeLevel = state.activityLevel
             val goalType = state.goalType
 
-            if (activeLevel == null || goalType == null) {
+            if (activeLevel == null) {
                 _uiState.update {
-                    it.copy(errorResId = R.string.error_unknown)
+                    it.copy(errorResId = R.string.error_activity_level_empty)
+                }
+                return@launch
+            }
+
+            if (goalType == null) {
+                _uiState.update {
+                    it.copy(errorResId = R.string.error_goal_empty)
                 }
                 return@launch
             }

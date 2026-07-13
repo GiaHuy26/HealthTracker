@@ -3,7 +3,6 @@ package com.example.healthtracker.data.local.db.entity
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.example.healthtracker.domain.model.Gender
 
 @Entity(
     tableName = "users",

@@ -62,7 +62,9 @@ fun SignUpScreen(
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
             when (event) {
-                SignUpViewModel.SignUpNavigationEvent.NavigateToLogin -> navigationManager.navigateBack()
+                SignUpViewModel.SignUpNavigationEvent.NavigateToLogin -> navigationManager.navigateAndClearStack(
+                    LoginRoute
+                )
             }
         }
     }
@@ -132,16 +134,7 @@ fun SignUpContent(
                     placeholder = stringResource(R.string.email),
                     leadingIcon = Icons.Outlined.Email
                 )
-                if (uiState.errorResId != null) {
-                    Text(
-                        text = stringResource(id = uiState.errorResId),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                } else {
-                    Spacer(Modifier.height(Dimens.SpaceMedium))
-                }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
+                Spacer(Modifier.height(Dimens.SpaceMedium))
                 TextFields(
                     value = uiState.password,
                     onChangeValue = onPasswordChange,
@@ -151,16 +144,7 @@ fun SignUpContent(
                     isPasswordVisible = uiState.isPasswordVisible,
                     onToggleVisibility = onTogglePasswordVisibility
                 )
-                if (uiState.errorResId != null) {
-                    Text(
-                        text = stringResource(id = uiState.errorResId),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                } else {
-                    Spacer(Modifier.height(Dimens.SpaceMedium))
-                }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
+                Spacer(Modifier.height(Dimens.SpaceMedium))
                 TextFields(
                     value = uiState.confirmPassword,
                     onChangeValue = onConfirmPasswordChange,
@@ -171,6 +155,7 @@ fun SignUpContent(
                     onToggleVisibility = onTogglePasswordVisibility
                 )
                 if (uiState.errorResId != null) {
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
                     Text(
                         text = stringResource(id = uiState.errorResId),
                         color = MaterialTheme.colorScheme.error,

@@ -1,6 +1,5 @@
 package com.example.healthtracker.presentation.signup
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.R
@@ -68,7 +67,7 @@ class SignUpViewModel @Inject constructor(
             } catch (e: Exception) {
                 val stringResId = when (e.message) {
                     "ERR_EMAIL_EMPTY" -> R.string.error_email_empty
-                    "ERR_EMAIL_INVALID" -> R.string.error_email_exists
+                    "ERR_EMAIL_INVALID" -> R.string.error_email_invalid
                     "ERR_EMAIL_EXISTS" -> R.string.error_email_exists
                     "ERR_PASSWORD_EMPTY" -> R.string.error_password_empty
                     "ERR_PASSWORD_TOO_SHORT" -> R.string.error_password_too_short

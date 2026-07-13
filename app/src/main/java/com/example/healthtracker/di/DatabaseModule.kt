@@ -22,7 +22,8 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "health_tracker_db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+         .build()
     }
 
     @Provides

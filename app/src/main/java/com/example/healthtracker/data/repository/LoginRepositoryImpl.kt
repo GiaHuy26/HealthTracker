@@ -16,9 +16,11 @@ class LoginRepositoryImpl @Inject constructor(
         if (userEntity.password != password) {
             throw Exception("ERR_WRONG_CREDENTIALS")
         }
+        val isProfileCompleted = !userEntity.userName.isNullOrBlank()
         return User(
             id = userEntity.id,
-            email = userEntity.email
+            email = userEntity.email,
+            isProfileCompleted = isProfileCompleted
         )
     }
 }

@@ -112,15 +112,7 @@ fun SetupProfileContent(
             ),
             color = MaterialTheme.colorScheme.secondary
         )
-        if (uiState.errorResId != null) {
-            Text(
-                text = stringResource(id = uiState.errorResId),
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        } else {
-            Spacer(Modifier.height(Dimens.SpaceMedium))
-        }
+         Spacer(Modifier.height(Dimens.SpaceMedium))
         Spacer(Modifier.height(Dimens.SpaceMedium))
         Cards(
             modifier = Modifier.fillMaxWidth()
@@ -156,15 +148,7 @@ fun SetupProfileContent(
                     placeholder = stringResource(R.string.placeholder_name),
                     leadingIcon = Icons.Outlined.Person,
                 )
-                if (uiState.errorResId != null) {
-                    Text(
-                        text = stringResource(id = uiState.errorResId),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                } else {
-                    Spacer(Modifier.height(Dimens.SpaceMedium))
-                }
+                 Spacer(Modifier.height(Dimens.SpaceMedium))
                 Spacer(Modifier.height(Dimens.SpaceSmall))
                 Text(
                     text = stringResource(R.string.label_birthday),
@@ -178,18 +162,13 @@ fun SetupProfileContent(
                     placeholder = stringResource(R.string.placeholder_date_format),
                     leadingIcon = Icons.Outlined.CalendarMonth
                 )
-                Row {
-                    Text(
-                        text = stringResource(R.string.age_value),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                    Text(
-                        text = stringResource(R.string.age_value, uiState.age ?: 0),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                }
+                 if (uiState.age != null) {
+                     Text(
+                         text = stringResource(R.string.age_value, uiState.age),
+                         style = MaterialTheme.typography.bodyMedium,
+                         color = MaterialTheme.colorScheme.secondary
+                     )
+                 }
                 Spacer(Modifier.height(Dimens.SpaceSmall))
                 Text(
                     text = stringResource(R.string.label_gender),
@@ -197,10 +176,21 @@ fun SetupProfileContent(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(Modifier.height(Dimens.SpaceSmall))
-                GenderSelector(
-                    selectedGender = uiState.gender,
-                    onGenderSelected = onGenderClick
-                )
+                 GenderSelector(
+                     selectedGender = uiState.gender,
+                     onGenderSelected = onGenderClick
+                 )
+                 if (uiState.errorResId == R.string.error_name_empty ||
+                     uiState.errorResId == R.string.error_birthday_empty ||
+                     uiState.errorResId == R.string.error_unknown
+                 ) {
+                     Spacer(Modifier.height(Dimens.SpaceMedium))
+                     Text(
+                         text = stringResource(id = uiState.errorResId),
+                         color = MaterialTheme.colorScheme.error,
+                         style = MaterialTheme.typography.bodyMedium,
+                     )
+                 }
             }
         }
         Spacer(Modifier.height(Dimens.SpaceSmall))
@@ -241,40 +231,32 @@ fun SetupProfileContent(
                             leadingIcon = Icons.Outlined.Scale
                         )
                     }
-                    if (uiState.errorResId != null) {
-                        Text(
-                            text = stringResource(id = uiState.errorResId),
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    } else {
-                        Spacer(Modifier.height(Dimens.SpaceMedium))
-                    }
-                    Spacer(Modifier.width(Dimens.SpaceSmall))
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = stringResource(R.string.label_height),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.height(Dimens.SpaceSmall))
-                        TextFields(
-                            value = uiState.height,
-                            onChangeValue = onHeightChange,
-                            placeholder = stringResource(R.string.height),
-                            leadingIcon = Icons.Outlined.Straighten
-                        )
-                    }
-                    if (uiState.errorResId != null) {
-                        Text(
-                            text = stringResource(id = uiState.errorResId),
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    } else {
-                        Spacer(Modifier.height(Dimens.SpaceMedium))
-                    }
-                }
+                     Spacer(Modifier.width(Dimens.SpaceSmall))
+                     Column(modifier = Modifier.weight(1f)) {
+                         Text(
+                             text = stringResource(R.string.label_height),
+                             style = MaterialTheme.typography.bodyMedium,
+                             color = MaterialTheme.colorScheme.onSurfaceVariant
+                         )
+                         Spacer(Modifier.height(Dimens.SpaceSmall))
+                         TextFields(
+                             value = uiState.height,
+                             onChangeValue = onHeightChange,
+                             placeholder = stringResource(R.string.height),
+                             leadingIcon = Icons.Outlined.Straighten
+                         )
+                     }
+                 }
+                 if (uiState.errorResId == R.string.error_weight_invalid ||
+                     uiState.errorResId == R.string.error_height_invalid
+                 ) {
+                     Spacer(Modifier.height(Dimens.SpaceMedium))
+                     Text(
+                         text = stringResource(id = uiState.errorResId),
+                         color = MaterialTheme.colorScheme.error,
+                         style = MaterialTheme.typography.bodyMedium,
+                     )
+                 }
             }
         }
         Spacer(Modifier.height(Dimens.SpaceSmall))
@@ -291,7 +273,7 @@ fun SetupProfileContent(
                     )
                     Spacer(Modifier.width(Dimens.SpaceSmall))
                     Text(
-                        text = stringResource(R.string.section_body_metrics),
+                        text = stringResource(R.string.section_activity_level),
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -301,6 +283,14 @@ fun SetupProfileContent(
                     selectedLevel = uiState.activityLevel,
                     onSelectedLevel = onActivityLevelClick
                 )
+                if (uiState.errorResId == R.string.error_activity_level_empty) {
+                    Spacer(Modifier.height(Dimens.SpaceMedium))
+                    Text(
+                        text = stringResource(id = uiState.errorResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
             }
         }
         Spacer(Modifier.height(Dimens.SpaceSmall))
@@ -327,6 +317,14 @@ fun SetupProfileContent(
                     selectedGoal = uiState.goalType,
                     onGoalSelected = onGoalTypeClick
                 )
+                if (uiState.errorResId == R.string.error_goal_empty) {
+                    Spacer(Modifier.height(Dimens.SpaceMedium))
+                    Text(
+                        text = stringResource(id = uiState.errorResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
             }
         }
         Spacer(Modifier.height(Dimens.SpaceMedium))

@@ -17,11 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Password
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Card
@@ -30,9 +25,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -51,6 +44,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
 import com.example.healthtracker.navigation.HomeRoute
 import com.example.healthtracker.navigation.NavigationManager
+import com.example.healthtracker.navigation.SetupProfileRoute
 import com.example.healthtracker.navigation.SignUpRoute
 import com.example.healthtracker.presentation.components.Button
 import com.example.healthtracker.presentation.components.Cards
@@ -75,6 +69,9 @@ fun LoginScreen(
             when (event) {
                 LoginViewModel.LoginNavigationEvent.NavigationToHome -> navigationManager.navigateAndClearStack(
                     HomeRoute
+                )
+                LoginViewModel.LoginNavigationEvent.NavigationToSetupProfile -> navigationManager.navigateAndClearStack(
+                    SetupProfileRoute
                 )
             }
         }
@@ -144,16 +141,7 @@ fun LoginContent(
                     placeholder = stringResource(R.string.email),
                     leadingIcon = Icons.Outlined.Email
                 )
-                if (uiState.errorResId != null) {
-                    Text(
-                        text = stringResource(id = uiState.errorResId),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                } else {
-                    Spacer(Modifier.height(Dimens.SpaceMedium))
-                }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
+                Spacer(Modifier.height(Dimens.SpaceMedium))
                 TextFields(
                     value = uiState.password,
                     onChangeValue = onPasswordChange,
@@ -163,15 +151,6 @@ fun LoginContent(
                     isPasswordVisible = uiState.isPasswordVisible,
                     onToggleVisibility = onPasswordVisible
                 )
-                if (uiState.errorResId != null) {
-                    Text(
-                        text = stringResource(id = uiState.errorResId),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                } else {
-                    Spacer(Modifier.height(Dimens.SpaceMedium))
-                }
                 Spacer(Modifier.height(Dimens.SpaceSmall))
                 Text(
                     text = stringResource(R.string.login_forgot_password),
@@ -181,6 +160,14 @@ fun LoginContent(
                     ),
                     color = MaterialTheme.colorScheme.secondary
                 )
+                if (uiState.errorResId != null) {
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
+                    Text(
+                        text = stringResource(id = uiState.errorResId),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
             }
             Spacer(Modifier.height(Dimens.SpaceExtraLarge))
             Button(

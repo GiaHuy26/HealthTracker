@@ -25,6 +25,6 @@ class SignUpRepositoryImpl @Inject constructor(
 
         val generatedId = userDao.insertUser(newUserEntity)
 
-        return User(id = generatedId.toInt(), email = email)
+        return User(id = generatedId.toInt(), email = email, isProfileCompleted = false)
     }
 }

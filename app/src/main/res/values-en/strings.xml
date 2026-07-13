@@ -30,6 +30,7 @@
 
     <!-- Error -->
     <string name="error_email_exists">This email is already in use!</string>
+    <string name="error_email_invalid">Invalid email format!</string>
     <string name="error_email_empty">Email cannot be empty!</string>
     <string name="error_password_mismatch">Confirm password does not match!</string>
     <string name="error_unknown">An unknown error occurred!</string>
@@ -38,6 +39,8 @@
     <string name="error_wrong_credentials">Invalid email or password!</string>
     <string name="error_name_empty">Full name cannot be empty!</string>
     <string name="error_birthday_empty">Date of birth cannot be empty!</string>
+    <string name="error_activity_level_empty">Please select activity level!</string>
+    <string name="error_goal_empty">Please select your goal!</string>
     <string name="error_weight_invalid">Weight must be greater than 0!</string>
     <string name="error_height_invalid">Height must be greater than 0!</string>
 
