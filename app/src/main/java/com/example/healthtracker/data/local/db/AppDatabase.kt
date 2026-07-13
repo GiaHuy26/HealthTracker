@@ -7,7 +7,7 @@ import com.example.healthtracker.data.local.db.entity.UserEntity
 
 @Database(
     entities = [UserEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

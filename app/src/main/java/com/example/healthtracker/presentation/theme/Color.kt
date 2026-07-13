@@ -15,11 +15,11 @@ val HealthTeal = Color(0xFF009688)
 val HealthBgLight = Color(0xFFF8F9FB)
 val HealthCardLight = Color(0xFFF2F4F6)
 val HealthContainerLight = Color(0xFFEDEEF0)
-val HealthTextDark = Color(0xFF191C1C)
+val HealthTextDark = Color(0xFF191C1E)
 val HealthDividerLight = Color(0xFFE1E2E4)
 
 val HealthBgDark = Color(0xFF121414)
-val HealthCardDark = Color(0xFF191C1C)
+val HealthCardDark = Color(0xFF191C1E)
 val HealthTextLight = Color(0xFFFFFFFF)
 val HealthDividerDark = Color(0xFF2C2F30)
 

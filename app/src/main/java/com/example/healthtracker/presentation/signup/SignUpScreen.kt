@@ -62,7 +62,9 @@ fun SignUpScreen(
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
             when (event) {
-                SignUpViewModel.SignUpNavigationEvent.NavigateToLogin -> navigationManager.navigateBack()
+                SignUpViewModel.SignUpNavigationEvent.NavigateToLogin -> navigationManager.navigateAndClearStack(
+                    LoginRoute
+                )
             }
         }
     }
@@ -101,10 +103,11 @@ fun SignUpContent(
                     )
                 )
             )
-            .safeContentPadding()
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .safeContentPadding(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -131,16 +134,7 @@ fun SignUpContent(
                     placeholder = stringResource(R.string.email),
                     leadingIcon = Icons.Outlined.Email
                 )
-                if (uiState.errorResId != null) {
-                    Text(
-                        text = stringResource(id = uiState.errorResId),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                } else {
-                    Spacer(Modifier.height(Dimens.SpaceMedium))
-                }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
+                Spacer(Modifier.height(Dimens.SpaceMedium))
                 TextFields(
                     value = uiState.password,
                     onChangeValue = onPasswordChange,
@@ -150,16 +144,7 @@ fun SignUpContent(
                     isPasswordVisible = uiState.isPasswordVisible,
                     onToggleVisibility = onTogglePasswordVisibility
                 )
-                if (uiState.errorResId != null) {
-                    Text(
-                        text = stringResource(id = uiState.errorResId),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                } else {
-                    Spacer(Modifier.height(Dimens.SpaceMedium))
-                }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
+                Spacer(Modifier.height(Dimens.SpaceMedium))
                 TextFields(
                     value = uiState.confirmPassword,
                     onChangeValue = onConfirmPasswordChange,
@@ -170,6 +155,7 @@ fun SignUpContent(
                     onToggleVisibility = onTogglePasswordVisibility
                 )
                 if (uiState.errorResId != null) {
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
                     Text(
                         text = stringResource(id = uiState.errorResId),
                         color = MaterialTheme.colorScheme.error,
@@ -184,17 +170,6 @@ fun SignUpContent(
                 text = stringResource(R.string.signup),
                 onClick = onSignUp
             )
-            if (uiState.isLoading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.3f))
-                        .pointerInput(Unit) {},
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = HealthGreen)
-                }
-            }
             Spacer(Modifier.height(Dimens.SpaceMedium))
             Row(
                 modifier = Modifier
@@ -292,6 +267,17 @@ fun SignUpContent(
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.clickable(onClick = onLogin)
                 )
+            }
+        }
+        if (uiState.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.3f))
+                    .pointerInput(Unit) {},
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = HealthGreen)
             }
         }
     }

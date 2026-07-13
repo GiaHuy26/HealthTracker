@@ -1,8 +1,11 @@
 package com.example.healthtracker.di
 
 import com.example.healthtracker.data.repository.LoginRepositoryImpl
+import com.example.healthtracker.data.repository.SessionManagerImpl
+import com.example.healthtracker.data.repository.SetupProfileRepositoryImpl
 import com.example.healthtracker.data.repository.SignUpRepositoryImpl
 import com.example.healthtracker.domain.repository.LoginRepository
+import com.example.healthtracker.domain.repository.SetupProfileRepository
 import com.example.healthtracker.domain.repository.SignUpRepository
 import dagger.Binds
 import dagger.Module
@@ -25,4 +28,16 @@ abstract class RepositoryModule {
     abstract fun bindLoginRepository(
         loginRepositoryImpl: LoginRepositoryImpl
     ): LoginRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSetupProfileRepository(
+        setupProfileRepositoryImpl: SetupProfileRepositoryImpl
+    ): SetupProfileRepository
+
+    @Binds
+    @Singleton
+    abstract fun binSessionManager(
+        sessionManagerImpl: SessionManagerImpl
+    ): SessionManager
 }

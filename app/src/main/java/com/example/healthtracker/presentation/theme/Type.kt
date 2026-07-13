@@ -60,7 +60,7 @@ val BaseTypography = Typography(
     ),
     titleLarge = TextStyle(
         fontFamily = MontserratFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Medium,
         fontSize = 22.sp,
         lineHeight = 28.sp
     ),

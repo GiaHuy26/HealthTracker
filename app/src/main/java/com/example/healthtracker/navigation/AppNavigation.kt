@@ -6,6 +6,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
 import com.example.healthtracker.presentation.login.LoginScreen
+import com.example.healthtracker.presentation.setup_profile.SetupProfileScreen
 import com.example.healthtracker.presentation.signup.SignUpScreen
 import com.example.healthtracker.presentation.start.StartScreen
 
@@ -29,6 +30,10 @@ fun AppNavigation(
 
                 is SignUpRoute -> NavEntry(route) {
                     SignUpScreen(navigationManager = navigationManager)
+                }
+
+                is SetupProfileRoute -> NavEntry(route){
+                    SetupProfileScreen(navigationManager = navigationManager)
                 }
 
                 is HomeRoute -> NavEntry(route) {

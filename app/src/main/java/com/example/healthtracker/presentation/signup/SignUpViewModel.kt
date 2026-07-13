@@ -1,15 +1,15 @@
 package com.example.healthtracker.presentation.signup
 
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.usecase.signup.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,8 +21,8 @@ class SignUpViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState
 
-    private val _navigationEvent = Channel<SignUpNavigationEvent>()
-    val navigationEvent = _navigationEvent.receiveAsFlow()
+    private val _navigationEvent = MutableSharedFlow<SignUpNavigationEvent>()
+    val navigationEvent = _navigationEvent.asSharedFlow()
 
     fun onEmailChange(value: String) {
         _uiState.update {
@@ -63,14 +63,15 @@ class SignUpViewModel @Inject constructor(
                 )
                 _uiState.update { it.copy(isLoading = false) }
 
-                _navigationEvent.send(SignUpNavigationEvent.NavigateToLogin)
+                _navigationEvent.emit(SignUpNavigationEvent.NavigateToLogin)
             } catch (e: Exception) {
                 val stringResId = when (e.message) {
                     "ERR_EMAIL_EMPTY" -> R.string.error_email_empty
-                    "ERR_EMAIL_INVALID" -> R.string.error_email_exists
+                    "ERR_EMAIL_INVALID" -> R.string.error_email_invalid
+                    "ERR_EMAIL_EXISTS" -> R.string.error_email_exists
                     "ERR_PASSWORD_EMPTY" -> R.string.error_password_empty
                     "ERR_PASSWORD_TOO_SHORT" -> R.string.error_password_too_short
-                    "ERR_PASSWORD_MISMATCH" -> R.string.error_password_mismatch
+                    "ERR_PASSWORDS_DO_NOT_MATCH" -> R.string.error_password_mismatch
                     else -> R.string.error_unknown
                 }
 
