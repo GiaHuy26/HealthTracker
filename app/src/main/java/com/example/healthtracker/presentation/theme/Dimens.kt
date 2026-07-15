@@ -13,7 +13,8 @@ object Dimens {
 
     val CardPadding = 25.dp
 
-    val Elevation=4.dp
+    val Elevation = 4.dp
+    val ElevationMedium = 8.dp
 
     val ButtonHeight = 52.dp
     val ButtonHeightMedium = 58.dp
@@ -24,13 +25,13 @@ object Dimens {
     val CornerSmall = 8.dp
     val CornerMedium = 12.dp
     val CornerLarge = 20.dp
-    val CornerExtraLarge = 28.dp
+    val CornerExtraLarge = 32.dp
 
     val ImageStart = 350.dp
     val Logo = 80.dp
 
-    val BorderStrokeSmall=1.dp
-    val BorderStrokeMedium=2.dp
+    val BorderStrokeSmall = 1.dp
+    val BorderStrokeMedium = 2.dp
 
     val CardHeight = 80.dp
 }
