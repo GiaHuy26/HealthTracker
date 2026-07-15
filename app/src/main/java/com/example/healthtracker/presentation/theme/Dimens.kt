@@ -21,6 +21,7 @@ object Dimens {
     val IconSmall = 16.dp
     val IconNormal = 24.dp
     val IconLarge = 32.dp
+    val BgIcon = 50.dp
 
     val CornerSmall = 8.dp
     val CornerMedium = 12.dp
