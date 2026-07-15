@@ -79,4 +79,66 @@
     <string name="height">Chiều cao</string>
 
     <string name="age_value">Tuổi: %1$d tuổi</string>
+
+    <!-- Food Diary Screen -->
+    <string name="food_diary_title">Nhật ký bữa ăn</string>
+    <string name="food_diary_today_total_calories">Calo hôm nay</string>
+    <string name="food_diary_meal_breakfast">Bữa sáng</string>
+    <string name="food_diary_meal_lunch">Bữa trưa</string>
+    <string name="food_diary_meal_dinner">Bữa tối</string>
+    <string name="food_diary_meal_snack">Bữa phụ</string>
+    <string name="food_diary_no_items">Chưa ghi nhận món ăn nào.</string>
+    <string name="food_diary_add_food">Thêm món ăn</string>
+    <string name="food_diary_serving_format">%1$.1f phần (%2$s)</string>
+    <string name="food_diary_delete_item">Xóa món ăn</string>
+    <string name="food_diary_add_to_meal">Thêm món vào %1$s</string>
+    <string name="food_diary_tab_search">Tìm kiếm</string>
+    <string name="food_diary_tab_custom">Tự nhập</string>
+    <string name="food_diary_search_label">Nhập tên món ăn cần tìm…</string>
+    <string name="food_diary_no_results">Không tìm thấy món ăn nào khớp.</string>
+    <string name="food_diary_selected_food_standard">Chuẩn: %1$d kcal / %2$s</string>
+    <string name="food_diary_quantity_label">Số lượng / Số phần ăn (ví dụ: 1 hoặc 1.5)</string>
+    <string name="food_diary_btn_reselect">Chọn lại</string>
+    <string name="food_diary_btn_save_meal">Lưu bữa ăn</string>
+    <string name="food_diary_custom_name_label">Tên món ăn</string>
+    <string name="food_diary_custom_calories_label">kcal</string>
+    <string name="food_diary_custom_serving_label">Khẩu phần mặc định (ví dụ: 1 tô, 100g)</string>
+    <string name="food_diary_btn_cancel">Hủy</string>
+    <string name="food_diary_btn_save_custom">Lưu món mới</string>
+    <string name="food_diary_calendar_desc">Chọn ngày</string>
+    <string name="food_diary_date_format_pattern">dd \'Tháng\' MM, yyyy</string>
+    <string name="food_diary_target">Mục tiêu:</string>
+
+    <string-array name="sample_foods_array">
+        <item>Cơm trắng|130|100g</item>
+        <item>Trứng gà luộc|78|1 quả</item>
+        <item>Phở bò tô nhỏ|350|1 tô</item>
+        <item>Bánh mì kẹp thịt|380|1 ổ</item>
+        <item>Ức gà áp chảo|165|100g</item>
+        <item>Thịt heo luộc|240|100g</item>
+        <item>Thịt bò xào rau|180|100g</item>
+        <item>Cá hồi nướng|200|100g</item>
+        <item>Sữa tươi không đường|60|100ml</item>
+        <item>Khoai lang luộc|85|100g</item>
+        <item>Quả táo đỏ|52|1 quả</item>
+        <item>Quả chuối chín|90|1 quả</item>
+        <item>Quả bơ tươi|160|100g</item>
+        <item>Rau cải luộc|25|100g</item>
+        <item>Đậu hũ luộc|76|100g</item>
+        <item>Mì ăn liền|350|1 gói</item>
+        <item>Bún riêu cua|410|1 tô</item>
+        <item>Hủ tiếu gà|360|1 tô</item>
+        <item>Xôi mặn|480|1 gói</item>
+        <item>Sữa chua có đường|105|1 hộp</item>
+        <item>Salad ức gà|150|1 đĩa</item>
+        <item>Sinh tố cam vắt|50|100ml</item>
+        <item>Hạt điều sấy|550|100g</item>
+        <item>Yến mạch pha sữa|120|1 tô</item>
+        <item>Cháo sườn|290|1 tô</item>
+        <item>Tôm hấp|95|100g</item>
+        <item>Nước mía|80|100ml</item>
+        <item>Quả dưa hấu|30|100g</item>
+        <item>Cà phê sữa đá|140|1 ly</item>
+        <item>Thịt vịt luộc|220|100g</item>
+    </string-array>
 </resources>

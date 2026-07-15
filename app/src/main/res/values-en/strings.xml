@@ -81,5 +81,67 @@
 
     <string name="age_value">Age: %1$d years old</string>
 
+    <!-- Food Diary Screen  -->
+    <string name="food_diary_title">Food Diary</string>
+    <string name="food_diary_today_total_calories">Calories today</string>
+    <string name="food_diary_meal_breakfast">Breakfast</string>
+    <string name="food_diary_meal_lunch">Lunch</string>
+    <string name="food_diary_meal_dinner">Dinner</string>
+    <string name="food_diary_meal_snack">Snack</string>
+    <string name="food_diary_no_items">No food items recorded.</string>
+    <string name="food_diary_add_food">Add Food</string>
+    <string name="food_diary_serving_format">%1$.1f serving(s) (%2$s)</string>
+    <string name="food_diary_delete_item">Delete item</string>
+    <string name="food_diary_add_to_meal">Add to %1$s</string>
+    <string name="food_diary_tab_search">Search</string>
+    <string name="food_diary_tab_custom">Custom</string>
+    <string name="food_diary_search_label">Search food by name…</string>
+    <string name="food_diary_no_results">No matching food found.</string>
+    <string name="food_diary_selected_food_standard">Standard: %1$d kcal / %2$s</string>
+    <string name="food_diary_quantity_label">Quantity / Servings (e.g., 1 or 1.5)</string>
+    <string name="food_diary_btn_reselect">Reselect</string>
+    <string name="food_diary_btn_save_meal">Save meal</string>
+    <string name="food_diary_custom_name_label">Food name</string>
+    <string name="food_diary_custom_calories_label">kcal</string>
+    <string name="food_diary_custom_serving_label">Default serving (e.g. 1 bowl, 100g)</string>
+    <string name="food_diary_btn_cancel">Cancel</string>
+    <string name="food_diary_btn_save_custom">Save custom</string>
+    <string name="food_diary_calendar_desc">Choose date</string>
+    <string name="food_diary_date_format_pattern">MMMM dd, yyyy</string>
+    <string name="food_diary_target">Target:</string>
+
+    <string-array name="sample_foods_array">
+        <item>White rice|130|100g</item>
+        <item>Boiled egg|78|1 egg</item>
+        <item>Beef Pho small|350|1 bowl</item>
+        <item>Bread sandwich|380|1 loaf</item>
+        <item>Grilled chicken breast|165|100g</item>
+        <item>Boiled pork slice|240|100g</item>
+        <item>Stir-fried beef with veg|180|100g</item>
+        <item>Grilled salmon|200|100g</item>
+        <item>Unsweetened fresh milk|60|100ml</item>
+        <item>Boiled sweet potato|85|100g</item>
+        <item>Red apple|52|1 apple</item>
+        <item>Ripe banana|90|1 banana</item>
+        <item>Fresh avocado|160|100g</item>
+        <item>Boiled spinach|25|100g</item>
+        <item>Boiled tofu|76|100g</item>
+        <item>Instant noodles|350|1 pack</item>
+        <item>Crab noodle soup|410|1 bowl</item>
+        <item>Chicken noodle soup|360|1 bowl</item>
+        <item>Sticky rice with toppings|480|1 pack</item>
+        <item>Sweetened yogurt|105|1 cup</item>
+        <item>Chicken breast salad|150|1 plate</item>
+        <item>Orange juice|50|100ml</item>
+        <item>Roasted cashews|550|100g</item>
+        <item>Oatmeal with milk|120|1 bowl</item>
+        <item>Pork rib congee|290|1 bowl</item>
+        <item>Steamed shrimp|95|100g</item>
+        <item>Sugarcane juice|80|100ml</item>
+        <item>Watermelon|30|100g</item>
+        <item>Iced milk coffee|140|1 cup</item>
+        <item>Boiled duck meat|220|100g</item>
+    </string-array>
+
 
 </resources>

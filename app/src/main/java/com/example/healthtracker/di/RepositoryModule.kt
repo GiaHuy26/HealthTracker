@@ -1,9 +1,11 @@
 package com.example.healthtracker.di
 
+import com.example.healthtracker.data.repository.FoodDiaryRepositoryImpl
 import com.example.healthtracker.data.repository.LoginRepositoryImpl
 import com.example.healthtracker.data.repository.SessionManagerImpl
 import com.example.healthtracker.data.repository.SetupProfileRepositoryImpl
 import com.example.healthtracker.data.repository.SignUpRepositoryImpl
+import com.example.healthtracker.domain.repository.FoodDiaryRepository
 import com.example.healthtracker.domain.repository.LoginRepository
 import com.example.healthtracker.domain.repository.SetupProfileRepository
 import com.example.healthtracker.domain.repository.SignUpRepository
@@ -40,4 +42,10 @@ abstract class RepositoryModule {
     abstract fun binSessionManager(
         sessionManagerImpl: SessionManagerImpl
     ): SessionManager
+
+    @Binds
+    @Singleton
+    abstract fun binFoodDiaryRepository(
+        foodDiaryRepositoryImpl: FoodDiaryRepositoryImpl
+    ): FoodDiaryRepository
 }

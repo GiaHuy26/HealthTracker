@@ -34,4 +34,6 @@ object Dimens {
     val BorderStrokeMedium = 2.dp
 
     val CardHeight = 80.dp
+
+    val CircularProgress = 80.dp
 }
