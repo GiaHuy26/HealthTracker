@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
-import com.example.healthtracker.presentation.components.BottomBarScreen
 import com.example.healthtracker.presentation.login.LoginScreen
 import com.example.healthtracker.presentation.setup_profile.SetupProfileScreen
 import com.example.healthtracker.presentation.signup.SignUpScreen
@@ -37,7 +36,7 @@ fun AppNavigation(
                 }
 
                 is HomeRoute -> NavEntry(route) {
-                    BottomBarScreen(navigationManager = navigationManager)
+                    BottomBarNavigation(navigationManager = navigationManager)
                 }
             }
         }

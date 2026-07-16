@@ -86,13 +86,13 @@
     <string name="food_diary_meal_lunch">Bữa trưa</string>
     <string name="food_diary_meal_dinner">Bữa tối</string>
     <string name="food_diary_meal_snack">Bữa phụ</string>
-    <string name="food_diary_no_items">Chưa ghi nhận món ăn nào.</string>
+    <string name="food_diary_choose_meal">Chọn bữa ăn</string>
     <string name="food_diary_add_food">Thêm món ăn</string>
     <string name="food_diary_serving_format">%1$.1f phần (%2$s)</string>
     <string name="food_diary_delete_item">Xóa món ăn</string>
     <string name="food_diary_add_to_meal">Thêm món vào %1$s</string>
     <string name="food_diary_tab_search">Tìm kiếm</string>
-    <string name="food_diary_tab_custom">Tự nhập</string>
+    <string name="food_diary_choose_food">Chọn món ăn</string>
     <string name="food_diary_search_label">Nhập tên món ăn cần tìm…</string>
     <string name="food_diary_no_results">Không tìm thấy món ăn nào khớp.</string>
     <string name="food_diary_selected_food_standard">Chuẩn: %1$d kcal / %2$s</string>

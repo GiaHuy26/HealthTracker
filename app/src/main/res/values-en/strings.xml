@@ -88,13 +88,13 @@
     <string name="food_diary_meal_lunch">Lunch</string>
     <string name="food_diary_meal_dinner">Dinner</string>
     <string name="food_diary_meal_snack">Snack</string>
-    <string name="food_diary_no_items">No food items recorded.</string>
+    <string name="food_diary_choose_meal">Choose meal</string>
     <string name="food_diary_add_food">Add Food</string>
     <string name="food_diary_serving_format">%1$.1f serving(s) (%2$s)</string>
     <string name="food_diary_delete_item">Delete item</string>
     <string name="food_diary_add_to_meal">Add to %1$s</string>
     <string name="food_diary_tab_search">Search</string>
-    <string name="food_diary_tab_custom">Custom</string>
+    <string name="food_diary_choose_food">Choose foods</string>
     <string name="food_diary_search_label">Search food by name…</string>
     <string name="food_diary_no_results">No matching food found.</string>
     <string name="food_diary_selected_food_standard">Standard: %1$d kcal / %2$s</string>

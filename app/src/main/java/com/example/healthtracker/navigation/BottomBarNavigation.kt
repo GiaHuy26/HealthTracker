@@ -1,4 +1,4 @@
-package com.example.healthtracker.presentation.components
+package com.example.healthtracker.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -10,13 +10,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.healthtracker.navigation.NavigationManager
+import com.example.healthtracker.presentation.components.BottomBars
+import com.example.healthtracker.presentation.components.ButtonAdd
 import com.example.healthtracker.presentation.food_diary.FoodDiaryScreen
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
-fun BottomBarScreen(
+fun BottomBarNavigation(
     navigationManager: NavigationManager
 ) {
     var selectedTab by remember { mutableIntStateOf(1) }
@@ -59,8 +60,8 @@ fun BottomBarScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewBottomBarScreen() {
+fun PreviewBottomBarNavigation() {
     HealthTrackerTheme {
-        BottomBarScreen(navigationManager = NavigationManager())
+        BottomBarNavigation(navigationManager = NavigationManager())
     }
 }
