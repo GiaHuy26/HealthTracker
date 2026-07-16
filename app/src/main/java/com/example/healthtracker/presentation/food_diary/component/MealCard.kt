@@ -39,7 +39,6 @@ fun MealCard(
     mealName: String,
     totalCalories: Int,
     foods: List<MealEntity>,
-    icon: ImageVector,
     onAddFood: () -> Unit
 ) {
     Cards {
@@ -159,7 +158,6 @@ fun PreviewMealCard() {
                 mealName = "Bữa sáng",
                 totalCalories = 347,
                 foods = sampleFoods,
-                icon = Icons.Outlined.FreeBreakfast,
                 onAddFood = {}
             )
         }

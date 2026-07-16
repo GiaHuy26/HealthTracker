@@ -77,7 +77,6 @@
     <string name="weight">Cân nặng</string>
     <string name="label_height">Chiều cao (cm)</string>
     <string name="height">Chiều cao</string>
-
     <string name="age_value">Tuổi: %1$d tuổi</string>
 
     <!-- Food Diary Screen -->
@@ -141,4 +140,5 @@
         <item>Cà phê sữa đá|140|1 ly</item>
         <item>Thịt vịt luộc|220|100g</item>
     </string-array>
+    <string name="btn_confirm">Đồng ý</string>
 </resources>

@@ -1,11 +1,16 @@
 package com.example.healthtracker.presentation.food_diary
 
+import android.widget.Space
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
@@ -14,14 +19,22 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,16 +44,67 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
+import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.presentation.components.BottomBars
 import com.example.healthtracker.presentation.components.ButtonAdd
 import com.example.healthtracker.presentation.components.HealthCards
+import com.example.healthtracker.presentation.food_diary.component.MealCard
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthLightGreen
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
-fun FoodDiaryScreen() {
+fun FoodDiaryScreen(
+    viewModel: FoodDiaryViewModel = hiltViewModel(),
+    onAddMealClick: () -> Unit = {}
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var showDatePicker by remember { mutableStateOf(false) }
+    FoodDiaryContent(
+        uiState = uiState,
+        onCalendar = {
+            showDatePicker = true
+        },
+        onAddMeal = onAddMealClick
+    )
+    if (showDatePicker) {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val initialSelectedMillis = try {
+            sdf.parse(uiState.selectDate)?.time
+        } catch (e: Exception) {
+            System.currentTimeMillis()
+        }
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = initialSelectedMillis
+        )
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        datePickerState.selectedDateMillis?.let { millis ->
+                            viewModel.selectDateByMillis(millis)
+                        }
+                        showDatePicker = false
+                    }
+                ) {
+                    Text(stringResource(R.string.btn_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePicker = false }) {
+                    Text(stringResource(R.string.food_diary_btn_cancel))
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,14 +122,14 @@ fun FoodDiaryContent(
         topBar = {
             TopAppBar(
                 title = {
-                    Column() {
+                    Column {
                         Text(
                             text = stringResource(R.string.food_diary_title),
                             style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.onBackground
                         )
                         Text(
-                            text = stringResource(R.string.food_diary_date_format_pattern),
+                            text = uiState.displayDate.ifEmpty { stringResource(R.string.food_diary_date_format_pattern) },
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -77,6 +141,7 @@ fun FoodDiaryContent(
                             .clip(CircleShape)
                             .background(MaterialTheme.colorScheme.outline)
                             .padding(Dimens.SpaceSmall)
+                            .clickable { onCalendar() }
                     ) {
                         Icon(
                             Icons.Outlined.CalendarMonth,
@@ -87,24 +152,13 @@ fun FoodDiaryContent(
                 },
                 scrollBehavior = scrollBehavior
             )
-        },
-        bottomBar = {
-            BottomBars(
-                selectedTab = 1,
-                onTabSelected = {}
-            )
-        },
-        floatingActionButton = {
-            ButtonAdd(
-                size = Dimens.ButtonHeight,
-                onClick = onAddMeal
-            )
         }
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
                 .padding(horizontal = Dimens.ScreenPadding)
         ) {
             HealthCards {
@@ -169,6 +223,18 @@ fun FoodDiaryContent(
                             color = MaterialTheme.colorScheme.background,
                         )
                     }
+                }
+            }
+            MealType.entries.forEach { type ->
+                val foodsMeal = uiState.meal.filter { it.mealType == type.mealType }
+                if (foodsMeal.isNotEmpty()) {
+                    MealCard(
+                        mealName = stringResource(type.titleResId),
+                        totalCalories = foodsMeal.sumOf { it.calories },
+                        foods = foodsMeal,
+                        onAddFood = onAddMeal
+                    )
+                    Spacer(Modifier.height(Dimens.SpaceMedium))
                 }
             }
         }
