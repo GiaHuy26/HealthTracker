@@ -3,6 +3,8 @@ package com.example.healthtracker.di
 import android.content.Context
 import androidx.room.Room
 import com.example.healthtracker.data.local.db.AppDatabase
+import com.example.healthtracker.data.local.db.dao.FoodDao
+import com.example.healthtracker.data.local.db.dao.MealDao
 import com.example.healthtracker.data.local.db.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -23,12 +25,24 @@ object DatabaseModule {
             AppDatabase::class.java,
             "health_tracker_db"
         ).fallbackToDestructiveMigration()
-         .build()
+            .build()
     }
 
     @Provides
     @Singleton
     fun provideUserDao(database: AppDatabase): UserDao {
         return database.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFoodDao(database: AppDatabase): FoodDao {
+        return database.foodDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMealDao(database: AppDatabase): MealDao {
+        return database.mealDao()
     }
 }

@@ -1,0 +1,99 @@
+package com.example.healthtracker.presentation.components
+
+import androidx.compose.runtime.Composable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.BarChart
+import androidx.compose.material.icons.outlined.FitnessCenter
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.RestaurantMenu
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.healthtracker.presentation.theme.Dimens
+import com.example.healthtracker.presentation.theme.HealthGreen
+import com.example.healthtracker.presentation.theme.HealthTextMutedGreen
+
+@Composable
+fun BottomBars(
+    selectedTab: Int,
+    onTabSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val containerBgColor = MaterialTheme.colorScheme.background
+    val activeBgColor = HealthGreen
+    val activeIconColor = HealthTextMutedGreen
+    val inactiveIconColor = MaterialTheme.colorScheme.onSurfaceVariant
+
+    val tabs = listOf(
+        Icons.Outlined.Home to "Home",
+        Icons.Outlined.RestaurantMenu to "Food",
+        Icons.Outlined.FitnessCenter to "Workout",
+        Icons.Outlined.BarChart to "Stats",
+        Icons.Outlined.Settings to "Settings"
+    )
+
+    Surface(
+        modifier = modifier
+            .padding(horizontal = Dimens.SpaceLarge, vertical = Dimens.SpaceMedium)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(Dimens.CornerExtraLarge),
+        color = containerBgColor,
+        shadowElevation = Dimens.ElevationMedium
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = Dimens.SpaceSmall, horizontal = Dimens.SpaceSmall),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            tabs.forEachIndexed { index, (icon, label) ->
+                val isSelected = selectedTab == index
+
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(Dimens.CornerExtraLarge))
+                        .background(if (isSelected) activeBgColor else Color.Transparent)
+                        .clickable { onTabSelected(index) }
+                        .padding(horizontal = Dimens.SpaceMedium, vertical = Dimens.SpaceSmall),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = label,
+                        tint = if (isSelected) activeIconColor else inactiveIconColor,
+                        modifier = Modifier.size(Dimens.IconNormal)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(name = "Tab Home Selected", showBackground = true)
+@Composable
+fun PreviewHomeSelected() {
+    BottomBars(selectedTab = 0, onTabSelected = {})
+}
+
+@Preview(name = "Tab Settings Selected", showBackground = true)
+@Composable
+fun PreviewSettingsSelected() {
+    BottomBars(selectedTab = 4, onTabSelected = {})
+}

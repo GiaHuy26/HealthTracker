@@ -105,233 +105,233 @@ fun SetupProfileContent(
                 .safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-        Text(
-            text = stringResource(id = R.string.setup_profile_title),
-            style = MaterialTheme.typography.headlineLarge.copy(
-                fontWeight = FontWeight.Bold
-            ),
-            color = MaterialTheme.colorScheme.secondary
-        )
-         Spacer(Modifier.height(Dimens.SpaceMedium))
-        Spacer(Modifier.height(Dimens.SpaceMedium))
-        Cards(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        Icons.Outlined.PersonOutline,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.size(Dimens.IconNormal)
-                    )
-                    Spacer(Modifier.width(Dimens.SpaceSmall))
-                    Text(
-                        text = stringResource(R.string.section_personal_info),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
-                Text(
-                    text = stringResource(R.string.label_name),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(Modifier.height(Dimens.SpaceSmall))
-                TextFields(
-                    value = uiState.userName,
-                    onChangeValue = onUserNameChange,
-                    placeholder = stringResource(R.string.placeholder_name),
-                    leadingIcon = Icons.Outlined.Person,
-                )
-                 Spacer(Modifier.height(Dimens.SpaceMedium))
-                Spacer(Modifier.height(Dimens.SpaceSmall))
-                Text(
-                    text = stringResource(R.string.label_birthday),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(Modifier.height(Dimens.SpaceSmall))
-                TextFields(
-                    value = uiState.birthDate,
-                    onChangeValue = onBirthDateChange,
-                    placeholder = stringResource(R.string.placeholder_date_format),
-                    leadingIcon = Icons.Outlined.CalendarMonth
-                )
-                 if (uiState.age != null) {
-                     Text(
-                         text = stringResource(R.string.age_value, uiState.age),
-                         style = MaterialTheme.typography.bodyMedium,
-                         color = MaterialTheme.colorScheme.secondary
-                     )
-                 }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
-                Text(
-                    text = stringResource(R.string.label_gender),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(Modifier.height(Dimens.SpaceSmall))
-                 GenderSelector(
-                     selectedGender = uiState.gender,
-                     onGenderSelected = onGenderClick
-                 )
-                 if (uiState.errorResId == R.string.error_name_empty ||
-                     uiState.errorResId == R.string.error_birthday_empty ||
-                     uiState.errorResId == R.string.error_unknown
-                 ) {
-                     Spacer(Modifier.height(Dimens.SpaceMedium))
-                     Text(
-                         text = stringResource(id = uiState.errorResId),
-                         color = MaterialTheme.colorScheme.error,
-                         style = MaterialTheme.typography.bodyMedium,
-                     )
-                 }
-            }
-        }
-        Spacer(Modifier.height(Dimens.SpaceSmall))
-        Cards {
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        Icons.Default.AlignVerticalBottom,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary
-                    )
-                    Spacer(Modifier.width(Dimens.SpaceSmall))
-                    Text(
-                        text = stringResource(R.string.section_body_metrics),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = stringResource(R.string.label_weight),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+            Text(
+                text = stringResource(id = R.string.setup_profile_title),
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = MaterialTheme.colorScheme.secondary
+            )
+            Spacer(Modifier.height(Dimens.SpaceMedium))
+            Spacer(Modifier.height(Dimens.SpaceMedium))
+            Cards(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Outlined.PersonOutline,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.size(Dimens.IconNormal)
                         )
-                        Spacer(Modifier.height(Dimens.SpaceSmall))
-                        TextFields(
-                            value = uiState.weight,
-                            onChangeValue = onWeightChange,
-                            placeholder = stringResource(R.string.weight),
-                            leadingIcon = Icons.Outlined.Scale
+                        Spacer(Modifier.width(Dimens.SpaceSmall))
+                        Text(
+                            text = stringResource(R.string.section_personal_info),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
-                     Spacer(Modifier.width(Dimens.SpaceSmall))
-                     Column(modifier = Modifier.weight(1f)) {
-                         Text(
-                             text = stringResource(R.string.label_height),
-                             style = MaterialTheme.typography.bodyMedium,
-                             color = MaterialTheme.colorScheme.onSurfaceVariant
-                         )
-                         Spacer(Modifier.height(Dimens.SpaceSmall))
-                         TextFields(
-                             value = uiState.height,
-                             onChangeValue = onHeightChange,
-                             placeholder = stringResource(R.string.height),
-                             leadingIcon = Icons.Outlined.Straighten
-                         )
-                     }
-                 }
-                 if (uiState.errorResId == R.string.error_weight_invalid ||
-                     uiState.errorResId == R.string.error_height_invalid
-                 ) {
-                     Spacer(Modifier.height(Dimens.SpaceMedium))
-                     Text(
-                         text = stringResource(id = uiState.errorResId),
-                         color = MaterialTheme.colorScheme.error,
-                         style = MaterialTheme.typography.bodyMedium,
-                     )
-                 }
-            }
-        }
-        Spacer(Modifier.height(Dimens.SpaceSmall))
-        Cards {
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.fitness),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary
-                    )
-                    Spacer(Modifier.width(Dimens.SpaceSmall))
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
                     Text(
-                        text = stringResource(R.string.section_activity_level),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
-                ActivityLevelSelector(
-                    selectedLevel = uiState.activityLevel,
-                    onSelectedLevel = onActivityLevelClick
-                )
-                if (uiState.errorResId == R.string.error_activity_level_empty) {
-                    Spacer(Modifier.height(Dimens.SpaceMedium))
-                    Text(
-                        text = stringResource(id = uiState.errorResId),
-                        color = MaterialTheme.colorScheme.error,
+                        text = stringResource(R.string.label_name),
                         style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                }
-            }
-        }
-        Spacer(Modifier.height(Dimens.SpaceSmall))
-        Cards {
-            Column {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        Icons.Outlined.Flag,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.secondary
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
+                    TextFields(
+                        value = uiState.userName,
+                        onChangeValue = onUserNameChange,
+                        placeholder = stringResource(R.string.placeholder_name),
+                        leadingIcon = Icons.Outlined.Person,
                     )
-                    Spacer(Modifier.width(Dimens.SpaceSmall))
-                    Text(
-                        text = stringResource(R.string.section_goal),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-                Spacer(Modifier.height(Dimens.SpaceSmall))
-                GoalSelector(
-                    selectedGoal = uiState.goalType,
-                    onGoalSelected = onGoalTypeClick
-                )
-                if (uiState.errorResId == R.string.error_goal_empty) {
                     Spacer(Modifier.height(Dimens.SpaceMedium))
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
                     Text(
-                        text = stringResource(id = uiState.errorResId),
-                        color = MaterialTheme.colorScheme.error,
+                        text = stringResource(R.string.label_birthday),
                         style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
+                    TextFields(
+                        value = uiState.birthDate,
+                        onChangeValue = onBirthDateChange,
+                        placeholder = stringResource(R.string.placeholder_date_format),
+                        leadingIcon = Icons.Outlined.CalendarMonth
+                    )
+                    if (uiState.age != null) {
+                        Text(
+                            text = stringResource(R.string.age_value, uiState.age),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+                    }
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
+                    Text(
+                        text = stringResource(R.string.label_gender),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
+                    GenderSelector(
+                        selectedGender = uiState.gender,
+                        onGenderSelected = onGenderClick
+                    )
+                    if (uiState.errorResId == R.string.error_name_empty ||
+                        uiState.errorResId == R.string.error_birthday_empty ||
+                        uiState.errorResId == R.string.error_unknown
+                    ) {
+                        Spacer(Modifier.height(Dimens.SpaceMedium))
+                        Text(
+                            text = stringResource(id = uiState.errorResId),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
                 }
             }
-        }
-        Spacer(Modifier.height(Dimens.SpaceMedium))
-        Button(
-            text = stringResource(R.string.btn_saveProfile),
-            onClick = onSaveProfile
-        )
+            Spacer(Modifier.height(Dimens.SpaceSmall))
+            Cards {
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.AlignVerticalBottom,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary
+                        )
+                        Spacer(Modifier.width(Dimens.SpaceSmall))
+                        Text(
+                            text = stringResource(R.string.section_body_metrics),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(R.string.label_weight),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(Modifier.height(Dimens.SpaceSmall))
+                            TextFields(
+                                value = uiState.weight,
+                                onChangeValue = onWeightChange,
+                                placeholder = stringResource(R.string.weight),
+                                leadingIcon = Icons.Outlined.Scale
+                            )
+                        }
+                        Spacer(Modifier.width(Dimens.SpaceSmall))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(R.string.label_height),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(Modifier.height(Dimens.SpaceSmall))
+                            TextFields(
+                                value = uiState.height,
+                                onChangeValue = onHeightChange,
+                                placeholder = stringResource(R.string.height),
+                                leadingIcon = Icons.Outlined.Straighten
+                            )
+                        }
+                    }
+                    if (uiState.errorResId == R.string.error_weight_invalid ||
+                        uiState.errorResId == R.string.error_height_invalid
+                    ) {
+                        Spacer(Modifier.height(Dimens.SpaceMedium))
+                        Text(
+                            text = stringResource(id = uiState.errorResId),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                }
+            }
+            Spacer(Modifier.height(Dimens.SpaceSmall))
+            Cards {
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.fitness),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary
+                        )
+                        Spacer(Modifier.width(Dimens.SpaceSmall))
+                        Text(
+                            text = stringResource(R.string.section_activity_level),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
+                    ActivityLevelSelector(
+                        selectedLevel = uiState.activityLevel,
+                        onSelectedLevel = onActivityLevelClick
+                    )
+                    if (uiState.errorResId == R.string.error_activity_level_empty) {
+                        Spacer(Modifier.height(Dimens.SpaceMedium))
+                        Text(
+                            text = stringResource(id = uiState.errorResId),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                }
+            }
+            Spacer(Modifier.height(Dimens.SpaceSmall))
+            Cards {
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Outlined.Flag,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary
+                        )
+                        Spacer(Modifier.width(Dimens.SpaceSmall))
+                        Text(
+                            text = stringResource(R.string.section_goal),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                    Spacer(Modifier.height(Dimens.SpaceSmall))
+                    GoalSelector(
+                        selectedGoal = uiState.goalType,
+                        onGoalSelected = onGoalTypeClick
+                    )
+                    if (uiState.errorResId == R.string.error_goal_empty) {
+                        Spacer(Modifier.height(Dimens.SpaceMedium))
+                        Text(
+                            text = stringResource(id = uiState.errorResId),
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                }
+            }
+            Spacer(Modifier.height(Dimens.SpaceMedium))
+            Button(
+                text = stringResource(R.string.btn_saveProfile),
+                onClick = onSaveProfile
+            )
         }
         if (uiState.isLoading) {
             Box(
