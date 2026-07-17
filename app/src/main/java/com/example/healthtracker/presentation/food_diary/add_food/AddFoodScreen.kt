@@ -1,9 +1,9 @@
 package com.example.healthtracker.presentation.food_diary.add_food
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -23,7 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.MealType
+import com.example.healthtracker.presentation.components.Button
 import com.example.healthtracker.presentation.food_diary.component.MealSelected
+import com.example.healthtracker.presentation.food_diary.component.SearchFood
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
@@ -36,6 +38,7 @@ fun AddFoodScreen() {
 fun AddFoodContent(
     uiState: AddFoodUiState = AddFoodUiState(),
     onSelectedMeal: (MealType) -> Unit = {},
+    onSearchQueryChange: (String) -> Unit = {},
     onSavingMeal: () -> Unit = {},
     onAddFood: () -> Unit = {}
 ) {
@@ -65,6 +68,18 @@ fun AddFoodContent(
                 },
                 scrollBehavior = scrollBehavior
             )
+        },
+        bottomBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.ScreenPadding)
+            ) {
+                Button(
+                    text = stringResource(R.string.food_diary_btn_save_meal),
+                    onClick = onSavingMeal
+                )
+            }
         }
     ) { innerPadding ->
         Column(
@@ -72,7 +87,6 @@ fun AddFoodContent(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = Dimens.ScreenPadding)
-                .background(color = MaterialTheme.colorScheme.surface)
         ) {
             Text(
                 text = stringResource(R.string.food_diary_choose_meal),
@@ -88,7 +102,11 @@ fun AddFoodContent(
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-
+            SearchFood(
+                text = stringResource(R.string.food_diary_search_label),
+                query = uiState.searchQuery,
+                onQueryChange = onSearchQueryChange
+            )
         }
     }
 }

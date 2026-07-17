@@ -39,7 +39,7 @@ fun MealSelected(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.spacedBy(Dimens.SpaceSmall)
     ) {
         MealType.entries.forEach { type ->
             val isSelected = selectedMeal == type
@@ -79,7 +79,6 @@ fun MealSelected(
                     )
                 }
             }
-            Spacer(Modifier.width(Dimens.SpaceMedium))
         }
     }
 }
