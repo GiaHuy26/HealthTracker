@@ -11,4 +11,6 @@ interface FoodDiaryRepository {
     suspend fun addMeal(meal: MealEntity)
     suspend fun deleteMeal(meal: MealEntity)
     suspend fun seedSampleFood(context: Context)
+    suspend fun getMealsByDateAndType(date: String, mealType: String): List<MealEntity>
+    suspend fun deleteMealsByType(date: String, mealType: String)
 }

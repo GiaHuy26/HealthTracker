@@ -51,4 +51,11 @@ class FoodDiaryRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getMealsByDateAndType(date: String, mealType: String): List<MealEntity> {
+        return mealDao.getMealsByDateAndType(date, mealType)
+    }
+
+    override suspend fun deleteMealsByType(date: String, mealType: String) {
+        mealDao.deleteMealsByType(date, mealType)
+    }
 }

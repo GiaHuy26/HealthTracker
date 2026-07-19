@@ -10,17 +10,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.presentation.components.BottomBars
 import com.example.healthtracker.presentation.components.ButtonAdd
 import com.example.healthtracker.presentation.food_diary.FoodDiaryScreen
+import com.example.healthtracker.presentation.food_diary.FoodDiaryViewModel
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
 fun BottomBarNavigation(
-    navigationManager: NavigationManager
+    navigationManager: NavigationManager,
+    viewModel: FoodDiaryViewModel = hiltViewModel()
 ) {
     var selectedTab by remember { mutableIntStateOf(1) }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         bottomBar = {
@@ -35,7 +40,11 @@ fun BottomBarNavigation(
             if (selectedTab == 1) {
                 ButtonAdd(
                     size = Dimens.ButtonHeight,
-                    onClick = {}
+                    onClick = {
+                        navigationManager.navigateTo(
+                            AddFoodRoute(date = uiState.selectDate)
+                        )
+                    }
                 )
             }
         }
@@ -48,7 +57,12 @@ fun BottomBarNavigation(
             when (selectedTab) {
                 0 -> Box {}
                 1 -> FoodDiaryScreen(
-                    onAddMealClick = {}
+                    viewModel = viewModel,
+                    onAddMealClick = { date, mealType ->
+                        navigationManager.navigateTo(
+                            AddFoodRoute(date = date, mealType = mealType)
+                        )
+                    }
                 )
                 2 -> Box {}
                 3 -> Box {}

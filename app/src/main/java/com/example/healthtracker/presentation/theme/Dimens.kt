@@ -36,6 +36,12 @@ object Dimens {
 
     val CardHeight = 80.dp
     val CardHeightMedium = 65.dp
-
+    val HeightCard = 380.dp
+    val HeightCardSmall = 200.dp
+    val Width = 24.dp
     val CircularProgress = 80.dp
+    val AddButtonSize = 36.dp
+    val IconMedium = 20.dp
+    val QuantityButtonSize = 28.dp
+    val EmptyStateIconBg = 64.dp
 }

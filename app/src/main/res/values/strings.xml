@@ -141,4 +141,10 @@
         <item>Thịt vịt luộc|220|100g</item>
     </string-array>
     <string name="btn_confirm">Đồng ý</string>
+    <string name="food_diary_selected_foods_title">MÓN ĂN ĐÃ CHỌN (%1$d)</string>
+    <string name="food_diary_clear_all">Xóa tất cả</string>
+    <string name="food_diary_no_food_selected">Chưa có món ăn nào</string>
+    <string name="food_diary_empty_selected_desc">Hãy tìm kiếm và thêm món ăn\nvào bữa của bạn</string>
+    <string name="food_diary_portion_int_format">%1$d phần (%2$s)</string>
+    <string name="food_diary_portion_decimal_format">%1$.1f phần (%2$s)</string>
 </resources>

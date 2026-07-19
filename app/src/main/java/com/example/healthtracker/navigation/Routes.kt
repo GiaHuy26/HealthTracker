@@ -21,3 +21,9 @@ data object HomeRoute: AppNavKey
 
 @Serializable
 data object SetupProfileRoute: AppNavKey
+
+@Serializable
+data class AddFoodRoute(
+    val date: String,
+    val mealType: String? = null
+) : AppNavKey

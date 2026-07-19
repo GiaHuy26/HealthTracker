@@ -61,7 +61,7 @@ import java.util.Locale
 @Composable
 fun FoodDiaryScreen(
     viewModel: FoodDiaryViewModel = hiltViewModel(),
-    onAddMealClick: () -> Unit = {}
+    onAddMealClick: (date: String, mealType: String?) -> Unit = { _, _ -> }
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showDatePicker by remember { mutableStateOf(false) }
@@ -70,7 +70,9 @@ fun FoodDiaryScreen(
         onCalendar = {
             showDatePicker = true
         },
-        onAddMeal = onAddMealClick
+        onAddMeal = { mealType ->
+            onAddMealClick(uiState.selectDate, mealType?.mealType)
+        }
     )
     if (showDatePicker) {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
@@ -112,7 +114,7 @@ fun FoodDiaryScreen(
 fun FoodDiaryContent(
     uiState: FoodDiaryUiState = FoodDiaryUiState(),
     onCalendar: () -> Unit = {},
-    onAddMeal: () -> Unit = {}
+    onAddMeal: (MealType?) -> Unit = {}
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
@@ -210,9 +212,9 @@ fun FoodDiaryContent(
                         CircularProgressIndicator(
                             progress = { uiState.progressFloat },
                             modifier = Modifier.size(Dimens.CircularProgress),
-                            color = MaterialTheme.colorScheme.background,
+                            color = HealthLightGreen,
                             strokeWidth = 10.dp,
-                            trackColor = HealthLightGreen,
+                            trackColor = MaterialTheme.colorScheme.background,
                             strokeCap = StrokeCap.Round,
                         )
                         Text(
@@ -225,6 +227,7 @@ fun FoodDiaryContent(
                     }
                 }
             }
+            Spacer(Modifier.height(Dimens.SpaceMedium))
             MealType.entries.forEach { type ->
                 val foodsMeal = uiState.meal.filter { it.mealType == type.mealType }
                 if (foodsMeal.isNotEmpty()) {
@@ -232,7 +235,7 @@ fun FoodDiaryContent(
                         mealName = stringResource(type.titleResId),
                         totalCalories = foodsMeal.sumOf { it.calories },
                         foods = foodsMeal,
-                        onAddFood = onAddMeal
+                        onAddFood = { onAddMeal(type) }
                     )
                     Spacer(Modifier.height(Dimens.SpaceMedium))
                 }

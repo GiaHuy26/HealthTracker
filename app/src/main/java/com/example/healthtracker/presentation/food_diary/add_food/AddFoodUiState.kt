@@ -14,8 +14,6 @@ data class AddFoodUiState(
     val listFoods: List<FoodEntity> = emptyList(),
     val searchResults: List<FoodEntity> = emptyList(),
     val selectedFoods: List<SelectedFoodItem> = emptyList(),
-    val note: String = "",
-    val maxNoteLength: Int = 200,
     val isLoading: Boolean = false,
     val isSaving: Boolean = false,
     val isSaveSuccess: Boolean = false,

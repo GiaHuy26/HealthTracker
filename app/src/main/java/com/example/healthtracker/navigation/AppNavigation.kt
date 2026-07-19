@@ -8,6 +8,7 @@ import com.example.healthtracker.presentation.login.LoginScreen
 import com.example.healthtracker.presentation.setup_profile.SetupProfileScreen
 import com.example.healthtracker.presentation.signup.SignUpScreen
 import com.example.healthtracker.presentation.start.StartScreen
+import com.example.healthtracker.presentation.food_diary.add_food.AddFoodScreen
 
 @Composable
 fun AppNavigation(
@@ -37,6 +38,14 @@ fun AppNavigation(
 
                 is HomeRoute -> NavEntry(route) {
                     BottomBarNavigation(navigationManager = navigationManager)
+                }
+
+                is AddFoodRoute -> NavEntry(route) {
+                    AddFoodScreen(
+                        date = route.date,
+                        mealType = route.mealType,
+                        onBackClick = { navigationManager.navigateBack() }
+                    )
                 }
             }
         }

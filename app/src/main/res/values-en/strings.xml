@@ -142,6 +142,11 @@
         <item>Iced milk coffee|140|1 cup</item>
         <item>Boiled duck meat|220|100g</item>
     </string-array>
-
-
+    <string name="btn_confirm">Accept</string>
+    <string name="food_diary_selected_foods_title">SELECTED FOODS (%1$d)</string>
+    <string name="food_diary_clear_all">Clear all</string>
+    <string name="food_diary_no_food_selected">No food items yet</string>
+    <string name="food_diary_empty_selected_desc">Search and add food items\nto your meal</string>
+    <string name="food_diary_portion_int_format">%1$d portion (%2$s)</string>
+    <string name="food_diary_portion_decimal_format">%1$.1f portions (%2$s)</string>
 </resources>

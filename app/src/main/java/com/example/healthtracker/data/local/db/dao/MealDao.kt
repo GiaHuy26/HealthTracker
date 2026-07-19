@@ -19,4 +19,10 @@ interface MealDao {
 
     @Delete
     suspend fun deleteMeal(log: MealEntity)
+
+    @Query("SELECT * FROM meals WHERE date = :date AND mealType = :mealType")
+    suspend fun getMealsByDateAndType(date: String, mealType: String): List<MealEntity>
+
+    @Query("DELETE FROM meals WHERE date = :date AND mealType = :mealType")
+    suspend fun deleteMealsByType(date: String, mealType: String)
 }
