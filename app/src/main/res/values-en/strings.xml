@@ -88,13 +88,13 @@
     <string name="food_diary_meal_lunch">Lunch</string>
     <string name="food_diary_meal_dinner">Dinner</string>
     <string name="food_diary_meal_snack">Snack</string>
-    <string name="food_diary_no_items">No food items recorded.</string>
+    <string name="food_diary_choose_meal">Choose meal</string>
     <string name="food_diary_add_food">Add Food</string>
     <string name="food_diary_serving_format">%1$.1f serving(s) (%2$s)</string>
     <string name="food_diary_delete_item">Delete item</string>
     <string name="food_diary_add_to_meal">Add to %1$s</string>
     <string name="food_diary_tab_search">Search</string>
-    <string name="food_diary_tab_custom">Custom</string>
+    <string name="food_diary_choose_food">Choose foods</string>
     <string name="food_diary_search_label">Search food by name…</string>
     <string name="food_diary_no_results">No matching food found.</string>
     <string name="food_diary_selected_food_standard">Standard: %1$d kcal / %2$s</string>
@@ -142,6 +142,11 @@
         <item>Iced milk coffee|140|1 cup</item>
         <item>Boiled duck meat|220|100g</item>
     </string-array>
-
-
+    <string name="btn_confirm">Accept</string>
+    <string name="food_diary_selected_foods_title">SELECTED FOODS (%1$d)</string>
+    <string name="food_diary_clear_all">Clear all</string>
+    <string name="food_diary_no_food_selected">No food items yet</string>
+    <string name="food_diary_empty_selected_desc">Search and add food items\nto your meal</string>
+    <string name="food_diary_portion_int_format">%1$d portion (%2$s)</string>
+    <string name="food_diary_portion_decimal_format">%1$.1f portions (%2$s)</string>
 </resources>

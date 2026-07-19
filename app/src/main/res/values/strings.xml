@@ -86,13 +86,13 @@
     <string name="food_diary_meal_lunch">Bữa trưa</string>
     <string name="food_diary_meal_dinner">Bữa tối</string>
     <string name="food_diary_meal_snack">Bữa phụ</string>
-    <string name="food_diary_no_items">Chưa ghi nhận món ăn nào.</string>
+    <string name="food_diary_choose_meal">Chọn bữa ăn</string>
     <string name="food_diary_add_food">Thêm món ăn</string>
     <string name="food_diary_serving_format">%1$.1f phần (%2$s)</string>
     <string name="food_diary_delete_item">Xóa món ăn</string>
     <string name="food_diary_add_to_meal">Thêm món vào %1$s</string>
     <string name="food_diary_tab_search">Tìm kiếm</string>
-    <string name="food_diary_tab_custom">Tự nhập</string>
+    <string name="food_diary_choose_food">Chọn món ăn</string>
     <string name="food_diary_search_label">Nhập tên món ăn cần tìm…</string>
     <string name="food_diary_no_results">Không tìm thấy món ăn nào khớp.</string>
     <string name="food_diary_selected_food_standard">Chuẩn: %1$d kcal / %2$s</string>
@@ -141,4 +141,10 @@
         <item>Thịt vịt luộc|220|100g</item>
     </string-array>
     <string name="btn_confirm">Đồng ý</string>
+    <string name="food_diary_selected_foods_title">MÓN ĂN ĐÃ CHỌN (%1$d)</string>
+    <string name="food_diary_clear_all">Xóa tất cả</string>
+    <string name="food_diary_no_food_selected">Chưa có món ăn nào</string>
+    <string name="food_diary_empty_selected_desc">Hãy tìm kiếm và thêm món ăn\nvào bữa của bạn</string>
+    <string name="food_diary_portion_int_format">%1$d phần (%2$s)</string>
+    <string name="food_diary_portion_decimal_format">%1$.1f phần (%2$s)</string>
 </resources>
