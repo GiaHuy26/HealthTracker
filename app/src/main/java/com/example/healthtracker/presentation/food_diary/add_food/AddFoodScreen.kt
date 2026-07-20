@@ -49,9 +49,9 @@ import com.example.healthtracker.R
 import com.example.healthtracker.data.local.db.entity.FoodEntity
 import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.presentation.components.Button
+import com.example.healthtracker.presentation.components.SearchBar
 import com.example.healthtracker.presentation.food_diary.component.ChooseFoodItem
 import com.example.healthtracker.presentation.food_diary.component.MealSelected
-import com.example.healthtracker.presentation.food_diary.component.SearchFood
 import com.example.healthtracker.presentation.food_diary.component.SelectedFoodItemRow
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
@@ -168,7 +168,7 @@ fun AddFoodContent(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(Modifier.height(Dimens.SpaceSmall))
-            SearchFood(
+            SearchBar(
                 text = stringResource(R.string.food_diary_search_label),
                 query = uiState.searchQuery,
                 onQueryChange = onSearchQueryChange
