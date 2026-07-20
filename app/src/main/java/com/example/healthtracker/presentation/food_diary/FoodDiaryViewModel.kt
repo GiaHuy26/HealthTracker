@@ -2,15 +2,11 @@ package com.example.healthtracker.presentation.food_diary
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.healthtracker.data.local.db.dao.UserDao
 import com.example.healthtracker.data.local.db.entity.MealEntity
-import com.example.healthtracker.data.local.db.entity.UserEntity
 import com.example.healthtracker.di.SessionManager
-import com.example.healthtracker.domain.model.ActivityLevel
-import com.example.healthtracker.domain.model.Gender
-import com.example.healthtracker.domain.model.GoalType
 import com.example.healthtracker.domain.model.Profile
 import com.example.healthtracker.domain.repository.FoodDiaryRepository
+import com.example.healthtracker.domain.repository.UserProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,31 +24,30 @@ import javax.inject.Inject
 class FoodDiaryViewModel @Inject constructor(
     private val foodDiaryRepository: FoodDiaryRepository,
     private val sessionManager: SessionManager,
-    private val userDao: UserDao
+    private val userProfileRepository: UserProfileRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FoodDiaryUiState())
     val uiState: StateFlow<FoodDiaryUiState> = _uiState.asStateFlow()
 
-    private val dbDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    private val displayDateFormat = SimpleDateFormat("dd 'Tháng' MM,yyyy", Locale("vi", "VN"))
+    private val dbDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US).apply {
+        isLenient = false
+    }
 
-    private var currentCalendar = Calendar.getInstance()
+    private var selectedCalendar = Calendar.getInstance()
     private var mealCollectJob: Job? = null
 
     init {
         getUserTargetCalories()
-        loadDiaryForDate(currentCalendar.time)
+        loadDiaryForDate(selectedCalendar.time)
     }
 
     private fun getUserTargetCalories() {
         viewModelScope.launch {
             try {
                 val email = sessionManager.getCurrentUserEmail()
-                val user = userDao.getUserByEmail(email)
-                if (user != null) {
-                    val target = calculateCalories(user)
-                    _uiState.update { it.copy(targetCalories = target) }
-                }
+                val profile = userProfileRepository.getProfile(email)
+                val targetCalories = profile?.let { calculateCalories(it) } ?: 0
+                _uiState.update { it.copy(targetCalories = targetCalories) }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -61,11 +56,9 @@ class FoodDiaryViewModel @Inject constructor(
 
     fun loadDiaryForDate(date: Date) {
         val dateString = dbDateFormat.format(date)
-        val displayDateString = displayDateFormat.format(date)
         _uiState.update {
             it.copy(
                 selectDate = dateString,
-                displayDate = displayDateString,
                 isLoading = true
             )
         }
@@ -93,28 +86,15 @@ class FoodDiaryViewModel @Inject constructor(
         }
     }
 
-    private fun calculateCalories(user: UserEntity): Int {
-        val birthDate = user.birthDate ?: return 2100
-        val genderStr = user.gender ?: "MALE"
-
-        val genderEnum = if (genderStr == "MALE") Gender.MALE else Gender.FEMALE
-        val activeLevelEnum = ActivityLevel.valueOf(user.activeLevel ?: "MODERATELY_ACTIVE")
-        val goalTypeEnum = GoalType.valueOf(user.goalType ?: "MAINTAIN_WEIGHT")
-        val profile = Profile(
-            userName = user.userName ?: "",
-            birthDate = birthDate,
-            gender = genderEnum,
-            weight = user.weight ?: 60f,
-            height = user.height ?: 170f,
-            activeLevel = activeLevelEnum,
-            goalType = goalTypeEnum
-        )
-        return (profile.tdee + profile.goalType.caloriesOffset).toInt()
+    private fun calculateCalories(profile: Profile): Int? {
+        return (profile.tdee + profile.goalType.caloriesOffset)
+            .toInt()
+            .takeIf { it > 0 }
     }
 
     fun selectDateByMillis(millis: Long) {
-        currentCalendar.timeInMillis = millis
-        loadDiaryForDate(currentCalendar.time)
+        selectedCalendar.timeInMillis = millis
+        loadDiaryForDate(selectedCalendar.time)
     }
 
     fun deleteMeal(meal: MealEntity) {

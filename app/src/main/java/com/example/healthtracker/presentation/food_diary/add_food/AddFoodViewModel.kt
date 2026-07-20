@@ -1,7 +1,6 @@
 package com.example.healthtracker.presentation.food_diary.add_food
 
 import android.content.Context
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.data.local.db.entity.FoodEntity
@@ -22,7 +21,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AddFoodViewModel @Inject constructor(
     private val foodDiaryRepository: FoodDiaryRepository,
-    private val savedStateHandle: SavedStateHandle,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -39,7 +37,7 @@ class AddFoodViewModel @Inject constructor(
         this.selectedDate = date
         this.initialMealType = mealTypeStr
         val initialType = mealTypeStr?.let { typeStr ->
-            MealType.entries.find { it.mealType.equals(typeStr, ignoreCase = true) }
+            MealType.entries.find { it.name.equals(typeStr, ignoreCase = true) }
         } ?: MealType.BREAKFAST
 
         _uiState.update { it.copy(selectedMealType = initialType) }
@@ -164,7 +162,7 @@ class AddFoodViewModel @Inject constructor(
         _uiState.update { it.copy(isSaving = true) }
         viewModelScope.launch {
             try {
-                val mealTypeStr = (_uiState.value.selectedMealType ?: MealType.BREAKFAST).mealType
+                val mealTypeStr = (_uiState.value.selectedMealType ?: MealType.BREAKFAST).name
                 if (initialMealType != null) {
                     foodDiaryRepository.deleteMealsByType(selectedDate, initialMealType!!)
                 }

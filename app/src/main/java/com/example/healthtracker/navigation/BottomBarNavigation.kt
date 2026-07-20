@@ -1,74 +1,54 @@
 package com.example.healthtracker.navigation
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.presentation.components.BottomBars
-import com.example.healthtracker.presentation.components.ButtonAdd
 import com.example.healthtracker.presentation.food_diary.FoodDiaryScreen
-import com.example.healthtracker.presentation.food_diary.FoodDiaryViewModel
-import com.example.healthtracker.presentation.theme.Dimens
+import com.example.healthtracker.presentation.activity_diary.ActivityDiaryScreen
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
 fun BottomBarNavigation(
-    navigationManager: NavigationManager,
-    viewModel: FoodDiaryViewModel = hiltViewModel()
+    navigationManager: NavigationManager
 ) {
     var selectedTab by remember { mutableIntStateOf(1) }
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    Scaffold(
-        bottomBar = {
-            BottomBars(
-                selectedTab = selectedTab,
-                onTabSelected = { index ->
-                    selectedTab = index
-                }
-            )
-        },
-        floatingActionButton = {
-            if (selectedTab == 1) {
-                ButtonAdd(
-                    size = Dimens.ButtonHeight,
-                    onClick = {
-                        navigationManager.navigateTo(
-                            AddFoodRoute(date = uiState.selectDate)
-                        )
-                    }
-                )
-            }
-        }
-    ) { innerPadding ->
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
         Box(
-            modifier = Modifier.padding(
-                bottom = innerPadding.calculateBottomPadding()
-            )
+            modifier = Modifier.fillMaxSize()
         ) {
             when (selectedTab) {
                 0 -> Box {}
                 1 -> FoodDiaryScreen(
-                    viewModel = viewModel,
                     onAddMealClick = { date, mealType ->
                         navigationManager.navigateTo(
                             AddFoodRoute(date = date, mealType = mealType)
                         )
                     }
                 )
-                2 -> Box {}
+                2 -> ActivityDiaryScreen()
                 3 -> Box {}
                 4 -> Box {}
             }
         }
+
+        BottomBars(
+            selectedTab = selectedTab,
+            onTabSelected = { index ->
+                selectedTab = index
+            },
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
 
