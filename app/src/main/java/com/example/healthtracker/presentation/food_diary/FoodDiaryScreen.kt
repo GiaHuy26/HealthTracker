@@ -1,6 +1,5 @@
 package com.example.healthtracker.presentation.food_diary
 
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -48,7 +46,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.R
 import com.example.healthtracker.domain.model.MealType
-import com.example.healthtracker.presentation.components.BottomBars
 import com.example.healthtracker.presentation.components.ButtonAdd
 import com.example.healthtracker.presentation.components.HealthCards
 import com.example.healthtracker.presentation.food_diary.component.MealCard
@@ -71,7 +68,10 @@ fun FoodDiaryScreen(
             showDatePicker = true
         },
         onAddMeal = { mealType ->
-            onAddMealClick(uiState.selectDate, mealType?.mealType)
+            onAddMealClick(uiState.selectDate, mealType?.name)
+        },
+        onAddFoodClick = {
+            onAddMealClick(uiState.selectDate, null)
         }
     )
     if (showDatePicker) {
@@ -114,7 +114,8 @@ fun FoodDiaryScreen(
 fun FoodDiaryContent(
     uiState: FoodDiaryUiState = FoodDiaryUiState(),
     onCalendar: () -> Unit = {},
-    onAddMeal: (MealType?) -> Unit = {}
+    onAddMeal: (MealType?) -> Unit = {},
+    onAddFoodClick: () -> Unit = {}
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
@@ -153,6 +154,12 @@ fun FoodDiaryContent(
                     }
                 },
                 scrollBehavior = scrollBehavior
+            )
+        },
+        floatingActionButton = {
+            ButtonAdd(
+                size = Dimens.ButtonHeight,
+                onClick = onAddFoodClick
             )
         }
     ) { innerPadding ->
@@ -229,7 +236,7 @@ fun FoodDiaryContent(
             }
             Spacer(Modifier.height(Dimens.SpaceMedium))
             MealType.entries.forEach { type ->
-                val foodsMeal = uiState.meal.filter { it.mealType == type.mealType }
+                val foodsMeal = uiState.meal.filter { it.mealType.equals(type.name, ignoreCase = true) }
                 if (foodsMeal.isNotEmpty()) {
                     MealCard(
                         mealName = stringResource(type.titleResId),

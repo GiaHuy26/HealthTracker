@@ -12,6 +12,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import com.example.healthtracker.data.local.db.dao.UserActivityDao
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,5 +45,11 @@ object DatabaseModule {
     @Singleton
     fun provideMealDao(database: AppDatabase): MealDao {
         return database.mealDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserActivityDao(database: AppDatabase): UserActivityDao {
+        return database.userActivityDao()
     }
 }

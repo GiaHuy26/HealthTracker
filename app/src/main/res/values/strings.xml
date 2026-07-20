@@ -147,4 +147,36 @@
     <string name="food_diary_empty_selected_desc">Hãy tìm kiếm và thêm món ăn\nvào bữa của bạn</string>
     <string name="food_diary_portion_int_format">%1$d phần (%2$s)</string>
     <string name="food_diary_portion_decimal_format">%1$.1f phần (%2$s)</string>
+
+    <!-- Activity Diary Screen -->
+    <string name="activity_diary_title">Nhật ký hoạt động</string>
+    <string name="activity_diary_total_burned">Tổng tiêu thụ</string>
+    <string name="activity_diary_calories_unit">kcal</string>
+    <string name="activity_diary_add_activity">Thêm hoạt động</string>
+    <string name="activity_diary_duration_label">Thời gian thực hiện (phút)</string>
+    <string name="activity_diary_duration_placeholder">Nhập số phút…</string>
+    <string name="activity_diary_select_activity_type">Chọn loại hoạt động</string>
+    <string name="activity_diary_empty_list">Chưa có hoạt động nào trong ngày hôm nay</string>
+    <string name="activity_diary_delete_confirm">Xóa hoạt động này?</string>
+    <string name="activity_diary_duration_format">%1$d phút</string>
+    <string name="activity_diary_calories_burned_format">%1$d kcal</string>
+    <string name="activity_diary_btn_save">Lưu hoạt động</string>
+    <string name="activity_diary_weight_required_error">Vui lòng hoàn thành hồ sơ cá nhân để tính calo tiêu thụ!</string>
+    <string name="activity_diary_duration_invalid_error">Thời gian hoạt động phải lớn hơn 0 phút!</string>
+    
+    <string name="activity_walking">Đi bộ</string>
+    <string name="activity_running">Chạy bộ</string>
+    <string name="activity_cycling">Đạp xe</string>
+    <string name="activity_swimming">Bơi lội</string>
+    <string name="activity_yoga">Yoga</string>
+    <string name="activity_gym">Tập Gym</string>
+    <string name="activity_stair_climbing">Leo cầu thang</string>
+    <string name="activity_jump_rope">Nhảy dây</string>
+    <string name="activity_badminton">Cầu lông</string>
+    <string name="activity_soccer">Bóng đá</string>
+    <string name="activity_basketball">Bóng rổ</string>
+    <string name="activity_table_tennis">Bóng bàn</string>
+    <string name="activity_tennis">Tennis</string>
+    <string name="activity_dancing">Khiêu vũ</string>
+    <string name="activity_aerobics">Aerobic</string>
 </resources>

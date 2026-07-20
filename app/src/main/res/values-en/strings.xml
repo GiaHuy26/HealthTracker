@@ -149,4 +149,36 @@
     <string name="food_diary_empty_selected_desc">Search and add food items\nto your meal</string>
     <string name="food_diary_portion_int_format">%1$d portion (%2$s)</string>
     <string name="food_diary_portion_decimal_format">%1$.1f portions (%2$s)</string>
+
+    <!-- Activity Diary Screen -->
+    <string name="activity_diary_title">Activity Diary</string>
+    <string name="activity_diary_total_burned">Total Burned</string>
+    <string name="activity_diary_calories_unit">kcal</string>
+    <string name="activity_diary_add_activity">Add Activity</string>
+    <string name="activity_diary_duration_label">Duration (minutes)</string>
+    <string name="activity_diary_duration_placeholder">Enter minutes…</string>
+    <string name="activity_diary_select_activity_type">Select activity type</string>
+    <string name="activity_diary_empty_list">No activities logged today</string>
+    <string name="activity_diary_delete_confirm">Delete this activity?</string>
+    <string name="activity_diary_duration_format">%1$d mins</string>
+    <string name="activity_diary_calories_burned_format">%1$d kcal</string>
+    <string name="activity_diary_btn_save">Save Activity</string>
+    <string name="activity_diary_weight_required_error">Please complete your personal profile to calculate calories burned!</string>
+    <string name="activity_diary_duration_invalid_error">Duration must be greater than 0 minutes!</string>
+
+    <string name="activity_walking">Walking</string>
+    <string name="activity_running">Running</string>
+    <string name="activity_cycling">Cycling</string>
+    <string name="activity_swimming">Swimming</string>
+    <string name="activity_yoga">Yoga</string>
+    <string name="activity_gym">Gym</string>
+    <string name="activity_stair_climbing">Stair climbing</string>
+    <string name="activity_jump_rope">Jump rope</string>
+    <string name="activity_badminton">Badminton</string>
+    <string name="activity_soccer">Soccer</string>
+    <string name="activity_basketball">Basketball</string>
+    <string name="activity_table_tennis">Table tennis</string>
+    <string name="activity_tennis">Tennis</string>
+    <string name="activity_dancing">Dancing</string>
+    <string name="activity_aerobics">Aerobics</string>
 </resources>
