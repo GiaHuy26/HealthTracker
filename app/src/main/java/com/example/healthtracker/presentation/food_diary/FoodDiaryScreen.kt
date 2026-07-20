@@ -16,28 +16,23 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
+import android.app.DatePickerDialog
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,6 +48,8 @@ import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthLightGreen
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @Composable
@@ -61,11 +58,33 @@ fun FoodDiaryScreen(
     onAddMealClick: (date: String, mealType: String?) -> Unit = { _, _ -> }
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    var showDatePicker by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
     FoodDiaryContent(
         uiState = uiState,
         onCalendar = {
-            showDatePicker = true
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            val date = try {
+                sdf.parse(uiState.selectDate)
+            } catch (e: Exception) {
+                null
+            } ?: Date()
+            val cal = Calendar.getInstance().apply { time = date }
+
+            DatePickerDialog(
+                context,
+                { _, year, month, dayOfMonth ->
+                    val selectedCal = Calendar.getInstance().apply {
+                        set(Calendar.YEAR, year)
+                        set(Calendar.MONTH, month)
+                        set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    }
+                    viewModel.selectDateByMillis(selectedCal.timeInMillis)
+                },
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
         },
         onAddMeal = { mealType ->
             onAddMealClick(uiState.selectDate, mealType?.name)
@@ -74,39 +93,6 @@ fun FoodDiaryScreen(
             onAddMealClick(uiState.selectDate, null)
         }
     )
-    if (showDatePicker) {
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val initialSelectedMillis = try {
-            sdf.parse(uiState.selectDate)?.time
-        } catch (e: Exception) {
-            System.currentTimeMillis()
-        }
-        val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = initialSelectedMillis
-        )
-        DatePickerDialog(
-            onDismissRequest = { showDatePicker = false },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        datePickerState.selectedDateMillis?.let { millis ->
-                            viewModel.selectDateByMillis(millis)
-                        }
-                        showDatePicker = false
-                    }
-                ) {
-                    Text(stringResource(R.string.btn_confirm))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDatePicker = false }) {
-                    Text(stringResource(R.string.food_diary_btn_cancel))
-                }
-            }
-        ) {
-            DatePicker(state = datePickerState)
-        }
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -159,7 +145,8 @@ fun FoodDiaryContent(
         floatingActionButton = {
             ButtonAdd(
                 size = Dimens.ButtonHeight,
-                onClick = onAddFoodClick
+                onClick = onAddFoodClick,
+                modifier = Modifier.padding(bottom = Dimens.FloatingActionButton)
             )
         }
     ) { innerPadding ->
@@ -236,7 +223,8 @@ fun FoodDiaryContent(
             }
             Spacer(Modifier.height(Dimens.SpaceMedium))
             MealType.entries.forEach { type ->
-                val foodsMeal = uiState.meal.filter { it.mealType.equals(type.name, ignoreCase = true) }
+                val foodsMeal =
+                    uiState.meal.filter { it.mealType.equals(type.name, ignoreCase = true) }
                 if (foodsMeal.isNotEmpty()) {
                     MealCard(
                         mealName = stringResource(type.titleResId),

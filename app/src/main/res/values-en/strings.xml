@@ -152,7 +152,7 @@
 
     <!-- Activity Diary Screen -->
     <string name="activity_diary_title">Activity Diary</string>
-    <string name="activity_diary_total_burned">Total Burned</string>
+    <string name="activity_diary_total_burned">Calories burned today</string>
     <string name="activity_diary_calories_unit">kcal</string>
     <string name="activity_diary_add_activity">Add Activity</string>
     <string name="activity_diary_duration_label">Duration (minutes)</string>
@@ -161,10 +161,24 @@
     <string name="activity_diary_empty_list">No activities logged today</string>
     <string name="activity_diary_delete_confirm">Delete this activity?</string>
     <string name="activity_diary_duration_format">%1$d mins</string>
+    <string name="activity_diary_duration_intensity_format">%1$d min · %2$s</string>
+    <string name="activity_diary_target_calories_format">/ %1$d kcal</string>
     <string name="activity_diary_calories_burned_format">%1$d kcal</string>
     <string name="activity_diary_btn_save">Save Activity</string>
     <string name="activity_diary_weight_required_error">Please complete your personal profile to calculate calories burned!</string>
     <string name="activity_diary_duration_invalid_error">Duration must be greater than 0 minutes!</string>
+    <string name="activity_diary_stat_calories_burned">Calories Burned</string>
+    <string name="activity_diary_stat_activities">Activities</string>
+    <string name="activity_diary_stat_exercise_time">Exercise Time</string>
+    <string name="activity_diary_stat_min">min</string>
+    <string name="activity_diary_calories_burned_today">Calories Burned Today</string>
+    <string name="activity_diary_progress_subtitle">You\'re making great progress.</string>
+    <string name="activity_diary_goal">Goal</string>
+    <string name="activity_diary_todays_activities">Today\'s Activities</string>
+    <string name="activity_diary_add_new_activity">Add New Activity</string>
+    <string name="activity_intensity_relaxed">Relaxed</string>
+    <string name="activity_intensity_moderate">Moderate</string>
+    <string name="activity_intensity_intense">Intense</string>
 
     <string name="activity_walking">Walking</string>
     <string name="activity_running">Running</string>

@@ -22,10 +22,11 @@ import com.example.healthtracker.presentation.theme.HealthGreen
 @Composable
 fun ButtonAdd(
     size: Dp,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .clip(CircleShape)
             .background(
                 brush = Brush.horizontalGradient(

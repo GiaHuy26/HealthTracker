@@ -150,7 +150,7 @@
 
     <!-- Activity Diary Screen -->
     <string name="activity_diary_title">Nhật ký hoạt động</string>
-    <string name="activity_diary_total_burned">Tổng tiêu thụ</string>
+    <string name="activity_diary_total_burned">Lượng calo tiêu thụ hôm nay</string>
     <string name="activity_diary_calories_unit">kcal</string>
     <string name="activity_diary_add_activity">Thêm hoạt động</string>
     <string name="activity_diary_duration_label">Thời gian thực hiện (phút)</string>
@@ -159,11 +159,25 @@
     <string name="activity_diary_empty_list">Chưa có hoạt động nào trong ngày hôm nay</string>
     <string name="activity_diary_delete_confirm">Xóa hoạt động này?</string>
     <string name="activity_diary_duration_format">%1$d phút</string>
+    <string name="activity_diary_duration_intensity_format">%1$d phút · %2$s</string>
+    <string name="activity_diary_target_calories_format">/ %1$d kcal</string>
     <string name="activity_diary_calories_burned_format">%1$d kcal</string>
     <string name="activity_diary_btn_save">Lưu hoạt động</string>
     <string name="activity_diary_weight_required_error">Vui lòng hoàn thành hồ sơ cá nhân để tính calo tiêu thụ!</string>
     <string name="activity_diary_duration_invalid_error">Thời gian hoạt động phải lớn hơn 0 phút!</string>
-    
+    <string name="activity_diary_stat_calories_burned">Calo tiêu thụ</string>
+    <string name="activity_diary_stat_activities">Hoạt động</string>
+    <string name="activity_diary_stat_exercise_time">Thời gian tập</string>
+    <string name="activity_diary_stat_min">phút</string>
+    <string name="activity_diary_calories_burned_today">Lượng calo tiêu thụ hôm nay</string>
+    <string name="activity_diary_progress_subtitle">Bạn đang tiến bộ rất tốt.</string>
+    <string name="activity_diary_goal">Mục tiêu</string>
+    <string name="activity_diary_todays_activities">Hoạt động hôm nay</string>
+    <string name="activity_diary_add_new_activity">Thêm hoạt động mới</string>
+    <string name="activity_intensity_relaxed">Nhẹ nhàng</string>
+    <string name="activity_intensity_moderate">Trung bình</string>
+    <string name="activity_intensity_intense">Cường độ cao</string>
+
     <string name="activity_walking">Đi bộ</string>
     <string name="activity_running">Chạy bộ</string>
     <string name="activity_cycling">Đạp xe</string>

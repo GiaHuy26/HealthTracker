@@ -1,7 +1,6 @@
 package com.example.healthtracker.presentation.food_diary.add_food
 
 import android.content.Context
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.data.local.db.entity.FoodEntity
@@ -22,7 +21,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AddFoodViewModel @Inject constructor(
     private val foodDiaryRepository: FoodDiaryRepository,
-    private val savedStateHandle: SavedStateHandle,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 

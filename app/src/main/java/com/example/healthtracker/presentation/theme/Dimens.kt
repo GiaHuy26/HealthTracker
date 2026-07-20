@@ -40,8 +40,11 @@ object Dimens {
     val HeightCardSmall = 200.dp
     val Width = 24.dp
     val CircularProgress = 80.dp
+    val CircularProgressLarge = 140.dp
     val AddButtonSize = 36.dp
     val IconMedium = 20.dp
     val QuantityButtonSize = 28.dp
     val EmptyStateIconBg = 64.dp
+    val CircularProgressStroke = 12.dp
+    val FloatingActionButton = 60.dp
 }
