@@ -4,7 +4,6 @@ import com.example.healthtracker.data.local.db.entity.UserActivityEntity
 
 data class ActivityDiaryUiState (
     val selectDate: String = "",
-    val displayDate: String = "",
     val activity: List<UserActivityEntity> = emptyList(),
     val totalCalories: Int = 0,
     val targetCalories: Int = 0,

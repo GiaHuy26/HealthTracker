@@ -23,8 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.healthtracker.R
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthGreen
 import com.example.healthtracker.presentation.theme.HealthTextMutedGreen
@@ -35,17 +37,12 @@ fun BottomBars(
     onTabSelected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val containerBgColor = MaterialTheme.colorScheme.background
-    val activeBgColor = HealthGreen
-    val activeIconColor = HealthTextMutedGreen
-    val inactiveIconColor = MaterialTheme.colorScheme.onSurfaceVariant
-
     val tabs = listOf(
-        Icons.Outlined.Home to "Home",
-        Icons.Outlined.RestaurantMenu to "Food",
-        Icons.Outlined.FitnessCenter to "Workout",
-        Icons.Outlined.BarChart to "Stats",
-        Icons.Outlined.Settings to "Settings"
+        Icons.Outlined.Home to R.string.bottom_nav_home,
+        Icons.Outlined.RestaurantMenu to R.string.bottom_nav_food,
+        Icons.Outlined.FitnessCenter to R.string.bottom_nav_workout,
+        Icons.Outlined.BarChart to R.string.bottom_nav_stats,
+        Icons.Outlined.Settings to R.string.bottom_nav_settings
     )
 
     Surface(
@@ -53,7 +50,7 @@ fun BottomBars(
             .padding(horizontal = Dimens.SpaceLarge, vertical = Dimens.SpaceMedium)
             .fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.CornerExtraLarge),
-        color = containerBgColor,
+        color = MaterialTheme.colorScheme.background,
         shadowElevation = Dimens.ElevationMedium
     ) {
         Row(
@@ -63,13 +60,14 @@ fun BottomBars(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            tabs.forEachIndexed { index, (icon, label) ->
+            tabs.forEachIndexed { index, (icon, labelResId) ->
                 val isSelected = selectedTab == index
+                val label = stringResource(labelResId)
 
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(Dimens.CornerExtraLarge))
-                        .background(if (isSelected) activeBgColor else Color.Transparent)
+                        .background(if (isSelected) HealthGreen else Color.Transparent)
                         .clickable { onTabSelected(index) }
                         .padding(horizontal = Dimens.SpaceMedium, vertical = Dimens.SpaceSmall),
                     contentAlignment = Alignment.Center
@@ -77,7 +75,7 @@ fun BottomBars(
                     Icon(
                         imageVector = icon,
                         contentDescription = label,
-                        tint = if (isSelected) activeIconColor else inactiveIconColor,
+                        tint = if (isSelected) HealthTextMutedGreen else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(Dimens.IconNormal)
                     )
                 }

@@ -19,31 +19,24 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.LocalFireDepartment
 import androidx.compose.material.icons.automirrored.outlined.FormatListBulleted
 import androidx.compose.material.icons.outlined.Timer
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,9 +48,9 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -70,6 +63,7 @@ import java.util.Locale
 import com.example.healthtracker.domain.model.ActivityType
 import com.example.healthtracker.presentation.components.Cards
 import com.example.healthtracker.presentation.activity_diary.component.ActivityCard
+import com.example.healthtracker.presentation.activity_diary.component.AddActivityDialog
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthGreen
 import com.example.healthtracker.presentation.theme.HealthOrange
@@ -87,30 +81,36 @@ fun ActivityDiaryScreen(
     ActivityDiaryContent(
         uiState = uiState,
         onCalendarClick = {
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-            val date = try { sdf.parse(uiState.selectDate) } catch (e: Exception) { null } ?: Date()
-            val cal = Calendar.getInstance().apply { time = date }
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            val currentDate = try {
+                dateFormat.parse(uiState.selectDate)
+            } catch (exception: Exception) {
+                null
+            } ?: Date()
+            val currentCalendar = Calendar.getInstance().apply {
+                time = currentDate
+            }
 
             DatePickerDialog(
                 context,
                 { _, year, month, dayOfMonth ->
-                    val selectedCal = Calendar.getInstance().apply {
+                    val selectedCalendar = Calendar.getInstance().apply {
                         set(Calendar.YEAR, year)
                         set(Calendar.MONTH, month)
                         set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     }
-                    viewModel.selectDateByMillis(selectedCal.timeInMillis)
+                    viewModel.selectDateByMillis(selectedCalendar.timeInMillis)
                 },
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
+                currentCalendar.get(Calendar.YEAR),
+                currentCalendar.get(Calendar.MONTH),
+                currentCalendar.get(Calendar.DAY_OF_MONTH)
             ).show()
         },
-        onAddActivity = { type, minutes ->
-            viewModel.addActivity(type, minutes)
+        onAddActivity = { activityType, durationMinutes ->
+            viewModel.addActivity(activityType, durationMinutes)
         },
-        onDeleteActivity = { entity ->
-            viewModel.deleteActivity(entity)
+        onDeleteActivity = { activity ->
+            viewModel.deleteActivity(activity)
         }
     )
 }
@@ -125,6 +125,8 @@ fun ActivityDiaryContent(
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var showAddDialog by remember { mutableStateOf(false) }
+    val displayDate = formatActivityDate(uiState.selectDate)
+
     Scaffold(
         modifier = Modifier.nestedScroll(
             scrollBehavior.nestedScrollConnection
@@ -139,7 +141,7 @@ fun ActivityDiaryContent(
                             color = MaterialTheme.colorScheme.onBackground
                         )
                         Text(
-                            text = uiState.displayDate.ifEmpty { stringResource(R.string.food_diary_date_format_pattern) },
+                            text = displayDate,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -151,7 +153,7 @@ fun ActivityDiaryContent(
                             .clip(CircleShape)
                             .background(MaterialTheme.colorScheme.outline)
                             .padding(Dimens.SpaceSmall)
-                            .clickable {onCalendarClick() }
+                            .clickable { onCalendarClick() }
                     ) {
                         Icon(
                             Icons.Outlined.CalendarMonth,
@@ -164,7 +166,7 @@ fun ActivityDiaryContent(
             )
         }
     ) { innerPadding ->
-         Column(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -192,7 +194,10 @@ fun ActivityDiaryContent(
                             color = MaterialTheme.colorScheme.secondary
                         )
                         Text(
-                            text = stringResource(R.string.activity_diary_target_calories_format, uiState.targetCalories),
+                            text = stringResource(
+                                R.string.activity_diary_target_calories_format,
+                                uiState.targetCalories
+                            ),
                             style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(bottom = Dimens.SpaceExtraSmall)
@@ -256,7 +261,7 @@ fun ActivityDiaryContent(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Row(
-                            verticalAlignment = Alignment.Bottom,
+                            verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(Dimens.SpaceExtraSmall)
                         ) {
                             Text(
@@ -338,7 +343,7 @@ fun ActivityDiaryContent(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Row(
-                            verticalAlignment = Alignment.Bottom,
+                            verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(Dimens.SpaceExtraSmall)
                         ) {
                             Text(
@@ -424,95 +429,32 @@ fun ActivityDiaryContent(
     }
 
     if (showAddDialog) {
-        var expanded by remember { mutableStateOf(false) }
-        var selectedType by remember { mutableStateOf(ActivityType.WALKING) }
-        var durationText by remember { mutableStateOf("") }
-
-        AlertDialog(
+        AddActivityDialog(
             onDismissRequest = { showAddDialog = false },
-            title = {
-                Text(
-                    text = stringResource(R.string.activity_diary_add_activity),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
-                )
-            },
-            text = {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(Dimens.SpaceMedium),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(R.string.activity_diary_select_activity_type),
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(Dimens.CornerMedium))
-                            .background(MaterialTheme.colorScheme.surfaceVariant)
-                            .clickable { expanded = true }
-                            .padding(Dimens.SpaceMedium)
-                    ) {
-                        Text(
-                            text = stringResource(selectedType.nameResId),
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false },
-                            modifier = Modifier.fillMaxWidth(0.8f)
-                        ) {
-                            ActivityType.entries.forEach { type ->
-                                DropdownMenuItem(
-                                    text = { Text(stringResource(type.nameResId)) },
-                                    onClick = {
-                                        selectedType = type
-                                        expanded = false
-                                    }
-                                )
-                            }
-                        }
-                    }
-
-                    OutlinedTextField(
-                        value = durationText,
-                        onValueChange = { input ->
-                            if (input.all { it.isDigit() }) {
-                                durationText = input
-                            }
-                        },
-                        label = { Text(stringResource(R.string.activity_diary_duration_label)) },
-                        placeholder = { Text(stringResource(R.string.activity_diary_duration_placeholder)) },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        val minutes = durationText.toIntOrNull() ?: 0
-                        if (minutes > 0) {
-                            onAddActivity(selectedType, minutes)
-                            showAddDialog = false
-                        }
-                    }
-                ) {
-                    Text(stringResource(R.string.btn_confirm))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showAddDialog = false }) {
-                    Text(stringResource(R.string.food_diary_btn_cancel))
-                }
+            onConfirm = { activityType, durationMinutes ->
+                onAddActivity(activityType, durationMinutes)
+                showAddDialog = false
             }
         )
+    }
+}
+
+@Composable
+private fun formatActivityDate(dateString: String): String {
+    val configuration = LocalConfiguration.current
+    val pattern = stringResource(R.string.activity_diary_date_format_pattern)
+    val locale = configuration.locales[0]
+
+    return remember(dateString, pattern, locale) {
+        val databaseDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US).apply {
+            isLenient = false
+        }
+        val displayDateFormat = SimpleDateFormat(pattern, locale)
+        val date = runCatching {
+            databaseDateFormat.parse(dateString)
+        }.getOrNull() ?: Date()
+
+        displayDateFormat.format(date)
     }
 }
 

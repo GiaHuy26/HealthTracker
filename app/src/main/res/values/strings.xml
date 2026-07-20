@@ -1,6 +1,11 @@
 <resources>
     <!-- Start Screen -->
     <string name="app_name">HealthTracker</string>
+    <string name="bottom_nav_home">Trang chủ</string>
+    <string name="bottom_nav_food">Bữa ăn</string>
+    <string name="bottom_nav_workout">Hoạt động</string>
+    <string name="bottom_nav_stats">Thống kê</string>
+    <string name="bottom_nav_settings">Cài đặt</string>
     <string name="start_subtitle">CUỘC SỐNG KHỎE MẠNH BẮT ĐẦU TỪ HÔM NAY</string>
     <string name="start_title">Làm Chủ Sức Khỏe Của Bạn</string>
     <string name="start_description">Theo dõi lượng calo, hoạt động, cân nặng và sức khỏe mỗi ngày với trải nghiệm thông minh và hiện đại.</string>
@@ -152,6 +157,7 @@
     <string name="activity_diary_title">Nhật ký hoạt động</string>
     <string name="activity_diary_total_burned">Lượng calo tiêu thụ hôm nay</string>
     <string name="activity_diary_calories_unit">kcal</string>
+    <string name="activity_diary_date_format_pattern">dd \'Tháng\' MM, yyyy</string>
     <string name="activity_diary_add_activity">Thêm hoạt động</string>
     <string name="activity_diary_duration_label">Thời gian thực hiện (phút)</string>
     <string name="activity_diary_duration_placeholder">Nhập số phút…</string>

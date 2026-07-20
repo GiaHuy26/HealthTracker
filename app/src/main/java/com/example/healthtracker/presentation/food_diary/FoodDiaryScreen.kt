@@ -27,11 +27,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -63,27 +65,29 @@ fun FoodDiaryScreen(
     FoodDiaryContent(
         uiState = uiState,
         onCalendar = {
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-            val date = try {
-                sdf.parse(uiState.selectDate)
-            } catch (e: Exception) {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            val currentDate = try {
+                dateFormat.parse(uiState.selectDate)
+            } catch (exception: Exception) {
                 null
             } ?: Date()
-            val cal = Calendar.getInstance().apply { time = date }
+            val currentCalendar = Calendar.getInstance().apply {
+                time = currentDate
+            }
 
             DatePickerDialog(
                 context,
                 { _, year, month, dayOfMonth ->
-                    val selectedCal = Calendar.getInstance().apply {
+                    val selectedCalendar = Calendar.getInstance().apply {
                         set(Calendar.YEAR, year)
                         set(Calendar.MONTH, month)
                         set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     }
-                    viewModel.selectDateByMillis(selectedCal.timeInMillis)
+                    viewModel.selectDateByMillis(selectedCalendar.timeInMillis)
                 },
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
+                currentCalendar.get(Calendar.YEAR),
+                currentCalendar.get(Calendar.MONTH),
+                currentCalendar.get(Calendar.DAY_OF_MONTH)
             ).show()
         },
         onAddMeal = { mealType ->
@@ -104,6 +108,8 @@ fun FoodDiaryContent(
     onAddFoodClick: () -> Unit = {}
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val displayDate = formatFoodDiaryDate(uiState.selectDate)
+
     Scaffold(
         modifier = Modifier.nestedScroll(
             scrollBehavior.nestedScrollConnection
@@ -118,7 +124,7 @@ fun FoodDiaryContent(
                             color = MaterialTheme.colorScheme.onBackground
                         )
                         Text(
-                            text = uiState.displayDate.ifEmpty { stringResource(R.string.food_diary_date_format_pattern) },
+                            text = displayDate,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -236,6 +242,25 @@ fun FoodDiaryContent(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun formatFoodDiaryDate(dateString: String): String {
+    val configuration = LocalConfiguration.current
+    val pattern = stringResource(R.string.food_diary_date_format_pattern)
+    val locale = configuration.locales[0]
+
+    return remember(dateString, pattern, locale) {
+        val databaseDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US).apply {
+            isLenient = false
+        }
+        val displayDateFormat = SimpleDateFormat(pattern, locale)
+        val date = runCatching {
+            databaseDateFormat.parse(dateString)
+        }.getOrNull() ?: Date()
+
+        displayDateFormat.format(date)
     }
 }
 
