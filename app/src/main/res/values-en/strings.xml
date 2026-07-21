@@ -224,4 +224,35 @@
     <string name="activity_tennis">Tennis</string>
     <string name="activity_dancing">Dancing</string>
     <string name="activity_aerobics">Aerobics</string>
+
+    <!-- Statistics Screen -->
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_subtitle">Track your progress</string>
+    <string name="statistics_period_day">Day</string>
+    <string name="statistics_period_week">Week</string>
+    <string name="statistics_period_month">Month</string>
+    <string name="statistics_daily_summary">Daily summary</string>
+    <string name="statistics_weekly_summary">Weekly summary</string>
+    <string name="statistics_monthly_summary">Monthly summary</string>
+    <string name="statistics_average_calories_in">Average calories in</string>
+    <string name="statistics_average_calories_burned">Average burned</string>
+    <string name="statistics_average_intake_short">Avg. intake</string>
+    <string name="statistics_average_burned_short">Avg. burned</string>
+    <string name="statistics_calories_value">%1$d kcal</string>
+    <string name="statistics_percent_value">%1$d%%</string>
+    <string name="statistics_goal">Goal</string>
+    <string name="statistics_calorie_intake">Calorie intake</string>
+    <string name="statistics_last_days">Last %1$d days</string>
+    <string name="statistics_today">Today</string>
+    <string name="statistics_trend">Calorie trend</string>
+    <string name="statistics_no_data">No data for this period yet.</string>
+    <string name="statistics_detailed_metrics">Detailed metrics</string>
+    <string name="statistics_target_days">Target days</string>
+    <string name="statistics_current_streak">Current streak</string>
+    <string name="statistics_target_days_value">%1$d/%2$d</string>
+    <string name="statistics_days_value">%1$d days</string>
+    <string name="statistics_motivation_title">Keep it up!</string>
+    <string name="statistics_motivation_streak">You have a %1$d-day goal streak.</string>
+    <string name="statistics_motivation_progress">You reached your goal on %1$d/%2$d days this period.</string>
+    <string name="statistics_motivation_start">Log your meals and activities daily to track progress.</string>
 </resources>

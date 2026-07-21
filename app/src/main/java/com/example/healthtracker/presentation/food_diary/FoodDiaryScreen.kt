@@ -121,7 +121,8 @@ fun FoodDiaryContent(
                         Text(
                             text = stringResource(R.string.food_diary_title),
                             style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onBackground
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.secondary
                         )
                         Text(
                             text = displayDate,

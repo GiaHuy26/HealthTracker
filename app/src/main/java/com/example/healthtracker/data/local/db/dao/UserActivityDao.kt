@@ -14,6 +14,12 @@ interface UserActivityDao {
     @Query("SELECT * FROM user_activities WHERE date = :date")
     fun getActivitiesByDate(date: String): Flow<List<UserActivityEntity>>
 
+    @Query("SELECT * FROM user_activities WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC")
+    fun getActivitiesBetweenDates(
+        startDate: String,
+        endDate: String
+    ): Flow<List<UserActivityEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertActivity(activity: UserActivityEntity): Long
 

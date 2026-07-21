@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NavigationManager @Inject constructor() {
-    private val _backStack = MutableStateFlow<List<AppNavKey>>(listOf(StartRoute))
+    private val _backStack = MutableStateFlow<List<AppNavKey>>(listOf(LoginRoute))
     val backStack: StateFlow<List<AppNavKey>> = _backStack.asStateFlow()
 
     fun navigateTo(route: AppNavKey) {
