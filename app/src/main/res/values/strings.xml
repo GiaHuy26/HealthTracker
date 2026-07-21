@@ -6,6 +6,29 @@
     <string name="bottom_nav_workout">Hoạt động</string>
     <string name="bottom_nav_stats">Thống kê</string>
     <string name="bottom_nav_settings">Cài đặt</string>
+
+    <!-- Dashboard Screen -->
+    <string name="dashboard_greeting">Xin chào 👋</string>
+    <string name="dashboard_default_user_name">Người dùng</string>
+    <string name="dashboard_date_format_pattern">dd \'Tháng\' MM, yyyy</string>
+    <string name="dashboard_profile_picture">Ảnh đại diện</string>
+    <string name="dashboard_today_goal">Mục tiêu hôm nay</string>
+    <string name="dashboard_calorie_goal_format">/ %1$d kcal</string>
+    <string name="dashboard_remaining_calories">Lượng calo còn lại: %1$d kcal</string>
+    <string name="dashboard_exceeded_calories">Lượng calo vượt quá: %1$d kcal</string>
+    <string name="dashboard_calories_in">Calo nạp</string>
+    <string name="dashboard_calories_burned">Calo đốt</string>
+    <string name="dashboard_calories_remaining">Còn lại</string>
+    <string name="dashboard_calorie_balance">Cân bằng</string>
+    <string name="dashboard_advice_remaining">Bạn còn thiếu %1$d kcal</string>
+    <string name="dashboard_advice_enough">Bạn đã ăn đủ calo hôm nay!</string>
+    <string name="dashboard_advice_exceeded">Bạn đã vượt %1$d kcal</string>
+    <string name="dashboard_add_meal">Thêm bữa ăn</string>
+    <string name="dashboard_add_activity">Thêm hoạt động</string>
+    <string name="dashboard_today_meals">Bữa ăn hôm nay</string>
+    <string name="dashboard_view_all">XEM TẤT CẢ</string>
+    <string name="dashboard_no_meals">Bạn chưa thêm bữa ăn nào hôm nay.</string>
+    <string name="dashboard_calories_format">%1$d kcal</string>
     <string name="start_subtitle">CUỘC SỐNG KHỎE MẠNH BẮT ĐẦU TỪ HÔM NAY</string>
     <string name="start_title">Làm Chủ Sức Khỏe Của Bạn</string>
     <string name="start_description">Theo dõi lượng calo, hoạt động, cân nặng và sức khỏe mỗi ngày với trải nghiệm thông minh và hiện đại.</string>

@@ -47,4 +47,8 @@ object Dimens {
     val EmptyStateIconBg = 64.dp
     val CircularProgressStroke = 12.dp
     val FloatingActionButton = 60.dp
+
+    val DashboardBottomContentPadding = 120.dp
+    val DashboardGoalCardHeight = 250.dp
+    val DashboardSummaryCardHeight = 96.dp
 }

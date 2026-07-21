@@ -7,6 +7,29 @@
     <string name="bottom_nav_workout">Workout</string>
     <string name="bottom_nav_stats">Stats</string>
     <string name="bottom_nav_settings">Settings</string>
+
+    <!-- Dashboard Screen -->
+    <string name="dashboard_greeting">Hello 👋</string>
+    <string name="dashboard_default_user_name">User</string>
+    <string name="dashboard_date_format_pattern">MMMM dd, yyyy</string>
+    <string name="dashboard_profile_picture">Profile picture</string>
+    <string name="dashboard_today_goal">Today\'s goal</string>
+    <string name="dashboard_calorie_goal_format">/ %1$d kcal</string>
+    <string name="dashboard_remaining_calories">Calories remaining: %1$d kcal</string>
+    <string name="dashboard_exceeded_calories">Calories over target: %1$d kcal</string>
+    <string name="dashboard_calories_in">Calories in</string>
+    <string name="dashboard_calories_burned">Burned</string>
+    <string name="dashboard_calories_remaining">Remaining</string>
+    <string name="dashboard_calorie_balance">Balance</string>
+    <string name="dashboard_advice_remaining">You need %1$d more kcal</string>
+    <string name="dashboard_advice_enough">You have reached today\'s calorie target!</string>
+    <string name="dashboard_advice_exceeded">You are %1$d kcal over the target</string>
+    <string name="dashboard_add_meal">Add meal</string>
+    <string name="dashboard_add_activity">Add activity</string>
+    <string name="dashboard_today_meals">Today\'s meals</string>
+    <string name="dashboard_view_all">VIEW ALL</string>
+    <string name="dashboard_no_meals">No meals have been added today.</string>
+    <string name="dashboard_calories_format">%1$d kcal</string>
     <string name="start_subtitle">HEALTHY LIFE STARTS TODAY</string>
     <string name="start_title">Take Control of Your Health</string>
     <string name="start_description">Track calories, activity, weight, and health every day with a smart and modern experience.</string>
