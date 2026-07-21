@@ -14,6 +14,6 @@ interface FoodDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFood(foods: List<FoodEntity>)
 
-    @Query("SELECT COUNT(*) FROM foods")
-    suspend fun getFoodCount():Int
+    @Query("DELETE FROM foods")
+    suspend fun deleteAllFoods()
 }

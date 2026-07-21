@@ -253,4 +253,35 @@
     <string name="statistics_motivation_streak">Bạn đang có chuỗi %1$d ngày đạt mục tiêu.</string>
     <string name="statistics_motivation_progress">Bạn đã đạt mục tiêu %1$d/%2$d ngày trong kỳ này.</string>
     <string name="statistics_motivation_start">Hãy ghi nhật ký mỗi ngày để theo dõi tiến trình.</string>
+    <!-- Settings Screen -->
+    <string name="action_back">Quay lại</string>
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_subtitle">Cá nhân hóa trải nghiệm HealthTracker</string>
+    <string name="settings_profile">Hồ sơ</string>
+    <string name="settings_profile_subtitle">Chỉnh sửa thông tin cá nhân</string>
+    <string name="settings_appearance">Giao diện</string>
+    <string name="settings_appearance_subtitle">Màu sắc, ngôn ngữ và cỡ chữ</string>
+    <string name="settings_no_profile">Chưa có thông tin hồ sơ</string>
+    <string name="settings_profile_detail">%1$d tuổi • %2$s</string>
+    <string name="settings_tdee_and_bmi">TDEE: %1$d kcal • BMI: %2$.1f (%3$s)</string>
+    <string name="settings_bmi_underweight">Thiếu cân</string>
+    <string name="settings_bmi_normal">Bình thường</string>
+    <string name="settings_bmi_overweight">Thừa cân</string>
+    <string name="settings_bmi_obese">Béo phì</string>
+    <string name="settings_edit_profile">Chỉnh sửa hồ sơ</string>
+    <string name="settings_save_changes">Lưu thay đổi</string>
+    <string name="appearance_subtitle">Tùy chỉnh giao diện ứng dụng</string>
+    <string name="appearance_theme_mode">Chế độ giao diện</string>
+    <string name="appearance_light">Sáng</string>
+    <string name="appearance_dark">Tối</string>
+    <string name="appearance_accent_color">Màu ứng dụng</string>
+    <string name="appearance_font_size">Cỡ chữ</string>
+    <string name="appearance_font_small">Nhỏ</string>
+    <string name="appearance_font_medium">Vừa</string>
+    <string name="appearance_font_large">Lớn</string>
+    <string name="appearance_languages">Ngôn ngữ</string>
+    <string name="appearance_language_english">English</string>
+    <string name="appearance_language_english_subtitle">Tiếng Anh</string>
+    <string name="appearance_language_vietnamese">Tiếng Việt</string>
+    <string name="appearance_language_vietnamese_subtitle">Vietnamese</string>
 </resources>

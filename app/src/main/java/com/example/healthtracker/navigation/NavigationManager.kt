@@ -1,6 +1,5 @@
 package com.example.healthtracker.navigation
 
-import android.os.Build
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NavigationManager @Inject constructor() {
-    private val _backStack = MutableStateFlow<List<AppNavKey>>(listOf(LoginRoute))
+    private val _backStack = MutableStateFlow<List<AppNavKey>>(listOf(StartRoute))
     val backStack: StateFlow<List<AppNavKey>> = _backStack.asStateFlow()
 
     fun navigateTo(route: AppNavKey) {

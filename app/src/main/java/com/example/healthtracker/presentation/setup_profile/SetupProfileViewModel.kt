@@ -8,6 +8,7 @@ import com.example.healthtracker.domain.model.ActivityLevel
 import com.example.healthtracker.domain.model.Gender
 import com.example.healthtracker.domain.model.GoalType
 import com.example.healthtracker.domain.model.Profile
+import com.example.healthtracker.domain.repository.UserProfileRepository
 import com.example.healthtracker.domain.usecase.setup_profile.SetupProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -28,7 +29,8 @@ import kotlin.time.Duration.Companion.milliseconds
 @HiltViewModel
 class SetupProfileViewModel @Inject constructor(
     private val setupProfileUseCase: SetupProfileUseCase,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
+    private val userProfileRepository: UserProfileRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SetupProfileUiState())
     val uiState: StateFlow<SetupProfileUiState> = _uiState.asStateFlow()
@@ -37,7 +39,31 @@ class SetupProfileViewModel @Inject constructor(
     val navigationEvent: SharedFlow<SetupProfileNavigationEvent> = _navigationEvent.asSharedFlow()
 
     sealed interface SetupProfileNavigationEvent {
-        data object NavigateToHome : SetupProfileNavigationEvent
+        data object ProfileSaved : SetupProfileNavigationEvent
+    }
+
+    fun loadCurrentProfile() {
+        viewModelScope.launch {
+            try {
+                val email = sessionManager.getCurrentUserEmail()
+                val profile = userProfileRepository.getProfile(email) ?: return@launch
+
+                _uiState.update {
+                    it.copy(
+                        userName = profile.userName,
+                        birthDate = profile.birthDate,
+                        age = profile.age,
+                        gender = profile.gender,
+                        weight = profile.weight.toString(),
+                        height = profile.height.toString(),
+                        activityLevel = profile.activeLevel,
+                        goalType = profile.goalType
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     fun onUserNameChange(value: String) {
@@ -136,7 +162,7 @@ class SetupProfileViewModel @Inject constructor(
                 )
                 setupProfileUseCase(email, profile)
                 _uiState.update { it.copy(isLoading = false) }
-                _navigationEvent.emit(SetupProfileNavigationEvent.NavigateToHome)
+                _navigationEvent.emit(SetupProfileNavigationEvent.ProfileSaved)
             } catch (e: Exception) {
                 val errorResId = when (e.message) {
                     "ERR_NAME_EMPTY" -> R.string.error_name_empty

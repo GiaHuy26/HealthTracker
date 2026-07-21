@@ -10,6 +10,16 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MealDao {
+    @Query(
+        "UPDATE meals SET foodName = :newName, servingSize = :newServing " +
+            "WHERE foodName = :oldName"
+    )
+    suspend fun updateFoodLanguage(
+        oldName: String,
+        newName: String,
+        newServing: String
+    )
+
 
     @Query("SELECT * FROM meals WHERE date = :date")
     fun getMealByDate(date: String): Flow<List<MealEntity>>

@@ -255,4 +255,35 @@
     <string name="statistics_motivation_streak">You have a %1$d-day goal streak.</string>
     <string name="statistics_motivation_progress">You reached your goal on %1$d/%2$d days this period.</string>
     <string name="statistics_motivation_start">Log your meals and activities daily to track progress.</string>
+    <!-- Settings Screen -->
+    <string name="action_back">Back</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">Personalize your HealthTracker experience</string>
+    <string name="settings_profile">Profile</string>
+    <string name="settings_profile_subtitle">Edit your personal information</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_appearance_subtitle">Colors, language and font size</string>
+    <string name="settings_no_profile">No profile information</string>
+    <string name="settings_profile_detail">Age %1$d • %2$s</string>
+    <string name="settings_tdee_and_bmi">TDEE: %1$d kcal • BMI: %2$.1f (%3$s)</string>
+    <string name="settings_bmi_underweight">Underweight</string>
+    <string name="settings_bmi_normal">Normal</string>
+    <string name="settings_bmi_overweight">Overweight</string>
+    <string name="settings_bmi_obese">Obese</string>
+    <string name="settings_edit_profile">Edit profile</string>
+    <string name="settings_save_changes">Save changes</string>
+    <string name="appearance_subtitle">Customize your app experience</string>
+    <string name="appearance_theme_mode">Theme mode</string>
+    <string name="appearance_light">Light</string>
+    <string name="appearance_dark">Dark</string>
+    <string name="appearance_accent_color">App color</string>
+    <string name="appearance_font_size">Font size</string>
+    <string name="appearance_font_small">Small</string>
+    <string name="appearance_font_medium">Medium</string>
+    <string name="appearance_font_large">Large</string>
+    <string name="appearance_languages">Available languages</string>
+    <string name="appearance_language_english">English</string>
+    <string name="appearance_language_english_subtitle">English (United States)</string>
+    <string name="appearance_language_vietnamese">Tiếng Việt</string>
+    <string name="appearance_language_vietnamese_subtitle">Vietnamese</string>
 </resources>

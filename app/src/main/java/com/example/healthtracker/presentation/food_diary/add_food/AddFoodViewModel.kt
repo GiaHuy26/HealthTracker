@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.data.local.db.entity.FoodEntity
 import com.example.healthtracker.data.local.db.entity.MealEntity
+import com.example.healthtracker.data.repository.AppSettingsManager
 import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.domain.repository.FoodDiaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AddFoodViewModel @Inject constructor(
     private val foodDiaryRepository: FoodDiaryRepository,
-    @ApplicationContext private val context: Context
+    private val appSettingsManager: AppSettingsManager,
+    @param:ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddFoodUiState())
@@ -44,7 +46,8 @@ class AddFoodViewModel @Inject constructor(
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            foodDiaryRepository.seedSampleFood(context)
+            val languageCode = appSettingsManager.settings.value.language.code
+            foodDiaryRepository.seedSampleFood(context, languageCode)
             loadAllFoods()
             if (mealTypeStr != null) {
                 loadExistingMeals(date, mealTypeStr)

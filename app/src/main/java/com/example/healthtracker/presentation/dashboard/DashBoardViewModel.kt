@@ -36,10 +36,6 @@ class DashboardViewModel @Inject constructor(
     }
     private var dashboardCollectJob: Job? = null
 
-    init {
-        loadDashboard()
-    }
-
     fun loadDashboard(date: Date = Date()) {
         val dateString = databaseDateFormat.format(date)
         _uiState.update {
