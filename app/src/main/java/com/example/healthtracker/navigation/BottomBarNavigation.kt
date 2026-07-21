@@ -34,7 +34,8 @@ fun BottomBarNavigation(
                 0 -> DashboardScreen(
                     onAddMealClick = { selectedTab = 1 },
                     onAddActivityClick = { selectedTab = 2 },
-                    onViewAllMealsClick = { selectedTab = 1 }
+                    onViewAllMealsClick = { selectedTab = 1 },
+                    onProfileClick = { selectedTab = 4 }
                 )
                 1 -> FoodDiaryScreen(
                     onAddMealClick = { date, mealType ->
@@ -45,7 +46,11 @@ fun BottomBarNavigation(
                 )
                 2 -> ActivityDiaryScreen()
                 3 -> StatisticsScreen()
-                4 -> SettingsScreen()
+                4 -> SettingsScreen(
+                    onLogoutComplete = {
+                        navigationManager.navigateAndClearStack(LoginRoute)
+                    }
+                )
             }
         }
 

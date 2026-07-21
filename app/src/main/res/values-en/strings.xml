@@ -263,6 +263,7 @@
     <string name="settings_profile_subtitle">Edit your personal information</string>
     <string name="settings_appearance">Appearance</string>
     <string name="settings_appearance_subtitle">Colors, language and font size</string>
+    <string name="settings_logout">Log out</string>
     <string name="settings_no_profile">No profile information</string>
     <string name="settings_profile_detail">Age %1$d • %2$s</string>
     <string name="settings_tdee_and_bmi">TDEE: %1$d kcal • BMI: %2$.1f (%3$s)</string>

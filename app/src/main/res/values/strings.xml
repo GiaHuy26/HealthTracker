@@ -261,6 +261,7 @@
     <string name="settings_profile_subtitle">Chỉnh sửa thông tin cá nhân</string>
     <string name="settings_appearance">Giao diện</string>
     <string name="settings_appearance_subtitle">Màu sắc, ngôn ngữ và cỡ chữ</string>
+    <string name="settings_logout">Đăng xuất</string>
     <string name="settings_no_profile">Chưa có thông tin hồ sơ</string>
     <string name="settings_profile_detail">%1$d tuổi • %2$s</string>
     <string name="settings_tdee_and_bmi">TDEE: %1$d kcal • BMI: %2$.1f (%3$s)</string>

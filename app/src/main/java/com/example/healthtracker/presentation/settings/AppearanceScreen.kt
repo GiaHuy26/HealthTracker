@@ -2,9 +2,7 @@ package com.example.healthtracker.presentation.settings
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +39,7 @@ import com.example.healthtracker.domain.model.AppLanguage
 import com.example.healthtracker.domain.model.AppSettings
 import com.example.healthtracker.domain.model.AppTheme
 import com.example.healthtracker.presentation.settings.component.ColorOption
+import com.example.healthtracker.presentation.settings.component.FontSizeSelector
 import com.example.healthtracker.presentation.settings.component.LanguageOption
 import com.example.healthtracker.presentation.settings.component.ThemeOption
 import com.example.healthtracker.presentation.theme.Dimens
@@ -61,8 +60,9 @@ fun AppearanceScreen(
         onColorSelected = viewModel::setColor,
         onFontSizeSelected = viewModel::setFontSize,
         onLanguageSelected = { language ->
-            viewModel.setLanguage(language)
-            activity?.recreate()
+            viewModel.setLanguage(language) {
+                activity?.recreate()
+            }
         }
     )
 }
@@ -88,13 +88,15 @@ fun AppearanceContent(
             IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                    contentDescription = stringResource(R.string.action_back)
+                    contentDescription = stringResource(R.string.action_back),
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
             Text(
                 text = stringResource(R.string.settings_appearance),
                 style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
         Text(
@@ -106,7 +108,8 @@ fun AppearanceContent(
         Spacer(modifier = Modifier.height(Dimens.SpaceLarge))
         Text(
             text = stringResource(R.string.appearance_theme_mode),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.height(Dimens.SpaceSmall))
         Card(
@@ -141,7 +144,8 @@ fun AppearanceContent(
         Spacer(modifier = Modifier.height(Dimens.SpaceLarge))
         Text(
             text = stringResource(R.string.appearance_accent_color),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.height(Dimens.SpaceSmall))
         Card(
@@ -169,7 +173,8 @@ fun AppearanceContent(
         Spacer(modifier = Modifier.height(Dimens.SpaceLarge))
         Text(
             text = stringResource(R.string.appearance_font_size),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.height(Dimens.SpaceSmall))
         Card(
@@ -178,41 +183,20 @@ fun AppearanceContent(
             ),
             shape = RoundedCornerShape(Dimens.CornerLarge)
         ) {
-            Row(
+            FontSizeSelector(
+                selectedFontSize = appSettings.fontSize,
+                onFontSizeSelected = onFontSizeSelected,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(Dimens.SpaceMedium),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.SpaceSmall)
-            ) {
-                AppFontSize.entries.forEach { fontSize ->
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .background(
-                                color = if (fontSize == appSettings.fontSize) {
-                                    MaterialTheme.colorScheme.primaryContainer
-                                } else {
-                                    MaterialTheme.colorScheme.surfaceVariant
-                                },
-                                shape = RoundedCornerShape(Dimens.CornerExtraLarge)
-                            )
-                            .clickable { onFontSizeSelected(fontSize) }
-                            .padding(vertical = Dimens.SpaceSmall),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = stringResource(fontSize.titleResId),
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                    }
-                }
-            }
+                    .padding(Dimens.SpaceMedium)
+            )
         }
 
         Spacer(modifier = Modifier.height(Dimens.SpaceLarge))
         Text(
             text = stringResource(R.string.appearance_languages),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.height(Dimens.SpaceSmall))
         Card(

@@ -64,10 +64,21 @@ class SettingsViewModel @Inject constructor(
         appSettingsManager.setFontSize(fontSize)
     }
 
-    fun setLanguage(language: AppLanguage) {
+    fun setLanguage(
+        language: AppLanguage,
+        onLanguageChanged: () -> Unit
+    ) {
         appSettingsManager.setLanguage(language)
         viewModelScope.launch {
             foodDiaryRepository.seedSampleFood(context, language.code)
+            onLanguageChanged()
+        }
+    }
+
+    fun logout(onLogoutComplete: () -> Unit) {
+        viewModelScope.launch {
+            sessionManager.clearSession()
+            onLogoutComplete()
         }
     }
 }

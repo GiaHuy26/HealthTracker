@@ -55,7 +55,7 @@ private fun ProfileSettingsContentPreview() {
     HealthTrackerTheme {
         SetupProfileContent(
             uiState = SetupProfileUiState(
-                userName = "Quân Gia Huy",
+                userName = "Quan Gia Huy",
                 birthDate = "07/21/2003",
                 age = 23,
                 gender = Gender.MALE,

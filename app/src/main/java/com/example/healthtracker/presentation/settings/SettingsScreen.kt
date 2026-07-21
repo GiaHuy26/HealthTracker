@@ -42,14 +42,15 @@ import com.example.healthtracker.domain.model.GoalType
 import com.example.healthtracker.domain.model.Profile
 import com.example.healthtracker.R
 import com.example.healthtracker.presentation.settings.component.ProfileSummaryCard
+import com.example.healthtracker.presentation.settings.component.LogoutButton
 import com.example.healthtracker.presentation.settings.component.SettingsItem
 import com.example.healthtracker.presentation.theme.Dimens
-import com.example.healthtracker.presentation.theme.HealthBlue
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
 fun SettingsScreen(
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel = hiltViewModel(),
+    onLogoutComplete: () -> Unit = {}
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
     var currentPage by rememberSaveable { mutableStateOf(SettingsPage.MAIN) }
@@ -63,7 +64,8 @@ fun SettingsScreen(
         SettingsPage.MAIN -> SettingsContent(
             uiState = uiState.value,
             onProfileClick = { currentPage = SettingsPage.PROFILE },
-            onAppearanceClick = { currentPage = SettingsPage.APPEARANCE }
+            onAppearanceClick = { currentPage = SettingsPage.APPEARANCE },
+            onLogoutClick = { viewModel.logout(onLogoutComplete) }
         )
 
         SettingsPage.PROFILE -> ProfileSettingsScreen(
@@ -87,7 +89,8 @@ fun SettingsScreen(
 fun SettingsContent(
     uiState: SettingsUiState,
     onProfileClick: () -> Unit,
-    onAppearanceClick: () -> Unit
+    onAppearanceClick: () -> Unit,
+    onLogoutClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -95,9 +98,8 @@ fun SettingsContent(
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
-                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f),
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.16f),
                         MaterialTheme.colorScheme.background,
-                        MaterialTheme.colorScheme.tertiary.copy(alpha = 0.12f),
                         MaterialTheme.colorScheme.background
                     )
                 )
@@ -139,7 +141,7 @@ fun SettingsContent(
                     icon = Icons.Outlined.Person,
                     title = stringResource(R.string.settings_profile),
                     subtitle = stringResource(R.string.settings_profile_subtitle),
-                    iconColor = HealthBlue,
+                    iconColor = MaterialTheme.colorScheme.primary,
                     onClick = onProfileClick
                 )
                 HorizontalDivider(color = MaterialTheme.colorScheme.outline)
@@ -151,6 +153,9 @@ fun SettingsContent(
                     onClick = onAppearanceClick
                 )
             }
+
+            Spacer(modifier = Modifier.height(Dimens.SpaceMedium))
+            LogoutButton(onClick = onLogoutClick)
 
             Spacer(modifier = Modifier.height(Dimens.StatisticsBottomContentPadding))
         }
@@ -182,7 +187,8 @@ private fun SettingsContentPreview() {
                 isLoading = false
             ),
             onProfileClick = {},
-            onAppearanceClick = {}
+            onAppearanceClick = {},
+            onLogoutClick = {}
         )
     }
 }

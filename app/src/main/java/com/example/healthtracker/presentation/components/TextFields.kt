@@ -68,8 +68,8 @@ fun TextFields(
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Color.Transparent,
             unfocusedBorderColor = Color.Transparent,
-            focusedContainerColor = MaterialTheme.colorScheme.surface,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surface
+            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
     )
 }
