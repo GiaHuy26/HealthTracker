@@ -5,21 +5,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.healthtracker.presentation.components.BottomBars
 import com.example.healthtracker.presentation.food_diary.FoodDiaryScreen
 import com.example.healthtracker.presentation.activity_diary.ActivityDiaryScreen
+import com.example.healthtracker.presentation.dashboard.DashboardScreen
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
 fun BottomBarNavigation(
     navigationManager: NavigationManager
 ) {
-    var selectedTab by remember { mutableIntStateOf(1) }
+    var selectedTab by rememberSaveable { mutableIntStateOf(0) }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -28,7 +29,11 @@ fun BottomBarNavigation(
             modifier = Modifier.fillMaxSize()
         ) {
             when (selectedTab) {
-                0 -> Box {}
+                0 -> DashboardScreen(
+                    onAddMealClick = { selectedTab = 1 },
+                    onAddActivityClick = { selectedTab = 2 },
+                    onViewAllMealsClick = { selectedTab = 1 }
+                )
                 1 -> FoodDiaryScreen(
                     onAddMealClick = { date, mealType ->
                         navigationManager.navigateTo(

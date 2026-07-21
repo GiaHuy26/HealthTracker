@@ -368,6 +368,7 @@ fun ActivityDiaryContent(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground
             )
+            Spacer(modifier = Modifier.height(Dimens.SpaceMedium))
             if (uiState.activity.isEmpty()) {
                 Box(
                     modifier = Modifier
@@ -394,6 +395,7 @@ fun ActivityDiaryContent(
                         caloriesBurned = entity.caloriesBurned,
                         onDelete = { onDeleteActivity(entity) }
                     )
+                    Spacer(modifier = Modifier.height(Dimens.SpaceMedium))
                 }
             }
             Spacer(modifier = Modifier.height(Dimens.SpaceMedium))
