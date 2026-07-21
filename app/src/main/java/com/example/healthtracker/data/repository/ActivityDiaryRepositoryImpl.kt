@@ -14,6 +14,13 @@ class ActivityDiaryRepositoryImpl @Inject constructor(
         return userActivityDao.getActivitiesByDate(date)
     }
 
+    override fun getActivitiesBetweenDates(
+        startDate: String,
+        endDate: String
+    ): Flow<List<UserActivityEntity>> {
+        return userActivityDao.getActivitiesBetweenDates(startDate, endDate)
+    }
+
     override suspend fun addActivity(activity: UserActivityEntity) {
         userActivityDao.insertActivity(activity)
     }

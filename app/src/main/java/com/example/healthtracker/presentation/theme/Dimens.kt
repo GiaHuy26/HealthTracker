@@ -51,4 +51,11 @@ object Dimens {
     val DashboardBottomContentPadding = 120.dp
     val DashboardGoalCardHeight = 250.dp
     val DashboardSummaryCardHeight = 96.dp
+
+    val StatisticsChartHeight = 160.dp
+    val StatisticsTrendChartHeight = 140.dp
+    val StatisticsChartDayWidth = 48.dp
+    val StatisticsBarWidth = 24.dp
+    val StatisticsMetricCardHeight = 112.dp
+    val StatisticsBottomContentPadding = 120.dp
 }

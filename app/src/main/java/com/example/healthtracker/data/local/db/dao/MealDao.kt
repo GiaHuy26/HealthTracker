@@ -14,6 +14,9 @@ interface MealDao {
     @Query("SELECT * FROM meals WHERE date = :date")
     fun getMealByDate(date: String): Flow<List<MealEntity>>
 
+    @Query("SELECT * FROM meals WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC")
+    fun getMealsBetweenDates(startDate: String, endDate: String): Flow<List<MealEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMeal(meal: MealEntity): Long
 

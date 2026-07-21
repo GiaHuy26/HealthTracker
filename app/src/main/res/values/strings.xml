@@ -222,4 +222,35 @@
     <string name="activity_tennis">Tennis</string>
     <string name="activity_dancing">Khiêu vũ</string>
     <string name="activity_aerobics">Aerobic</string>
+
+    <!-- Statistics Screen -->
+    <string name="statistics_title">Thống kê</string>
+    <string name="statistics_subtitle">Theo dõi tiến trình của bạn</string>
+    <string name="statistics_period_day">Ngày</string>
+    <string name="statistics_period_week">Tuần</string>
+    <string name="statistics_period_month">Tháng</string>
+    <string name="statistics_daily_summary">Tổng quan hôm nay</string>
+    <string name="statistics_weekly_summary">Tổng quan tuần</string>
+    <string name="statistics_monthly_summary">Tổng quan tháng</string>
+    <string name="statistics_average_calories_in">Calo nạp trung bình</string>
+    <string name="statistics_average_calories_burned">Calo đốt trung bình</string>
+    <string name="statistics_average_intake_short">TB calo nạp</string>
+    <string name="statistics_average_burned_short">TB calo đốt</string>
+    <string name="statistics_calories_value">%1$d kcal</string>
+    <string name="statistics_percent_value">%1$d%%</string>
+    <string name="statistics_goal">Mục tiêu</string>
+    <string name="statistics_calorie_intake">Calo nạp vào</string>
+    <string name="statistics_last_days">%1$d ngày gần nhất</string>
+    <string name="statistics_today">Hôm nay</string>
+    <string name="statistics_trend">Xu hướng calo</string>
+    <string name="statistics_no_data">Chưa có dữ liệu trong khoảng thời gian này.</string>
+    <string name="statistics_detailed_metrics">Thống kê chi tiết</string>
+    <string name="statistics_target_days">Ngày đạt mục tiêu</string>
+    <string name="statistics_current_streak">Chuỗi hiện tại</string>
+    <string name="statistics_target_days_value">%1$d/%2$d</string>
+    <string name="statistics_days_value">%1$d ngày</string>
+    <string name="statistics_motivation_title">Tiếp tục phát huy!</string>
+    <string name="statistics_motivation_streak">Bạn đang có chuỗi %1$d ngày đạt mục tiêu.</string>
+    <string name="statistics_motivation_progress">Bạn đã đạt mục tiêu %1$d/%2$d ngày trong kỳ này.</string>
+    <string name="statistics_motivation_start">Hãy ghi nhật ký mỗi ngày để theo dõi tiến trình.</string>
 </resources>

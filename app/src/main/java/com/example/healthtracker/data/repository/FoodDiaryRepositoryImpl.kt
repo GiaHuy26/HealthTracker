@@ -20,6 +20,13 @@ class FoodDiaryRepositoryImpl @Inject constructor(
         return mealDao.getMealByDate(date)
     }
 
+    override fun getMealsBetweenDates(
+        startDate: String,
+        endDate: String
+    ): Flow<List<MealEntity>> {
+        return mealDao.getMealsBetweenDates(startDate, endDate)
+    }
+
     override suspend fun searchFoods(query: String): List<FoodEntity> {
         return foodDao.searchFoods(query)
     }

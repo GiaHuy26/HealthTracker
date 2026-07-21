@@ -7,9 +7,6 @@ import kotlinx.serialization.Serializable
 sealed interface AppNavKey : NavKey
 
 @Serializable
-data object StartRoute: AppNavKey
-
-@Serializable
 data object LoginRoute: AppNavKey
 
 @Serializable

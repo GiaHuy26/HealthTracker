@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface FoodDiaryRepository {
     fun getMeal(date:String): Flow<List<MealEntity>>
+    fun getMealsBetweenDates(startDate: String, endDate: String): Flow<List<MealEntity>>
     suspend fun searchFoods(query:String): List<FoodEntity>
     suspend fun addMeal(meal: MealEntity)
     suspend fun deleteMeal(meal: MealEntity)

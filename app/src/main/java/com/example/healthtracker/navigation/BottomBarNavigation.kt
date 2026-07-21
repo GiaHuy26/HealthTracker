@@ -14,6 +14,7 @@ import com.example.healthtracker.presentation.components.BottomBars
 import com.example.healthtracker.presentation.food_diary.FoodDiaryScreen
 import com.example.healthtracker.presentation.activity_diary.ActivityDiaryScreen
 import com.example.healthtracker.presentation.dashboard.DashboardScreen
+import com.example.healthtracker.presentation.stats.StatisticsScreen
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
@@ -42,7 +43,7 @@ fun BottomBarNavigation(
                     }
                 )
                 2 -> ActivityDiaryScreen()
-                3 -> Box {}
+                3 -> StatisticsScreen()
                 4 -> Box {}
             }
         }

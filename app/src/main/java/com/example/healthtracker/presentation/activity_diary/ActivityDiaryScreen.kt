@@ -138,7 +138,8 @@ fun ActivityDiaryContent(
                         Text(
                             text = stringResource(R.string.activity_diary_title),
                             style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onBackground
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.secondary
                         )
                         Text(
                             text = displayDate,
