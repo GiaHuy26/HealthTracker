@@ -3,7 +3,7 @@ package com.example.healthtracker.presentation.settings
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.healthtracker.data.repository.AppSettingsManager
+import com.example.healthtracker.data.local.preferences.AppSettingsPreferences
 import com.example.healthtracker.di.SessionManager
 import com.example.healthtracker.domain.model.AppColor
 import com.example.healthtracker.domain.model.AppFontSize
@@ -27,14 +27,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 class SettingsViewModel @Inject constructor(
     private val userProfileRepository: UserProfileRepository,
     private val sessionManager: SessionManager,
-    private val appSettingsManager: AppSettingsManager,
+    private val appSettingsPreferences: AppSettingsPreferences,
     private val foodDiaryRepository: FoodDiaryRepository,
     @param:ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SettingsUiState())
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
-    val appSettings: StateFlow<AppSettings> = appSettingsManager.settings.stateIn(
+    val appSettings: StateFlow<AppSettings> = appSettingsPreferences.settings.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = AppSettings()
@@ -61,19 +61,19 @@ class SettingsViewModel @Inject constructor(
 
     fun setTheme(theme: AppTheme) {
         viewModelScope.launch {
-            appSettingsManager.setTheme(theme)
+            appSettingsPreferences.setTheme(theme)
         }
     }
 
     fun setColor(color: AppColor) {
         viewModelScope.launch {
-            appSettingsManager.setColor(color)
+            appSettingsPreferences.setColor(color)
         }
     }
 
     fun setFontSize(fontSize: AppFontSize) {
         viewModelScope.launch {
-            appSettingsManager.setFontSize(fontSize)
+            appSettingsPreferences.setFontSize(fontSize)
         }
     }
 
@@ -82,7 +82,7 @@ class SettingsViewModel @Inject constructor(
         onLanguageChanged: () -> Unit
     ) {
         viewModelScope.launch {
-            appSettingsManager.setLanguage(language)
+            appSettingsPreferences.setLanguage(language)
             val email = sessionManager.getCurrentUserEmail()
             foodDiaryRepository.seedSampleFood(context, language.code, email)
             onLanguageChanged()

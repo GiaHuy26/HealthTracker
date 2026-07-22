@@ -5,18 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.data.local.db.entity.FoodEntity
 import com.example.healthtracker.data.local.db.entity.MealEntity
-import com.example.healthtracker.data.repository.AppSettingsManager
+import com.example.healthtracker.data.local.preferences.AppSettingsPreferences
 import com.example.healthtracker.di.SessionManager
 import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.domain.repository.FoodDiaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddFoodViewModel @Inject constructor(
     private val foodDiaryRepository: FoodDiaryRepository,
-    private val appSettingsManager: AppSettingsManager,
+    private val appSettingsPreferences: AppSettingsPreferences,
     private val sessionManager: SessionManager,
     @param:ApplicationContext private val context: Context
 ) : ViewModel() {
@@ -32,8 +33,8 @@ class AddFoodViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AddFoodUiState())
     val uiState: StateFlow<AddFoodUiState> = _uiState.asStateFlow()
 
-    private val _saveEvent = Channel<Unit>()
-    val saveEvent = _saveEvent.receiveAsFlow()
+    private val _saveEvent = MutableSharedFlow<Unit>()
+    val saveEvent: SharedFlow<Unit> = _saveEvent.asSharedFlow()
 
     private var selectedDate: String = ""
     private var initialMealType: String? = null
@@ -50,7 +51,7 @@ class AddFoodViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             val email = sessionManager.getCurrentUserEmail()
-            val languageCode = appSettingsManager.settings.first().language.code
+            val languageCode = appSettingsPreferences.settings.first().language.code
             foodDiaryRepository.seedSampleFood(context, languageCode, email)
             loadAllFoods()
             if (mealTypeStr != null) {
@@ -206,7 +207,7 @@ class AddFoodViewModel @Inject constructor(
                     foodDiaryRepository.addMeal(meal)
                 }
                 _uiState.update { it.copy(isSaving = false) }
-                _saveEvent.send(Unit)
+                _saveEvent.emit(Unit)
             } catch (e: Exception) {
                 e.printStackTrace()
                 _uiState.update { it.copy(isSaving = false) }

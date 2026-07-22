@@ -1,4 +1,4 @@
-package com.example.healthtracker.data.repository
+package com.example.healthtracker.data.local.preferences
 
 import android.content.Context
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 private val Context.appSettingsDataStore by preferencesDataStore(name = "app_settings")
 
 @Singleton
-class AppSettingsManager @Inject constructor(
+class AppSettingsPreferences @Inject constructor(
     @ApplicationContext context: Context
 ) {
     private val dataStore = context.appSettingsDataStore

@@ -1,4 +1,4 @@
-package com.example.healthtracker.data.repository
+package com.example.healthtracker.data.local.preferences
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 private val Context.sessionDataStore by preferencesDataStore(name = "session_preferences")
 
-class SessionManagerImpl @Inject constructor(
+class SessionPreferences @Inject constructor(
     @ApplicationContext context: Context
 ) : SessionManager {
     private val dataStore = context.sessionDataStore

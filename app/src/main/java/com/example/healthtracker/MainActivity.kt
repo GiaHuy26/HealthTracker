@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.healthtracker.data.repository.AppSettingsManager
+import com.example.healthtracker.data.local.preferences.AppSettingsPreferences
 import com.example.healthtracker.domain.model.AppLanguage
 import com.example.healthtracker.navigation.AppNavigation
 import com.example.healthtracker.navigation.NavigationManager
@@ -24,18 +24,18 @@ class MainActivity : ComponentActivity() {
     lateinit var navigationManager: NavigationManager
 
     @Inject
-    lateinit var appSettingsManager: AppSettingsManager
+    lateinit var appSettingsPreferences: AppSettingsPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         lifecycleScope.launch {
-            val initialSettings = appSettingsManager.settings.first()
+            val initialSettings = appSettingsPreferences.settings.first()
             changeLanguage(initialSettings.language)
 
             setContent {
-                val appSettings = appSettingsManager.settings.collectAsStateWithLifecycle(
+                val appSettings = appSettingsPreferences.settings.collectAsStateWithLifecycle(
                     initialValue = initialSettings
                 )
 

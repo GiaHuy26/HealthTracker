@@ -8,3 +8,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Python cache files created by local helper scripts
+__pycache__/
+*.py[cod]
