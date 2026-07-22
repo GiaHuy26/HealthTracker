@@ -206,7 +206,6 @@
 
     <!-- Statistics Screen -->
     <string name="statistics_title">Statistics</string>
-    <string name="statistics_subtitle">Track your progress</string>
     <string name="statistics_period_day">Day</string>
     <string name="statistics_period_week">Week</string>
     <string name="statistics_period_month">Month</string>
@@ -231,7 +230,6 @@
     <!-- Settings Screen -->
     <string name="action_back">Back</string>
     <string name="settings_title">Settings</string>
-    <string name="settings_subtitle">Personalize your HealthTracker experience</string>
     <string name="settings_profile">Profile</string>
     <string name="settings_profile_subtitle">Edit your personal information</string>
     <string name="settings_appearance">Appearance</string>

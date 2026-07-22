@@ -84,11 +84,6 @@ fun StatisticsContent(
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.secondary
             )
-            Text(
-                text = stringResource(R.string.statistics_subtitle),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
 
             Spacer(modifier = Modifier.height(Dimens.SpaceMedium))
             Row(

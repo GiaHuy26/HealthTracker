@@ -204,7 +204,6 @@
 
     <!-- Statistics Screen -->
     <string name="statistics_title">Thống kê</string>
-    <string name="statistics_subtitle">Theo dõi tiến trình của bạn</string>
     <string name="statistics_period_day">Ngày</string>
     <string name="statistics_period_week">Tuần</string>
     <string name="statistics_period_month">Tháng</string>
@@ -229,7 +228,6 @@
     <!-- Settings Screen -->
     <string name="action_back">Quay lại</string>
     <string name="settings_title">Cài đặt</string>
-    <string name="settings_subtitle">Cá nhân hóa trải nghiệm HealthTracker</string>
     <string name="settings_profile">Hồ sơ</string>
     <string name="settings_profile_subtitle">Chỉnh sửa thông tin cá nhân</string>
     <string name="settings_appearance">Giao diện</string>
