@@ -77,6 +77,15 @@ fun ProfileSummaryCard(profile: Profile?) {
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    Text(
+                        text = stringResource(
+                            R.string.settings_bmi_value,
+                            profile.bmi,
+                            stringResource(profile.bmiLevel.titleResId)
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
             }
         }

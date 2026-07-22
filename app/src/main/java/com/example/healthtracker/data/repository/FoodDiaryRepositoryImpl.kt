@@ -18,15 +18,16 @@ class FoodDiaryRepositoryImpl @Inject constructor(
     private val foodDao: FoodDao,
     private val mealDao: MealDao
 ) : FoodDiaryRepository {
-    override fun getMeal(date: String): Flow<List<MealEntity>> {
-        return mealDao.getMealByDate(date)
+    override fun getMeal(userEmail: String, date: String): Flow<List<MealEntity>> {
+        return mealDao.getMealByDate(userEmail, date)
     }
 
     override fun getMealsBetweenDates(
+        userEmail: String,
         startDate: String,
         endDate: String
     ): Flow<List<MealEntity>> {
-        return mealDao.getMealsBetweenDates(startDate, endDate)
+        return mealDao.getMealsBetweenDates(userEmail, startDate, endDate)
     }
 
     override suspend fun searchFoods(query: String): List<FoodEntity> {
@@ -41,7 +42,11 @@ class FoodDiaryRepositoryImpl @Inject constructor(
         mealDao.deleteMeal(meal)
     }
 
-    override suspend fun seedSampleFood(context: Context, languageCode: String) {
+    override suspend fun seedSampleFood(
+        context: Context,
+        languageCode: String,
+        userEmail: String
+    ) {
         val foodToInsert = getSampleFoods(context, languageCode)
         val oldLanguageCode = if (languageCode == "vi") "en" else "vi"
         val oldFoods = getSampleFoods(context, oldLanguageCode)
@@ -49,6 +54,7 @@ class FoodDiaryRepositoryImpl @Inject constructor(
         oldFoods.forEachIndexed { index, oldFood ->
             val newFood = foodToInsert.getOrNull(index) ?: return@forEachIndexed
             mealDao.updateFoodLanguage(
+                userEmail = userEmail,
                 oldName = oldFood.name,
                 newName = newFood.name,
                 newServing = newFood.servingSize
@@ -84,11 +90,19 @@ class FoodDiaryRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMealsByDateAndType(date: String, mealType: String): List<MealEntity> {
-        return mealDao.getMealsByDateAndType(date, mealType)
+    override suspend fun getMealsByDateAndType(
+        userEmail: String,
+        date: String,
+        mealType: String
+    ): List<MealEntity> {
+        return mealDao.getMealsByDateAndType(userEmail, date, mealType)
     }
 
-    override suspend fun deleteMealsByType(date: String, mealType: String) {
-        mealDao.deleteMealsByType(date, mealType)
+    override suspend fun deleteMealsByType(
+        userEmail: String,
+        date: String,
+        mealType: String
+    ) {
+        mealDao.deleteMealsByType(userEmail, date, mealType)
     }
 }

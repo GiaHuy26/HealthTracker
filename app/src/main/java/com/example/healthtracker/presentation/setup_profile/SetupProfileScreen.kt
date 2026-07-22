@@ -205,6 +205,7 @@ fun SetupProfileContent(
                     )
                     if (uiState.errorResId == R.string.error_name_empty ||
                         uiState.errorResId == R.string.error_birthday_empty ||
+                        uiState.errorResId == R.string.error_birthday_invalid ||
                         uiState.errorResId == R.string.error_unknown
                     ) {
                         Spacer(Modifier.height(Dimens.SpaceMedium))

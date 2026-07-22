@@ -8,10 +8,10 @@ import com.example.healthtracker.domain.model.ActivityLevel
 import com.example.healthtracker.domain.model.Gender
 import com.example.healthtracker.domain.model.GoalType
 import com.example.healthtracker.domain.model.Profile
+import com.example.healthtracker.domain.model.toAge
 import com.example.healthtracker.domain.repository.UserProfileRepository
 import com.example.healthtracker.domain.usecase.setup_profile.SetupProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -20,11 +20,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class SetupProfileViewModel @Inject constructor(
@@ -74,7 +70,7 @@ class SetupProfileViewModel @Inject constructor(
 
     fun onBirthDateChange(value: String) {
         _uiState.update { state ->
-            val age = calculateAge(value)
+            val age = value.toAge()
             state.copy(birthDate = value, age = age, errorResId = null)
         }
     }
@@ -109,22 +105,6 @@ class SetupProfileViewModel @Inject constructor(
         }
     }
 
-    private fun calculateAge(birthDateString: String): Int? {
-        return try {
-            val sdf = SimpleDateFormat("MM/dd/yyyy", Locale.US)
-            val birthDate = sdf.parse(birthDateString) ?: return null
-            val today = Calendar.getInstance()
-            val birth = Calendar.getInstance().apply { time = birthDate }
-            var age = today.get(Calendar.YEAR) - birth.get(Calendar.YEAR)
-            if (today.get(Calendar.DAY_OF_YEAR) < birth.get(Calendar.DAY_OF_YEAR)) {
-                age--
-            }
-            if (age < 0) 0 else age
-        } catch (e: Exception) {
-            null
-        }
-    }
-
     fun onSaveProfile() {
         viewModelScope.launch {
             val state = _uiState.value
@@ -148,7 +128,6 @@ class SetupProfileViewModel @Inject constructor(
             _uiState.update {
                 it.copy(isLoading = true, errorResId = null)
             }
-            delay(2000.milliseconds)
             try {
                 val email = sessionManager.getCurrentUserEmail()
                 val profile = Profile(
@@ -167,6 +146,7 @@ class SetupProfileViewModel @Inject constructor(
                 val errorResId = when (e.message) {
                     "ERR_NAME_EMPTY" -> R.string.error_name_empty
                     "ERR_BIRTHDAY_EMPTY" -> R.string.error_birthday_empty
+                    "ERR_BIRTHDAY_INVALID" -> R.string.error_birthday_invalid
                     "ERR_WEIGHT_INVALID" -> R.string.error_weight_invalid
                     "ERR_HEIGHT_INVALID" -> R.string.error_height_invalid
                     else -> R.string.error_unknown

@@ -45,14 +45,17 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onLoginClick() {
+        if (_uiState.value.isLoading) return
+
+        _uiState.update {
+            it.copy(isLoading = true, errorResId = null)
+        }
+
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(isLoading = true, errorResId = null)
-            }
             try {
                 val state = _uiState.value
                 val user = loginUseCase(
-                    email = state.email.trim(),
+                    email = state.email,
                     password = state.password
                 )
                 sessionManager.saveUserEmail(user.email)

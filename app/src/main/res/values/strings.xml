@@ -60,16 +60,18 @@
     <string name="error_email_invalid">Email không hợp lệ!</string>
     <string name="error_email_empty">Email không được để trống!</string>
     <string name="error_password_mismatch">Mật khẩu xác nhận không khớp!</string>
+    <string name="error_confirm_password_empty">Xác nhận mật khẩu không được để trống!</string>
     <string name="error_unknown">Đã xảy ra lỗi không xác định!</string>
-    <string name="error_password_empty">Password không được để trống!</string>
-    <string name="error_password_too_short">Password quá ngắn (không được ít hơn 6 ký tự)!</string>
+    <string name="error_password_empty">Mật khẩu không được để trống!</string>
+    <string name="error_password_too_short">Mật khẩu phải có ít nhất 6 ký tự!</string>
     <string name="error_wrong_credentials">Email hoặc mật khẩu không chính xác!</string>
     <string name="error_name_empty">Họ và tên không được để trống!</string>
     <string name="error_birthday_empty">Ngày sinh không được để trống!</string>
+    <string name="error_birthday_invalid">Ngày sinh phải đúng định dạng MM/dd/yyyy và hợp lệ!</string>
     <string name="error_activity_level_empty">Vui lòng chọn mức độ vận động!</string>
     <string name="error_goal_empty">Vui lòng chọn mục tiêu của bạn!</string>
-    <string name="error_weight_invalid">Cân nặng phải lớn hơn 0!</string>
-    <string name="error_height_invalid">Chiều cao phải lớn hơn 0!</string>
+    <string name="error_weight_invalid">Cân nặng phải từ 20 đến 300 kg!</string>
+    <string name="error_height_invalid">Chiều cao phải từ 80 đến 250 cm!</string>
 
     <!-- SetupProfile -->
     <string name="activity_sedentary_title">Ít vận động</string>
@@ -265,6 +267,7 @@
     <string name="settings_no_profile">Chưa có thông tin hồ sơ</string>
     <string name="settings_profile_detail">%1$d tuổi • %2$s</string>
     <string name="settings_tdee_and_bmi">TDEE: %1$d kcal • BMI: %2$.1f (%3$s)</string>
+    <string name="settings_bmi_value">BMI: %1$.1f • %2$s</string>
     <string name="settings_bmi_underweight">Thiếu cân</string>
     <string name="settings_bmi_normal">Bình thường</string>
     <string name="settings_bmi_overweight">Thừa cân</string>

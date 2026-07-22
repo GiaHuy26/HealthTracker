@@ -12,7 +12,7 @@ import com.example.healthtracker.domain.model.AppTheme
 
 private fun getPrimaryColor(preset: AppColor): Color {
     return when (preset) {
-        AppColor.GREEN -> HealthGreen
+        AppColor.GREEN -> HealthGreenDark
         AppColor.BLUE -> HealthBlue
         AppColor.PURPLE -> HealthPurple
         AppColor.ORANGE -> HealthOrange

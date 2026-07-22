@@ -61,16 +61,18 @@
     <string name="error_email_invalid">Invalid email format!</string>
     <string name="error_email_empty">Email cannot be empty!</string>
     <string name="error_password_mismatch">Confirm password does not match!</string>
+    <string name="error_confirm_password_empty">Confirm password cannot be empty!</string>
     <string name="error_unknown">An unknown error occurred!</string>
     <string name="error_password_empty">Password cannot be empty!</string>
-    <string name="error_password_too_short">Password too short (cannot less than 6 characters)!</string>
+    <string name="error_password_too_short">Password must contain at least 6 characters!</string>
     <string name="error_wrong_credentials">Invalid email or password!</string>
     <string name="error_name_empty">Full name cannot be empty!</string>
     <string name="error_birthday_empty">Date of birth cannot be empty!</string>
+    <string name="error_birthday_invalid">Date of birth must use MM/dd/yyyy and be valid!</string>
     <string name="error_activity_level_empty">Please select activity level!</string>
     <string name="error_goal_empty">Please select your goal!</string>
-    <string name="error_weight_invalid">Weight must be greater than 0!</string>
-    <string name="error_height_invalid">Height must be greater than 0!</string>
+    <string name="error_weight_invalid">Weight must be between 20 and 300 kg!</string>
+    <string name="error_height_invalid">Height must be between 80 and 250 cm!</string>
 
     <!-- SetupProfile -->
     <string name="activity_sedentary_title">Sedentary</string>
@@ -267,6 +269,7 @@
     <string name="settings_no_profile">No profile information</string>
     <string name="settings_profile_detail">Age %1$d • %2$s</string>
     <string name="settings_tdee_and_bmi">TDEE: %1$d kcal • BMI: %2$.1f (%3$s)</string>
+    <string name="settings_bmi_value">BMI: %1$.1f • %2$s</string>
     <string name="settings_bmi_underweight">Underweight</string>
     <string name="settings_bmi_normal">Normal</string>
     <string name="settings_bmi_overweight">Overweight</string>

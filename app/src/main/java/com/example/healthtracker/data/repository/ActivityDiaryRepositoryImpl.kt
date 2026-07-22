@@ -10,15 +10,19 @@ class ActivityDiaryRepositoryImpl @Inject constructor(
     private val userActivityDao: UserActivityDao
 ) : ActivityDiaryRepository {
 
-    override fun getActivitiesByDate(date: String): Flow<List<UserActivityEntity>> {
-        return userActivityDao.getActivitiesByDate(date)
+    override fun getActivitiesByDate(
+        userEmail: String,
+        date: String
+    ): Flow<List<UserActivityEntity>> {
+        return userActivityDao.getActivitiesByDate(userEmail, date)
     }
 
     override fun getActivitiesBetweenDates(
+        userEmail: String,
         startDate: String,
         endDate: String
     ): Flow<List<UserActivityEntity>> {
-        return userActivityDao.getActivitiesBetweenDates(startDate, endDate)
+        return userActivityDao.getActivitiesBetweenDates(userEmail, startDate, endDate)
     }
 
     override suspend fun addActivity(activity: UserActivityEntity) {

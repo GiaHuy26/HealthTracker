@@ -70,7 +70,8 @@ class SettingsViewModel @Inject constructor(
     ) {
         appSettingsManager.setLanguage(language)
         viewModelScope.launch {
-            foodDiaryRepository.seedSampleFood(context, language.code)
+            val email = sessionManager.getCurrentUserEmail()
+            foodDiaryRepository.seedSampleFood(context, language.code, email)
             onLanguageChanged()
         }
     }

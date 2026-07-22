@@ -13,7 +13,7 @@ import com.example.healthtracker.data.local.db.entity.UserEntity
 
 @Database(
     entities = [UserEntity::class, FoodEntity::class, MealEntity::class, UserActivityEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

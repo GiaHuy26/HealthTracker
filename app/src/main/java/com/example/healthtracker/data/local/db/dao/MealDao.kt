@@ -12,20 +12,27 @@ import kotlinx.coroutines.flow.Flow
 interface MealDao {
     @Query(
         "UPDATE meals SET foodName = :newName, servingSize = :newServing " +
-            "WHERE foodName = :oldName"
+            "WHERE userEmail = :userEmail AND foodName = :oldName"
     )
     suspend fun updateFoodLanguage(
+        userEmail: String,
         oldName: String,
         newName: String,
         newServing: String
     )
 
+    @Query("SELECT * FROM meals WHERE userEmail = :userEmail AND date = :date")
+    fun getMealByDate(userEmail: String, date: String): Flow<List<MealEntity>>
 
-    @Query("SELECT * FROM meals WHERE date = :date")
-    fun getMealByDate(date: String): Flow<List<MealEntity>>
-
-    @Query("SELECT * FROM meals WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC")
-    fun getMealsBetweenDates(startDate: String, endDate: String): Flow<List<MealEntity>>
+    @Query(
+        "SELECT * FROM meals WHERE userEmail = :userEmail " +
+            "AND date BETWEEN :startDate AND :endDate ORDER BY date ASC"
+    )
+    fun getMealsBetweenDates(
+        userEmail: String,
+        startDate: String,
+        endDate: String
+    ): Flow<List<MealEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMeal(meal: MealEntity): Long
@@ -33,9 +40,19 @@ interface MealDao {
     @Delete
     suspend fun deleteMeal(log: MealEntity)
 
-    @Query("SELECT * FROM meals WHERE date = :date AND mealType = :mealType")
-    suspend fun getMealsByDateAndType(date: String, mealType: String): List<MealEntity>
+    @Query(
+        "SELECT * FROM meals WHERE userEmail = :userEmail " +
+            "AND date = :date AND mealType = :mealType"
+    )
+    suspend fun getMealsByDateAndType(
+        userEmail: String,
+        date: String,
+        mealType: String
+    ): List<MealEntity>
 
-    @Query("DELETE FROM meals WHERE date = :date AND mealType = :mealType")
-    suspend fun deleteMealsByType(date: String, mealType: String)
+    @Query(
+        "DELETE FROM meals WHERE userEmail = :userEmail " +
+            "AND date = :date AND mealType = :mealType"
+    )
+    suspend fun deleteMealsByType(userEmail: String, date: String, mealType: String)
 }

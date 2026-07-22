@@ -124,6 +124,7 @@ fun PreviewMealCard() {
     val sampleFoods = listOf(
         MealEntity(
             id = 1,
+            userEmail = "preview@example.com",
             date = "2026-07-15",
             mealType = "Breakfast",
             foodName = "Oatmeal",
@@ -133,6 +134,7 @@ fun PreviewMealCard() {
         ),
         MealEntity(
             id = 2,
+            userEmail = "preview@example.com",
             date = "2026-07-15",
             mealType = "Breakfast",
             foodName = "Banana",
@@ -142,6 +144,7 @@ fun PreviewMealCard() {
         ),
         MealEntity(
             id = 3,
+            userEmail = "preview@example.com",
             date = "2026-07-15",
             mealType = "Breakfast",
             foodName = "Boiled Egg",

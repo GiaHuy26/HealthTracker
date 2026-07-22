@@ -176,7 +176,7 @@ private fun SettingsContentPreview() {
         SettingsContent(
             uiState = SettingsUiState(
                 profile = Profile(
-                    userName = "Quân Gia Huy",
+                    userName = "Quan Gia Huy",
                     birthDate = "07/21/2003",
                     gender = Gender.MALE,
                     weight = 65f,
