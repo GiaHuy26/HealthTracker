@@ -65,7 +65,8 @@ class FoodDiaryViewModel @Inject constructor(
 
         mealCollectJob?.cancel()
         mealCollectJob = viewModelScope.launch {
-            foodDiaryRepository.getMeal(dateString).collect { mealsList ->
+            val email = sessionManager.getCurrentUserEmail()
+            foodDiaryRepository.getMeal(email, dateString).collect { mealsList ->
                 val targetCalories = _uiState.value.targetCalories
                 val totalCalories = mealsList.sumOf { it.calories }
 
@@ -87,9 +88,7 @@ class FoodDiaryViewModel @Inject constructor(
     }
 
     private fun calculateCalories(profile: Profile): Int? {
-        return (profile.tdee + profile.goalType.caloriesOffset)
-            .toInt()
-            .takeIf { it > 0 }
+        return profile.dailyCalorieTarget.toInt().takeIf { it > 0 }
     }
 
     fun selectDateByMillis(millis: Long) {

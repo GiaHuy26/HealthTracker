@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.healthtracker.R
+import com.example.healthtracker.domain.model.AppFontSize
 
 val MontserratFontFamily = FontFamily(
     Font(R.font.montserrat_regular, FontWeight.Normal),
@@ -14,12 +15,6 @@ val MontserratFontFamily = FontFamily(
     Font(R.font.montserrat_semibold, FontWeight.SemiBold),
     Font(R.font.montserrat_bold, FontWeight.Bold)
 )
-
-enum class TextSizePreset(val scaleFactor: Float) {
-    SMALL(0.85f),
-    MEDIUM(1.0f),
-    LARGE(1.15f)
-}
 
 val BaseTypography = Typography(
     displayLarge = TextStyle(
@@ -114,8 +109,8 @@ val BaseTypography = Typography(
     )
 )
 
-fun getScaledTypography(preset: TextSizePreset): Typography {
-    val factor = preset.scaleFactor
+fun getScaledTypography(fontSize: AppFontSize): Typography {
+    val factor = fontSize.scale
     return Typography(
         displayLarge = BaseTypography.displayLarge.copy(
             fontSize = (BaseTypography.displayLarge.fontSize.value * factor).sp,

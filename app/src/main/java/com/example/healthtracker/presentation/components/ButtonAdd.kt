@@ -16,8 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.Dp
 import com.example.healthtracker.presentation.theme.Dimens
-import com.example.healthtracker.presentation.theme.HealthBlue
-import com.example.healthtracker.presentation.theme.HealthGreen
 
 @Composable
 fun ButtonAdd(
@@ -30,7 +28,10 @@ fun ButtonAdd(
             .clip(CircleShape)
             .background(
                 brush = Brush.horizontalGradient(
-                    colors = listOf(HealthGreen, HealthBlue)
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.tertiary
+                    )
                 )
             )
             .size(size)

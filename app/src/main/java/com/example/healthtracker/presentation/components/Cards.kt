@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.presentation.theme.Dimens
-import com.example.healthtracker.presentation.theme.HealthTextLight
 
 @Composable
 fun Cards(
@@ -25,7 +25,7 @@ fun Cards(
             defaultElevation = Dimens.Elevation
         ),
         colors = CardDefaults.cardColors(
-            containerColor = HealthTextLight
+            containerColor = MaterialTheme.colorScheme.surface
         )
 
     ) {

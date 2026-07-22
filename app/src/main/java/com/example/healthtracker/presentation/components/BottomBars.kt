@@ -22,14 +22,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.R
 import com.example.healthtracker.presentation.theme.Dimens
-import com.example.healthtracker.presentation.theme.HealthGreen
-import com.example.healthtracker.presentation.theme.HealthTextMutedGreen
 
 @Composable
 fun BottomBars(
@@ -67,7 +64,13 @@ fun BottomBars(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(Dimens.CornerExtraLarge))
-                        .background(if (isSelected) HealthGreen else Color.Transparent)
+                        .background(
+                            if (isSelected) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.background
+                            }
+                        )
                         .clickable { onTabSelected(index) }
                         .padding(horizontal = Dimens.SpaceMedium, vertical = Dimens.SpaceSmall),
                     contentAlignment = Alignment.Center
@@ -75,7 +78,11 @@ fun BottomBars(
                     Icon(
                         imageVector = icon,
                         contentDescription = label,
-                        tint = if (isSelected) HealthTextMutedGreen else MaterialTheme.colorScheme.onSurfaceVariant,
+                        tint = if (isSelected) {
+                            MaterialTheme.colorScheme.onPrimary
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        },
                         modifier = Modifier.size(Dimens.IconNormal)
                     )
                 }

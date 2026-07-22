@@ -27,8 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import com.example.healthtracker.R
 import com.example.healthtracker.presentation.dashboard.DashboardUiState
 import com.example.healthtracker.presentation.theme.Dimens
-import com.example.healthtracker.presentation.theme.HealthBlue
-import com.example.healthtracker.presentation.theme.HealthLightGreen
 
 @Composable
 fun CaloriesGoalCard(uiState: DashboardUiState) {
@@ -45,7 +43,10 @@ fun CaloriesGoalCard(uiState: DashboardUiState) {
                 .fillMaxSize()
                 .background(
                     Brush.linearGradient(
-                        colors = listOf(HealthLightGreen, HealthBlue)
+                        colors = listOf(
+                            MaterialTheme.colorScheme.primary,
+                            MaterialTheme.colorScheme.tertiary
+                        )
                     )
                 )
                 .padding(Dimens.CardPadding),

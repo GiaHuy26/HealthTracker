@@ -6,36 +6,43 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.example.healthtracker.domain.model.AppColor
+import com.example.healthtracker.domain.model.AppSettings
+import com.example.healthtracker.domain.model.AppTheme
 
-enum class ThemeBrightness {
-    LIGHT, DARK
-}
-
-enum class ColorPreset {
-    GREEN, BLUE, PURPLE, ORANGE, PINK, TEAL
-}
-
-data class ThemeConfig(
-    val brightness: ThemeBrightness = ThemeBrightness.LIGHT,
-    val colorPreset: ColorPreset = ColorPreset.GREEN,
-    val textSizePreset: TextSizePreset = TextSizePreset.MEDIUM
-)
-
-private fun getLightColorScheme(preset: ColorPreset): ColorScheme {
-    val primaryColor = when (preset) {
-        ColorPreset.GREEN -> HealthGreen
-        ColorPreset.BLUE -> HealthBlue
-        ColorPreset.PURPLE -> HealthPurple
-        ColorPreset.ORANGE -> HealthOrange
-        ColorPreset.PINK -> HealthPink
-        ColorPreset.TEAL -> HealthTeal
+private fun getPrimaryColor(preset: AppColor): Color {
+    return when (preset) {
+        AppColor.GREEN -> HealthGreenDark
+        AppColor.BLUE -> HealthBlue
+        AppColor.PURPLE -> HealthPurple
+        AppColor.ORANGE -> HealthOrange
+        AppColor.PINK -> HealthPink
+        AppColor.TEAL -> HealthTeal
     }
+}
+
+private fun getGradientEndColor(preset: AppColor): Color {
+    return when (preset) {
+        AppColor.GREEN -> HealthBlue
+        AppColor.BLUE -> HealthTeal
+        AppColor.PURPLE -> HealthPink
+        AppColor.ORANGE -> HealthPink
+        AppColor.PINK -> HealthPurple
+        AppColor.TEAL -> HealthBlue
+    }
+}
+
+private fun getLightColorScheme(preset: AppColor): ColorScheme {
+    val primaryColor = getPrimaryColor(preset)
+    val gradientEndColor = getGradientEndColor(preset)
 
     return lightColorScheme(
         primary = primaryColor,
         onPrimary = Color.White,
-        secondary = HealthGreenDark  ,
+        secondary = primaryColor,
         onSecondary = Color.White,
+        tertiary = gradientEndColor,
+        onTertiary = Color.White,
         primaryContainer = primaryColor.copy(alpha = 0.2f),
         background = HealthBgLight,
         onBackground = HealthTextDark,
@@ -49,21 +56,17 @@ private fun getLightColorScheme(preset: ColorPreset): ColorScheme {
     )
 }
 
-private fun getDarkColorScheme(preset: ColorPreset): ColorScheme {
-    val primaryColor = when (preset) {
-        ColorPreset.GREEN -> HealthGreen
-        ColorPreset.BLUE -> HealthBlue
-        ColorPreset.PURPLE -> HealthPurple
-        ColorPreset.ORANGE -> HealthOrange
-        ColorPreset.PINK -> HealthPink
-        ColorPreset.TEAL -> HealthTeal
-    }
+private fun getDarkColorScheme(preset: AppColor): ColorScheme {
+    val primaryColor = getPrimaryColor(preset)
+    val gradientEndColor = getGradientEndColor(preset)
 
     return darkColorScheme(
         primary = primaryColor,
         onPrimary = HealthBgDark,
-        secondary = HealthBgDark,
-        onSecondary = HealthTextLight,
+        secondary = primaryColor,
+        onSecondary = HealthBgDark,
+        tertiary = gradientEndColor,
+        onTertiary = HealthBgDark,
         primaryContainer = primaryColor.copy(alpha = 0.2f),
         background = HealthBgDark,
         onBackground = HealthTextLight,
@@ -77,17 +80,20 @@ private fun getDarkColorScheme(preset: ColorPreset): ColorScheme {
     )
 }
 
-private fun getColorScheme(preset: ColorPreset, isDark: Boolean) = 
+private fun getColorScheme(preset: AppColor, isDark: Boolean) =
     if (isDark) getDarkColorScheme(preset) else getLightColorScheme(preset)
 
 @Composable
 fun HealthTrackerTheme(
-    themeConfig: ThemeConfig = ThemeConfig(),
+    appSettings: AppSettings = AppSettings(),
     content: @Composable () -> Unit
 ) {
-    val isDark = themeConfig.brightness == ThemeBrightness.DARK
-    val colorScheme = getColorScheme(themeConfig.colorPreset, isDark)
-    val typography = getScaledTypography(themeConfig.textSizePreset)
+    val isDark = when (appSettings.theme) {
+        AppTheme.LIGHT -> false
+        AppTheme.DARK -> true
+    }
+    val colorScheme = getColorScheme(appSettings.color, isDark)
+    val typography = getScaledTypography(appSettings.fontSize)
 
     MaterialTheme(
         colorScheme = colorScheme,

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.AlignVerticalBottom
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Flag
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.outlined.Scale
 import androidx.compose.material.icons.outlined.Straighten
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -63,7 +65,7 @@ fun SetupProfileScreen(
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
             when (event) {
-                SetupProfileViewModel.SetupProfileNavigationEvent.NavigateToHome -> {
+                SetupProfileViewModel.SetupProfileNavigationEvent.ProfileSaved -> {
                     navigationManager.navigateAndClearStack(HomeRoute)
                 }
             }
@@ -93,7 +95,9 @@ fun SetupProfileContent(
     onHeightChange: (String) -> Unit = {},
     onActivityLevelClick: (ActivityLevel) -> Unit = {},
     onGoalTypeClick: (GoalType) -> Unit = {},
-    onSaveProfile: () -> Unit = {}
+    onSaveProfile: () -> Unit = {},
+    isEditMode: Boolean = false,
+    onBackClick: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
     Box(modifier = Modifier.fillMaxSize()) {
@@ -105,13 +109,32 @@ fun SetupProfileContent(
                 .safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = stringResource(id = R.string.setup_profile_title),
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    fontWeight = FontWeight.Bold
-                ),
-                color = MaterialTheme.colorScheme.secondary
-            )
+            if (isEditMode) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                            contentDescription = stringResource(R.string.action_back)
+                        )
+                    }
+                    Text(
+                        text = stringResource(R.string.settings_edit_profile),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            } else {
+                Text(
+                    text = stringResource(id = R.string.setup_profile_title),
+                    style = MaterialTheme.typography.headlineLarge.copy(
+                        fontWeight = FontWeight.Bold
+                    ),
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
             Spacer(Modifier.height(Dimens.SpaceMedium))
             Spacer(Modifier.height(Dimens.SpaceMedium))
             Cards(
@@ -182,6 +205,7 @@ fun SetupProfileContent(
                     )
                     if (uiState.errorResId == R.string.error_name_empty ||
                         uiState.errorResId == R.string.error_birthday_empty ||
+                        uiState.errorResId == R.string.error_birthday_invalid ||
                         uiState.errorResId == R.string.error_unknown
                     ) {
                         Spacer(Modifier.height(Dimens.SpaceMedium))
@@ -329,9 +353,16 @@ fun SetupProfileContent(
             }
             Spacer(Modifier.height(Dimens.SpaceMedium))
             Button(
-                text = stringResource(R.string.btn_saveProfile),
+                text = if (isEditMode) {
+                    stringResource(R.string.settings_save_changes)
+                } else {
+                    stringResource(R.string.btn_saveProfile)
+                },
                 onClick = onSaveProfile
             )
+            if (isEditMode) {
+                Spacer(Modifier.height(Dimens.DashboardBottomContentPadding))
+            }
         }
         if (uiState.isLoading) {
             Box(

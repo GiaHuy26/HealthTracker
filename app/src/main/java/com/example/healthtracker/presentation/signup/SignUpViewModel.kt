@@ -49,15 +49,18 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onSignUp() {
+        if (_uiState.value.isLoading) return
+
+        _uiState.update {
+            it.copy(isLoading = true, errorResId = null)
+        }
+
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(isLoading = true, errorResId = null)
-            }
             try {
                 val state = _uiState.value
 
-                val user = signUpUseCase(
-                    email = state.email.trim(),
+                signUpUseCase(
+                    email = state.email,
                     password = state.password,
                     confirmPassword = state.confirmPassword
                 )
@@ -71,6 +74,7 @@ class SignUpViewModel @Inject constructor(
                     "ERR_EMAIL_EXISTS" -> R.string.error_email_exists
                     "ERR_PASSWORD_EMPTY" -> R.string.error_password_empty
                     "ERR_PASSWORD_TOO_SHORT" -> R.string.error_password_too_short
+                    "ERR_CONFIRM_PASSWORD_EMPTY" -> R.string.error_confirm_password_empty
                     "ERR_PASSWORDS_DO_NOT_MATCH" -> R.string.error_password_mismatch
                     else -> R.string.error_unknown
                 }

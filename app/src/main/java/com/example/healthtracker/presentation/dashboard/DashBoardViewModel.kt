@@ -36,10 +36,6 @@ class DashboardViewModel @Inject constructor(
     }
     private var dashboardCollectJob: Job? = null
 
-    init {
-        loadDashboard()
-    }
-
     fun loadDashboard(date: Date = Date()) {
         val dateString = databaseDateFormat.format(date)
         _uiState.update {
@@ -64,8 +60,8 @@ class DashboardViewModel @Inject constructor(
                 }
 
                 combine(
-                    foodDiaryRepository.getMeal(dateString),
-                    activityDiaryRepository.getActivitiesByDate(dateString)
+                    foodDiaryRepository.getMeal(email, dateString),
+                    activityDiaryRepository.getActivitiesByDate(email, dateString)
                 ) { meals, activities ->
                     meals to activities
                 }.collect { (meals, activities) ->
@@ -100,6 +96,6 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun calculateTargetCalories(profile: Profile): Int {
-        return profile.tdee.toInt().coerceAtLeast(0)
+        return profile.dailyCalorieTarget.toInt()
     }
 }

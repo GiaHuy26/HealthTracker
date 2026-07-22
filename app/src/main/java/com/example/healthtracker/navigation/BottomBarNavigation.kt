@@ -15,6 +15,7 @@ import com.example.healthtracker.presentation.food_diary.FoodDiaryScreen
 import com.example.healthtracker.presentation.activity_diary.ActivityDiaryScreen
 import com.example.healthtracker.presentation.dashboard.DashboardScreen
 import com.example.healthtracker.presentation.stats.StatisticsScreen
+import com.example.healthtracker.presentation.settings.SettingsScreen
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
@@ -33,7 +34,8 @@ fun BottomBarNavigation(
                 0 -> DashboardScreen(
                     onAddMealClick = { selectedTab = 1 },
                     onAddActivityClick = { selectedTab = 2 },
-                    onViewAllMealsClick = { selectedTab = 1 }
+                    onViewAllMealsClick = { selectedTab = 1 },
+                    onProfileClick = { selectedTab = 4 }
                 )
                 1 -> FoodDiaryScreen(
                     onAddMealClick = { date, mealType ->
@@ -44,7 +46,11 @@ fun BottomBarNavigation(
                 )
                 2 -> ActivityDiaryScreen()
                 3 -> StatisticsScreen()
-                4 -> Box {}
+                4 -> SettingsScreen(
+                    onLogoutComplete = {
+                        navigationManager.navigateAndClearStack(LoginRoute)
+                    }
+                )
             }
         }
 

@@ -2,6 +2,7 @@ package com.example.healthtracker.presentation.dashboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -58,15 +60,21 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel(),
     onAddMealClick: () -> Unit = {},
     onAddActivityClick: () -> Unit = {},
-    onViewAllMealsClick: () -> Unit = onAddMealClick
+    onViewAllMealsClick: () -> Unit = onAddMealClick,
+    onProfileClick: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadDashboard()
+    }
 
     DashboardContent(
         uiState = uiState,
         onAddMealClick = onAddMealClick,
         onAddActivityClick = onAddActivityClick,
-        onViewAllMealsClick = onViewAllMealsClick
+        onViewAllMealsClick = onViewAllMealsClick,
+        onProfileClick = onProfileClick
     )
 }
 
@@ -75,7 +83,8 @@ fun DashboardContent(
     uiState: DashboardUiState = DashboardUiState(),
     onAddMealClick: () -> Unit = {},
     onAddActivityClick: () -> Unit = {},
-    onViewAllMealsClick: () -> Unit = onAddMealClick
+    onViewAllMealsClick: () -> Unit = onAddMealClick,
+    onProfileClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -125,7 +134,8 @@ fun DashboardContent(
                     modifier = Modifier
                         .size(Dimens.ButtonHeight)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.primaryContainer),
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .clickable(onClick = onProfileClick),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(

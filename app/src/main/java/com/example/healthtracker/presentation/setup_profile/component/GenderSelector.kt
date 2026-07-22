@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.example.healthtracker.domain.model.Gender
 import com.example.healthtracker.presentation.theme.Dimens
@@ -38,7 +37,7 @@ fun GenderSelector(
             .fillMaxWidth()
             .height(Dimens.ButtonHeightMedium)
             .background(
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(Dimens.CornerExtraLarge)
             )
             .padding(Dimens.SpaceSmall),
@@ -49,7 +48,11 @@ fun GenderSelector(
 
             val contentColor =
                 if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant
-            val itemBgColor = if (isSelected) Color.White else Color.Transparent
+            val itemBgColor = if (isSelected) {
+                MaterialTheme.colorScheme.surface
+            } else {
+                MaterialTheme.colorScheme.surfaceVariant
+            }
 
             Box(
                 modifier = modifier

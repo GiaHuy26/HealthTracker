@@ -34,12 +34,12 @@ class StatisticsViewModel @Inject constructor(
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
     private var loadJob: Job? = null
 
-    init {
-        loadStatistics(StatisticsPeriod.WEEK)
-    }
-
     fun selectPeriod(period: StatisticsPeriod) {
         loadStatistics(period)
+    }
+
+    fun refreshStatistics() {
+        loadStatistics(_uiState.value.selectedPeriod)
     }
 
     private fun loadStatistics(period: StatisticsPeriod) {
@@ -62,13 +62,15 @@ class StatisticsViewModel @Inject constructor(
             try {
                 val email = sessionManager.getCurrentUserEmail()
                 val profile = userProfileRepository.getProfile(email)
-                val targetCalories = profile?.tdee?.toInt() ?: 0
+                val targetCalories = profile?.dailyCalorieTarget?.toInt() ?: 0
 
                 val mealsFlow = foodDiaryRepository.getMealsBetweenDates(
+                    email,
                     startDate,
                     endDate
                 )
                 val activitiesFlow = activityDiaryRepository.getActivitiesBetweenDates(
+                    email,
                     startDate,
                     endDate
                 )

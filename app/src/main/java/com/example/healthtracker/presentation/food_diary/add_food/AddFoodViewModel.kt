@@ -5,15 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthtracker.data.local.db.entity.FoodEntity
 import com.example.healthtracker.data.local.db.entity.MealEntity
+import com.example.healthtracker.data.local.preferences.AppSettingsPreferences
+import com.example.healthtracker.di.SessionManager
 import com.example.healthtracker.domain.model.MealType
 import com.example.healthtracker.domain.repository.FoodDiaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,14 +25,16 @@ import javax.inject.Inject
 @HiltViewModel
 class AddFoodViewModel @Inject constructor(
     private val foodDiaryRepository: FoodDiaryRepository,
-    @ApplicationContext private val context: Context
+    private val appSettingsPreferences: AppSettingsPreferences,
+    private val sessionManager: SessionManager,
+    @param:ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AddFoodUiState())
     val uiState: StateFlow<AddFoodUiState> = _uiState.asStateFlow()
 
-    private val _saveEvent = Channel<Unit>()
-    val saveEvent = _saveEvent.receiveAsFlow()
+    private val _saveEvent = MutableSharedFlow<Unit>()
+    val saveEvent: SharedFlow<Unit> = _saveEvent.asSharedFlow()
 
     private var selectedDate: String = ""
     private var initialMealType: String? = null
@@ -44,10 +50,12 @@ class AddFoodViewModel @Inject constructor(
 
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            foodDiaryRepository.seedSampleFood(context)
+            val email = sessionManager.getCurrentUserEmail()
+            val languageCode = appSettingsPreferences.settings.first().language.code
+            foodDiaryRepository.seedSampleFood(context, languageCode, email)
             loadAllFoods()
             if (mealTypeStr != null) {
-                loadExistingMeals(date, mealTypeStr)
+                loadExistingMeals(email, date, mealTypeStr)
             } else {
                 _uiState.update { it.copy(selectedFoods = emptyList()) }
             }
@@ -55,9 +63,17 @@ class AddFoodViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadExistingMeals(date: String, mealType: String) {
+    private suspend fun loadExistingMeals(
+        userEmail: String,
+        date: String,
+        mealType: String
+    ) {
         try {
-            val existingMeals = foodDiaryRepository.getMealsByDateAndType(date, mealType)
+            val existingMeals = foodDiaryRepository.getMealsByDateAndType(
+                userEmail,
+                date,
+                mealType
+            )
             if (existingMeals.isNotEmpty()) {
                 val selectedItems = existingMeals.map { meal ->
                     val matchingFood = _uiState.value.listFoods.find { it.name.equals(meal.foodName, ignoreCase = true) }
@@ -162,15 +178,25 @@ class AddFoodViewModel @Inject constructor(
         _uiState.update { it.copy(isSaving = true) }
         viewModelScope.launch {
             try {
+                val email = sessionManager.getCurrentUserEmail()
                 val mealTypeStr = (_uiState.value.selectedMealType ?: MealType.BREAKFAST).name
-                if (initialMealType != null) {
-                    foodDiaryRepository.deleteMealsByType(selectedDate, initialMealType!!)
+                val previousMealType = initialMealType
+
+                previousMealType?.let { mealType ->
+                    foodDiaryRepository.deleteMealsByType(
+                        email,
+                        selectedDate,
+                        mealType
+                    )
                 }
-                if (initialMealType == null || !initialMealType.equals(mealTypeStr, ignoreCase = true)) {
-                    foodDiaryRepository.deleteMealsByType(selectedDate, mealTypeStr)
+                if (previousMealType == null ||
+                    !previousMealType.equals(mealTypeStr, ignoreCase = true)
+                ) {
+                    foodDiaryRepository.deleteMealsByType(email, selectedDate, mealTypeStr)
                 }
                 selected.forEach { item ->
                     val meal = MealEntity(
+                        userEmail = email,
                         date = selectedDate,
                         mealType = mealTypeStr,
                         foodName = item.foods.name,
@@ -181,7 +207,7 @@ class AddFoodViewModel @Inject constructor(
                     foodDiaryRepository.addMeal(meal)
                 }
                 _uiState.update { it.copy(isSaving = false) }
-                _saveEvent.send(Unit)
+                _saveEvent.emit(Unit)
             } catch (e: Exception) {
                 e.printStackTrace()
                 _uiState.update { it.copy(isSaving = false) }

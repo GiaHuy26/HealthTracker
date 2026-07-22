@@ -65,28 +65,29 @@ class ActivityDiaryViewModel @Inject constructor(
                     calculateTargetBurnedCalories(it)
                 } ?: 0
 
-                activityDiaryRepository.getActivitiesByDate(dateString).collect { activities ->
-                    val totalCalories = activities.sumOf { it.caloriesBurned }
-                    val progressFloat = if (currentTarget > 0) {
-                        totalCalories.toFloat() / currentTarget
-                    } else {
-                        0f
-                    }
-                    val progressPercentage = (progressFloat * 100)
-                        .toInt()
-                        .coerceAtMost(100)
+                activityDiaryRepository.getActivitiesByDate(email, dateString)
+                    .collect { activities ->
+                        val totalCalories = activities.sumOf { it.caloriesBurned }
+                        val progressFloat = if (currentTarget > 0) {
+                            totalCalories.toFloat() / currentTarget
+                        } else {
+                            0f
+                        }
+                        val progressPercentage = (progressFloat * 100)
+                            .toInt()
+                            .coerceAtMost(100)
 
-                    _uiState.update {
-                        it.copy(
-                            activity = activities,
-                            totalCalories = totalCalories,
-                            targetCalories = currentTarget,
-                            progressFloat = progressFloat,
-                            progressPercentage = progressPercentage,
-                            isLoading = false
-                        )
+                        _uiState.update {
+                            it.copy(
+                                activity = activities,
+                                totalCalories = totalCalories,
+                                targetCalories = currentTarget,
+                                progressFloat = progressFloat,
+                                progressPercentage = progressPercentage,
+                                isLoading = false
+                            )
+                        }
                     }
-                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 _uiState.update { it.copy(isLoading = false) }
@@ -107,6 +108,7 @@ class ActivityDiaryViewModel @Inject constructor(
 
                 val calories = (type.met * weight * (durationMinutes / 60.0)).toInt()
                 val entity = UserActivityEntity(
+                    userEmail = email,
                     date = _uiState.value.selectDate,
                     activityType = type.name,
                     durationMinutes = durationMinutes,

@@ -52,8 +52,6 @@ import com.example.healthtracker.presentation.components.TextFields
 import com.example.healthtracker.presentation.theme.Dimens
 import com.example.healthtracker.presentation.theme.HealthCardLight
 import com.example.healthtracker.presentation.theme.HealthGreen
-import com.example.healthtracker.presentation.theme.HealthLightBlue
-import com.example.healthtracker.presentation.theme.HealthLightGreen
 import com.example.healthtracker.presentation.theme.HealthTextLight
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
@@ -102,10 +100,10 @@ fun LoginContent(
             .background(
                 brush = Brush.linearGradient(
                     colors = listOf(
-                        HealthLightGreen,
-                        Color.White,
-                        HealthLightBlue,
-                        Color.White
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.55f),
+                        MaterialTheme.colorScheme.background,
+                        MaterialTheme.colorScheme.tertiary.copy(alpha = 0.45f),
+                        MaterialTheme.colorScheme.background
                     )
                 )
             )

@@ -11,11 +11,18 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserActivityDao {
 
-    @Query("SELECT * FROM user_activities WHERE date = :date")
-    fun getActivitiesByDate(date: String): Flow<List<UserActivityEntity>>
+    @Query("SELECT * FROM user_activities WHERE userEmail = :userEmail AND date = :date")
+    fun getActivitiesByDate(
+        userEmail: String,
+        date: String
+    ): Flow<List<UserActivityEntity>>
 
-    @Query("SELECT * FROM user_activities WHERE date BETWEEN :startDate AND :endDate ORDER BY date ASC")
+    @Query(
+        "SELECT * FROM user_activities WHERE userEmail = :userEmail " +
+            "AND date BETWEEN :startDate AND :endDate ORDER BY date ASC"
+    )
     fun getActivitiesBetweenDates(
+        userEmail: String,
         startDate: String,
         endDate: String
     ): Flow<List<UserActivityEntity>>
@@ -25,7 +32,4 @@ interface UserActivityDao {
 
     @Delete
     suspend fun deleteActivity(activity: UserActivityEntity)
-
-    @Query("DELETE FROM user_activities WHERE date = :date")
-    suspend fun clearActivitiesByDate(date: String)
 }

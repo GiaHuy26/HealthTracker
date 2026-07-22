@@ -1,5 +1,6 @@
 package com.example.healthtracker.domain.model
 
+import com.example.healthtracker.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -14,23 +15,7 @@ data class Profile(
     val goalType: GoalType
 ) {
     val age: Int?
-        get() = try {
-            val sdf = SimpleDateFormat("MM/dd/yyyy", Locale.US)
-            val parsedBirthDate = sdf.parse(birthDate)
-            if (parsedBirthDate != null) {
-                val today = Calendar.getInstance()
-                val birth = Calendar.getInstance().apply { time = parsedBirthDate }
-                var ageVal = today.get(Calendar.YEAR) - birth.get(Calendar.YEAR)
-                if (today.get(Calendar.DAY_OF_YEAR) < birth.get(Calendar.DAY_OF_YEAR)) {
-                    ageVal--
-                }
-                if (ageVal < 0) 0 else ageVal
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            null
-        }
+        get() = birthDate.toAge()
 
     val bmi: Float
         get() {
@@ -39,16 +24,8 @@ data class Profile(
             return weight / (heightInMeters * heightInMeters)
         }
 
-    val bmiLevel: String
-        get() {
-            val lBmi = bmi
-            return when {
-                lBmi < 18.5f -> ""
-                lBmi < 25f -> ""
-                lBmi < 30f -> ""
-                else -> ""
-            }
-        }
+    val bmiLevel: BmiLevel
+        get() = BmiLevel.fromBmi(bmi)
 
     val bmr: Float
         get() {
@@ -57,14 +34,50 @@ data class Profile(
         }
 
     val tdee: Float
-        get() {
-            val activityMultiplier = when (activeLevel) {
-                ActivityLevel.SEDENTARY -> 1.2f
-                ActivityLevel.LIGHTLY_ACTIVE -> 1.375f
-                ActivityLevel.MODERATELY_ACTIVE -> 1.55f
-                ActivityLevel.VERY_ACTIVE -> 1.725f
-                ActivityLevel.EXTRA_ACTIVE -> 1.9f
+        get() = bmr * activeLevel.multiplier
+
+    val dailyCalorieTarget: Float
+        get() = (tdee + goalType.caloriesOffset).coerceAtLeast(0f)
+}
+
+enum class BmiLevel(val titleResId: Int) {
+    UNDERWEIGHT(R.string.settings_bmi_underweight),
+    NORMAL(R.string.settings_bmi_normal),
+    OVERWEIGHT(R.string.settings_bmi_overweight),
+    OBESE(R.string.settings_bmi_obese);
+
+    companion object {
+        fun fromBmi(bmi: Float): BmiLevel {
+            return when {
+                bmi < 18.5f -> UNDERWEIGHT
+                bmi < 25f -> NORMAL
+                bmi < 30f -> OVERWEIGHT
+                else -> OBESE
             }
-            return bmr * activityMultiplier
         }
+    }
+}
+
+fun String.toAge(): Int? {
+    if (!matches(Regex("\\d{2}/\\d{2}/\\d{4}"))) return null
+
+    return try {
+        val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US).apply {
+            isLenient = false
+        }
+        val parsedDate = dateFormat.parse(this) ?: return null
+        val today = Calendar.getInstance()
+        val birthDate = Calendar.getInstance().apply { time = parsedDate }
+
+        if (birthDate.after(today)) return null
+
+        var age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR)
+        if (today.get(Calendar.DAY_OF_YEAR) < birthDate.get(Calendar.DAY_OF_YEAR)) {
+            age--
+        }
+
+        age.takeIf { it in 1..120 }
+    } catch (exception: Exception) {
+        null
+    }
 }
