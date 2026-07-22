@@ -15,6 +15,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -49,7 +50,7 @@ class AddFoodViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             val email = sessionManager.getCurrentUserEmail()
-            val languageCode = appSettingsManager.settings.value.language.code
+            val languageCode = appSettingsManager.settings.first().language.code
             foodDiaryRepository.seedSampleFood(context, languageCode, email)
             loadAllFoods()
             if (mealTypeStr != null) {

@@ -16,5 +16,4 @@ data class AddFoodUiState(
     val selectedFoods: List<SelectedFoodItem> = emptyList(),
     val isLoading: Boolean = false,
     val isSaving: Boolean = false,
-    val isSaveSuccess: Boolean = false,
 )

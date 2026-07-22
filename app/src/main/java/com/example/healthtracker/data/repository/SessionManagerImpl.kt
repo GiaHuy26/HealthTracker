@@ -1,28 +1,38 @@
 package com.example.healthtracker.data.repository
 
 import android.content.Context
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.healthtracker.di.SessionManager
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
-import androidx.core.content.edit
+
+private val Context.sessionDataStore by preferencesDataStore(name = "session_preferences")
 
 class SessionManagerImpl @Inject constructor(
     @ApplicationContext context: Context
 ) : SessionManager {
-    private val sharedPrefs =
-        context.getSharedPreferences("health_tracker_prefs", Context.MODE_PRIVATE)
+    private val dataStore = context.sessionDataStore
 
     override suspend fun saveUserEmail(email: String) {
-        sharedPrefs.edit { putString("KEY_USER_EMAIL", email) }
+        dataStore.edit { preferences ->
+            preferences[userEmailKey] = email
+        }
     }
 
     override suspend fun getCurrentUserEmail(): String {
-        return sharedPrefs.getString("KEY_USER_EMAIL", "") ?: ""
+        return dataStore.data.first()[userEmailKey].orEmpty()
     }
 
     override suspend fun clearSession() {
-        sharedPrefs.edit {
-            remove("KEY_USER_EMAIL")
+        dataStore.edit { preferences ->
+            preferences.remove(userEmailKey)
         }
+    }
+
+    private companion object {
+        val userEmailKey = stringPreferencesKey("user_email")
     }
 }

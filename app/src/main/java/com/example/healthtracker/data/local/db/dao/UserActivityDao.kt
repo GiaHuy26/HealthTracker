@@ -32,7 +32,4 @@ interface UserActivityDao {
 
     @Delete
     suspend fun deleteActivity(activity: UserActivityEntity)
-
-    @Query("DELETE FROM user_activities WHERE userEmail = :userEmail AND date = :date")
-    suspend fun clearActivitiesByDate(userEmail: String, date: String)
 }

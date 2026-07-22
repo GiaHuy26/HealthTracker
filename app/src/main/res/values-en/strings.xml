@@ -19,7 +19,6 @@
     <string name="dashboard_exceeded_calories">Calories over target: %1$d kcal</string>
     <string name="dashboard_calories_in">Calories in</string>
     <string name="dashboard_calories_burned">Burned</string>
-    <string name="dashboard_calories_remaining">Remaining</string>
     <string name="dashboard_calorie_balance">Balance</string>
     <string name="dashboard_advice_remaining">You need %1$d more kcal</string>
     <string name="dashboard_advice_enough">You have reached today\'s calorie target!</string>
@@ -47,7 +46,6 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
-    <string name="user_name">Enter your name</string>
     <string name="or">Or</string>
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
@@ -120,23 +118,11 @@
     <string name="food_diary_meal_snack">Snack</string>
     <string name="food_diary_choose_meal">Choose meal</string>
     <string name="food_diary_add_food">Add Food</string>
-    <string name="food_diary_serving_format">%1$.1f serving(s) (%2$s)</string>
-    <string name="food_diary_delete_item">Delete item</string>
-    <string name="food_diary_add_to_meal">Add to %1$s</string>
-    <string name="food_diary_tab_search">Search</string>
     <string name="food_diary_choose_food">Choose foods</string>
     <string name="food_diary_search_label">Search food by name…</string>
-    <string name="food_diary_no_results">No matching food found.</string>
-    <string name="food_diary_selected_food_standard">Standard: %1$d kcal / %2$s</string>
-    <string name="food_diary_quantity_label">Quantity / Servings (e.g., 1 or 1.5)</string>
-    <string name="food_diary_btn_reselect">Reselect</string>
     <string name="food_diary_btn_save_meal">Save meal</string>
-    <string name="food_diary_custom_name_label">Food name</string>
     <string name="food_diary_custom_calories_label">kcal</string>
-    <string name="food_diary_custom_serving_label">Default serving (e.g. 1 bowl, 100g)</string>
     <string name="food_diary_btn_cancel">Cancel</string>
-    <string name="food_diary_btn_save_custom">Save custom</string>
-    <string name="food_diary_calendar_desc">Choose date</string>
     <string name="food_diary_date_format_pattern">MMMM dd, yyyy</string>
     <string name="food_diary_target">Target:</string>
 
@@ -182,7 +168,6 @@
 
     <!-- Activity Diary Screen -->
     <string name="activity_diary_title">Activity Diary</string>
-    <string name="activity_diary_total_burned">Calories burned today</string>
     <string name="activity_diary_calories_unit">kcal</string>
     <string name="activity_diary_date_format_pattern">MMMM dd, yyyy</string>
     <string name="activity_diary_add_activity">Add Activity</string>
@@ -190,21 +175,13 @@
     <string name="activity_diary_duration_placeholder">Enter minutes…</string>
     <string name="activity_diary_select_activity_type">Select activity type</string>
     <string name="activity_diary_empty_list">No activities logged today</string>
-    <string name="activity_diary_delete_confirm">Delete this activity?</string>
-    <string name="activity_diary_duration_format">%1$d mins</string>
     <string name="activity_diary_duration_intensity_format">%1$d min · %2$s</string>
     <string name="activity_diary_target_calories_format">/ %1$d kcal</string>
-    <string name="activity_diary_calories_burned_format">%1$d kcal</string>
-    <string name="activity_diary_btn_save">Save Activity</string>
-    <string name="activity_diary_weight_required_error">Please complete your personal profile to calculate calories burned!</string>
-    <string name="activity_diary_duration_invalid_error">Duration must be greater than 0 minutes!</string>
     <string name="activity_diary_stat_calories_burned">Calories Burned</string>
     <string name="activity_diary_stat_activities">Activities</string>
     <string name="activity_diary_stat_exercise_time">Exercise Time</string>
     <string name="activity_diary_stat_min">min</string>
     <string name="activity_diary_calories_burned_today">Calories Burned Today</string>
-    <string name="activity_diary_progress_subtitle">You\'re making great progress.</string>
-    <string name="activity_diary_goal">Goal</string>
     <string name="activity_diary_todays_activities">Today\'s Activities</string>
     <string name="activity_diary_add_new_activity">Add New Activity</string>
     <string name="activity_intensity_relaxed">Relaxed</string>
@@ -250,13 +227,7 @@
     <string name="statistics_no_data">No data for this period yet.</string>
     <string name="statistics_detailed_metrics">Detailed metrics</string>
     <string name="statistics_target_days">Target days</string>
-    <string name="statistics_current_streak">Current streak</string>
     <string name="statistics_target_days_value">%1$d/%2$d</string>
-    <string name="statistics_days_value">%1$d days</string>
-    <string name="statistics_motivation_title">Keep it up!</string>
-    <string name="statistics_motivation_streak">You have a %1$d-day goal streak.</string>
-    <string name="statistics_motivation_progress">You reached your goal on %1$d/%2$d days this period.</string>
-    <string name="statistics_motivation_start">Log your meals and activities daily to track progress.</string>
     <!-- Settings Screen -->
     <string name="action_back">Back</string>
     <string name="settings_title">Settings</string>
@@ -268,7 +239,6 @@
     <string name="settings_logout">Log out</string>
     <string name="settings_no_profile">No profile information</string>
     <string name="settings_profile_detail">Age %1$d • %2$s</string>
-    <string name="settings_tdee_and_bmi">TDEE: %1$d kcal • BMI: %2$.1f (%3$s)</string>
     <string name="settings_bmi_value">BMI: %1$.1f • %2$s</string>
     <string name="settings_bmi_underweight">Underweight</string>
     <string name="settings_bmi_normal">Normal</string>

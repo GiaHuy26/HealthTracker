@@ -1,66 +1,73 @@
 package com.example.healthtracker.data.repository
 
 import android.content.Context
-import androidx.core.content.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.healthtracker.domain.model.AppColor
 import com.example.healthtracker.domain.model.AppFontSize
 import com.example.healthtracker.domain.model.AppLanguage
 import com.example.healthtracker.domain.model.AppSettings
 import com.example.healthtracker.domain.model.AppTheme
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
+
+private val Context.appSettingsDataStore by preferencesDataStore(name = "app_settings")
 
 @Singleton
 class AppSettingsManager @Inject constructor(
     @ApplicationContext context: Context
 ) {
-    private val preferences = context.getSharedPreferences(
-        "app_settings",
-        Context.MODE_PRIVATE
-    )
+    private val dataStore = context.appSettingsDataStore
 
-    private val _settings = MutableStateFlow(readSettings())
-    val settings: StateFlow<AppSettings> = _settings.asStateFlow()
-
-    fun setTheme(theme: AppTheme) {
-        preferences.edit { putString("theme", theme.name) }
-        _settings.value = _settings.value.copy(theme = theme)
-    }
-
-    fun setColor(color: AppColor) {
-        preferences.edit { putString("color", color.name) }
-        _settings.value = _settings.value.copy(color = color)
-    }
-
-    fun setFontSize(fontSize: AppFontSize) {
-        preferences.edit { putString("font_size", fontSize.name) }
-        _settings.value = _settings.value.copy(fontSize = fontSize)
-    }
-
-    fun setLanguage(language: AppLanguage) {
-        preferences.edit { putString("language", language.name) }
-        _settings.value = _settings.value.copy(language = language)
-    }
-
-    private fun readSettings(): AppSettings {
-        val savedTheme = preferences.getString("theme", null)
-        val savedColor = preferences.getString("color", null)
-        val savedFontSize = preferences.getString("font_size", null)
-        val savedLanguage = preferences.getString("language", null)
-
-        return AppSettings(
-            theme = AppTheme.entries.find { it.name == savedTheme } ?: AppTheme.LIGHT,
-            color = AppColor.entries.find { it.name == savedColor } ?: AppColor.GREEN,
+    val settings: Flow<AppSettings> = dataStore.data.map { preferences ->
+        AppSettings(
+            theme = AppTheme.entries.find {
+                it.name == preferences[themeKey]
+            } ?: AppTheme.LIGHT,
+            color = AppColor.entries.find {
+                it.name == preferences[colorKey]
+            } ?: AppColor.GREEN,
             fontSize = AppFontSize.entries.find {
-                it.name == savedFontSize
+                it.name == preferences[fontSizeKey]
             } ?: AppFontSize.MEDIUM,
             language = AppLanguage.entries.find {
-                it.name == savedLanguage
+                it.name == preferences[languageKey]
             } ?: AppLanguage.VIETNAMESE
         )
+    }
+
+    suspend fun setTheme(theme: AppTheme) {
+        dataStore.edit { preferences ->
+            preferences[themeKey] = theme.name
+        }
+    }
+
+    suspend fun setColor(color: AppColor) {
+        dataStore.edit { preferences ->
+            preferences[colorKey] = color.name
+        }
+    }
+
+    suspend fun setFontSize(fontSize: AppFontSize) {
+        dataStore.edit { preferences ->
+            preferences[fontSizeKey] = fontSize.name
+        }
+    }
+
+    suspend fun setLanguage(language: AppLanguage) {
+        dataStore.edit { preferences ->
+            preferences[languageKey] = language.name
+        }
+    }
+
+    private companion object {
+        val themeKey = stringPreferencesKey("theme")
+        val colorKey = stringPreferencesKey("color")
+        val fontSizeKey = stringPreferencesKey("font_size")
+        val languageKey = stringPreferencesKey("language")
     }
 }

@@ -8,13 +8,16 @@ import com.example.healthtracker.di.SessionManager
 import com.example.healthtracker.domain.model.AppColor
 import com.example.healthtracker.domain.model.AppFontSize
 import com.example.healthtracker.domain.model.AppLanguage
+import com.example.healthtracker.domain.model.AppSettings
 import com.example.healthtracker.domain.model.AppTheme
 import com.example.healthtracker.domain.repository.UserProfileRepository
 import com.example.healthtracker.domain.repository.FoodDiaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,7 +34,11 @@ class SettingsViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(SettingsUiState())
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
-    val appSettings = appSettingsManager.settings
+    val appSettings: StateFlow<AppSettings> = appSettingsManager.settings.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = AppSettings()
+    )
 
     init {
         loadProfile()
@@ -53,23 +60,29 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun setTheme(theme: AppTheme) {
-        appSettingsManager.setTheme(theme)
+        viewModelScope.launch {
+            appSettingsManager.setTheme(theme)
+        }
     }
 
     fun setColor(color: AppColor) {
-        appSettingsManager.setColor(color)
+        viewModelScope.launch {
+            appSettingsManager.setColor(color)
+        }
     }
 
     fun setFontSize(fontSize: AppFontSize) {
-        appSettingsManager.setFontSize(fontSize)
+        viewModelScope.launch {
+            appSettingsManager.setFontSize(fontSize)
+        }
     }
 
     fun setLanguage(
         language: AppLanguage,
         onLanguageChanged: () -> Unit
     ) {
-        appSettingsManager.setLanguage(language)
         viewModelScope.launch {
+            appSettingsManager.setLanguage(language)
             val email = sessionManager.getCurrentUserEmail()
             foodDiaryRepository.seedSampleFood(context, language.code, email)
             onLanguageChanged()

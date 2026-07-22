@@ -18,7 +18,6 @@
     <string name="dashboard_exceeded_calories">Lượng calo vượt quá: %1$d kcal</string>
     <string name="dashboard_calories_in">Calo nạp</string>
     <string name="dashboard_calories_burned">Calo đốt</string>
-    <string name="dashboard_calories_remaining">Còn lại</string>
     <string name="dashboard_calorie_balance">Cân bằng</string>
     <string name="dashboard_advice_remaining">Bạn còn thiếu %1$d kcal</string>
     <string name="dashboard_advice_enough">Bạn đã ăn đủ calo hôm nay!</string>
@@ -46,7 +45,6 @@
     <string name="email">Email</string>
     <string name="password">Mật khẩu</string>
     <string name="confirm_password">Xác nhận mật khẩu</string>
-    <string name="user_name">Họ và tên</string>
     <string name="or">Hoặc</string>
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
@@ -118,23 +116,11 @@
     <string name="food_diary_meal_snack">Bữa phụ</string>
     <string name="food_diary_choose_meal">Chọn bữa ăn</string>
     <string name="food_diary_add_food">Thêm món ăn</string>
-    <string name="food_diary_serving_format">%1$.1f phần (%2$s)</string>
-    <string name="food_diary_delete_item">Xóa món ăn</string>
-    <string name="food_diary_add_to_meal">Thêm món vào %1$s</string>
-    <string name="food_diary_tab_search">Tìm kiếm</string>
     <string name="food_diary_choose_food">Chọn món ăn</string>
     <string name="food_diary_search_label">Nhập tên món ăn cần tìm…</string>
-    <string name="food_diary_no_results">Không tìm thấy món ăn nào khớp.</string>
-    <string name="food_diary_selected_food_standard">Chuẩn: %1$d kcal / %2$s</string>
-    <string name="food_diary_quantity_label">Số lượng / Số phần ăn (ví dụ: 1 hoặc 1.5)</string>
-    <string name="food_diary_btn_reselect">Chọn lại</string>
     <string name="food_diary_btn_save_meal">Lưu bữa ăn</string>
-    <string name="food_diary_custom_name_label">Tên món ăn</string>
     <string name="food_diary_custom_calories_label">kcal</string>
-    <string name="food_diary_custom_serving_label">Khẩu phần mặc định (ví dụ: 1 tô, 100g)</string>
     <string name="food_diary_btn_cancel">Hủy</string>
-    <string name="food_diary_btn_save_custom">Lưu món mới</string>
-    <string name="food_diary_calendar_desc">Chọn ngày</string>
     <string name="food_diary_date_format_pattern">dd \'Tháng\' MM, yyyy</string>
     <string name="food_diary_target">Mục tiêu:</string>
 
@@ -180,7 +166,6 @@
 
     <!-- Activity Diary Screen -->
     <string name="activity_diary_title">Nhật ký hoạt động</string>
-    <string name="activity_diary_total_burned">Lượng calo tiêu thụ hôm nay</string>
     <string name="activity_diary_calories_unit">kcal</string>
     <string name="activity_diary_date_format_pattern">dd \'Tháng\' MM, yyyy</string>
     <string name="activity_diary_add_activity">Thêm hoạt động</string>
@@ -188,21 +173,13 @@
     <string name="activity_diary_duration_placeholder">Nhập số phút…</string>
     <string name="activity_diary_select_activity_type">Chọn loại hoạt động</string>
     <string name="activity_diary_empty_list">Chưa có hoạt động nào trong ngày hôm nay</string>
-    <string name="activity_diary_delete_confirm">Xóa hoạt động này?</string>
-    <string name="activity_diary_duration_format">%1$d phút</string>
     <string name="activity_diary_duration_intensity_format">%1$d phút · %2$s</string>
     <string name="activity_diary_target_calories_format">/ %1$d kcal</string>
-    <string name="activity_diary_calories_burned_format">%1$d kcal</string>
-    <string name="activity_diary_btn_save">Lưu hoạt động</string>
-    <string name="activity_diary_weight_required_error">Vui lòng hoàn thành hồ sơ cá nhân để tính calo tiêu thụ!</string>
-    <string name="activity_diary_duration_invalid_error">Thời gian hoạt động phải lớn hơn 0 phút!</string>
     <string name="activity_diary_stat_calories_burned">Calo tiêu thụ</string>
     <string name="activity_diary_stat_activities">Hoạt động</string>
     <string name="activity_diary_stat_exercise_time">Thời gian tập</string>
     <string name="activity_diary_stat_min">phút</string>
     <string name="activity_diary_calories_burned_today">Lượng calo tiêu thụ hôm nay</string>
-    <string name="activity_diary_progress_subtitle">Bạn đang tiến bộ rất tốt.</string>
-    <string name="activity_diary_goal">Mục tiêu</string>
     <string name="activity_diary_todays_activities">Hoạt động hôm nay</string>
     <string name="activity_diary_add_new_activity">Thêm hoạt động mới</string>
     <string name="activity_intensity_relaxed">Nhẹ nhàng</string>
@@ -248,13 +225,7 @@
     <string name="statistics_no_data">Chưa có dữ liệu trong khoảng thời gian này.</string>
     <string name="statistics_detailed_metrics">Thống kê chi tiết</string>
     <string name="statistics_target_days">Ngày đạt mục tiêu</string>
-    <string name="statistics_current_streak">Chuỗi hiện tại</string>
     <string name="statistics_target_days_value">%1$d/%2$d</string>
-    <string name="statistics_days_value">%1$d ngày</string>
-    <string name="statistics_motivation_title">Tiếp tục phát huy!</string>
-    <string name="statistics_motivation_streak">Bạn đang có chuỗi %1$d ngày đạt mục tiêu.</string>
-    <string name="statistics_motivation_progress">Bạn đã đạt mục tiêu %1$d/%2$d ngày trong kỳ này.</string>
-    <string name="statistics_motivation_start">Hãy ghi nhật ký mỗi ngày để theo dõi tiến trình.</string>
     <!-- Settings Screen -->
     <string name="action_back">Quay lại</string>
     <string name="settings_title">Cài đặt</string>
@@ -266,7 +237,6 @@
     <string name="settings_logout">Đăng xuất</string>
     <string name="settings_no_profile">Chưa có thông tin hồ sơ</string>
     <string name="settings_profile_detail">%1$d tuổi • %2$s</string>
-    <string name="settings_tdee_and_bmi">TDEE: %1$d kcal • BMI: %2$.1f (%3$s)</string>
     <string name="settings_bmi_value">BMI: %1$.1f • %2$s</string>
     <string name="settings_bmi_underweight">Thiếu cân</string>
     <string name="settings_bmi_normal">Bình thường</string>
