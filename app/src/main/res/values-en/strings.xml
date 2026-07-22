@@ -244,7 +244,6 @@
     <string name="settings_bmi_obese">Obese</string>
     <string name="settings_edit_profile">Edit profile</string>
     <string name="settings_save_changes">Save changes</string>
-    <string name="appearance_subtitle">Customize your app experience</string>
     <string name="appearance_theme_mode">Theme mode</string>
     <string name="appearance_light">Light</string>
     <string name="appearance_dark">Dark</string>

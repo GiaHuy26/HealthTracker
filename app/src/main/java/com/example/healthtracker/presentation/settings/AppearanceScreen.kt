@@ -99,11 +99,6 @@ fun AppearanceContent(
                 color = MaterialTheme.colorScheme.onBackground
             )
         }
-        Text(
-            text = stringResource(R.string.appearance_subtitle),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
 
         Spacer(modifier = Modifier.height(Dimens.SpaceLarge))
         Text(
