@@ -50,7 +50,7 @@ fun SettingsItem(
                 imageVector = icon,
                 contentDescription = null,
                 tint = iconColor,
-                modifier = Modifier.size(Dimens.IconMedium)
+                modifier = Modifier.size(Dimens.IconNormal)
             )
         }
         Column(
@@ -60,12 +60,12 @@ fun SettingsItem(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium
             )
             Text(
                 text = subtitle,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }

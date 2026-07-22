@@ -74,7 +74,7 @@ fun ProfileSummaryCard(profile: Profile?) {
                             profile.age ?: 0,
                             stringResource(profile.gender.titleResId)
                         ),
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
@@ -83,7 +83,7 @@ fun ProfileSummaryCard(profile: Profile?) {
                             profile.bmi,
                             stringResource(profile.bmiLevel.titleResId)
                         ),
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
