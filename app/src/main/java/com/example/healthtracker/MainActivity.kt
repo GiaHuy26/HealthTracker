@@ -1,10 +1,11 @@
 package com.example.healthtracker
 
-import android.content.res.Configuration
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthtracker.data.local.preferences.AppSettingsPreferences
@@ -21,11 +22,10 @@ import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var navigationManager: NavigationManager
 
@@ -46,7 +46,8 @@ class MainActivity : ComponentActivity() {
             val initialSettings = appSettingsPreferences.settings.first()
             val initialRoute = getInitialRoute()
 
-            changeLanguage(initialSettings.language)
+            if (updateLanguage(initialSettings.language)) return@launch
+
             navigationManager.setInitialRoute(initialRoute)
 
             setContent {
@@ -72,12 +73,11 @@ class MainActivity : ComponentActivity() {
         return if (profile == null) SetupProfileRoute else HomeRoute
     }
 
-    private fun changeLanguage(language: AppLanguage) {
-        val locale = Locale(language.code)
-        Locale.setDefault(locale)
+    private fun updateLanguage(language: AppLanguage): Boolean {
+        val locales = LocaleListCompat.forLanguageTags(language.code)
+        if (AppCompatDelegate.getApplicationLocales() == locales) return false
 
-        val configuration = Configuration(resources.configuration)
-        configuration.setLocale(locale)
-        resources.updateConfiguration(configuration, resources.displayMetrics)
+        AppCompatDelegate.setApplicationLocales(locales)
+        return true
     }
 }

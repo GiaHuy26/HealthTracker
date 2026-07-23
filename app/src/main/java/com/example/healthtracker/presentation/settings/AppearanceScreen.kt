@@ -1,6 +1,6 @@
 package com.example.healthtracker.presentation.settings
 
-import androidx.activity.compose.LocalActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.core.os.LocaleListCompat
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,7 +52,6 @@ fun AppearanceScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val appSettings = viewModel.appSettings.collectAsStateWithLifecycle()
-    val activity = LocalActivity.current
 
     AppearanceContent(
         appSettings = appSettings.value,
@@ -61,7 +61,8 @@ fun AppearanceScreen(
         onFontSizeSelected = viewModel::setFontSize,
         onLanguageSelected = { language ->
             viewModel.setLanguage(language) {
-                activity?.recreate()
+                val locales = LocaleListCompat.forLanguageTags(language.code)
+                AppCompatDelegate.setApplicationLocales(locales)
             }
         }
     )
