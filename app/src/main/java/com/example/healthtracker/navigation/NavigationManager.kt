@@ -10,6 +10,14 @@ import javax.inject.Singleton
 class NavigationManager @Inject constructor() {
     private val _backStack = MutableStateFlow<List<AppNavKey>>(listOf(StartRoute))
     val backStack: StateFlow<List<AppNavKey>> = _backStack.asStateFlow()
+    private var isInitialized = false
+
+    fun setInitialRoute(route: AppNavKey) {
+        if (isInitialized) return
+
+        _backStack.value = listOf(route)
+        isInitialized = true
+    }
 
     fun navigateTo(route: AppNavKey) {
         val current = _backStack.value.toMutableList()
