@@ -80,10 +80,16 @@ fun TodayMealsCard(
                 color = MaterialTheme.colorScheme.outline
             )
 
-            val mealsByType = MealType.entries.mapNotNull { mealType ->
-                meals.filter { it.mealType.equals(mealType.name, ignoreCase = true) }
-                    .takeIf { it.isNotEmpty() }
-                    ?.let { mealType to it }
+            val mealsByType = mutableListOf<Pair<MealType, List<MealEntity>>>()
+
+            for (mealType in MealType.entries) {
+                val foods = meals.filter { meal ->
+                    meal.mealType.equals(mealType.name, ignoreCase = true)
+                }
+
+                if (foods.isNotEmpty()) {
+                    mealsByType.add(Pair(mealType, foods))
+                }
             }
 
             if (mealsByType.isEmpty()) {

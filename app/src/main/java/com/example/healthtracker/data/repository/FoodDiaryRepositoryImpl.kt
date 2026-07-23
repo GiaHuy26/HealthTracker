@@ -47,12 +47,16 @@ class FoodDiaryRepositoryImpl @Inject constructor(
         languageCode: String,
         userEmail: String
     ) {
-        val foodToInsert = getSampleFoods(context, languageCode)
+        val foodsToInsert = getSampleFoods(context, languageCode)
         val oldLanguageCode = if (languageCode == "vi") "en" else "vi"
         val oldFoods = getSampleFoods(context, oldLanguageCode)
 
-        oldFoods.forEachIndexed { index, oldFood ->
-            val newFood = foodToInsert.getOrNull(index) ?: return@forEachIndexed
+        val numberOfFoodsToUpdate = minOf(oldFoods.size, foodsToInsert.size)
+
+        for (index in 0 until numberOfFoodsToUpdate) {
+            val oldFood = oldFoods[index]
+            val newFood = foodsToInsert[index]
+
             mealDao.updateFoodLanguage(
                 userEmail = userEmail,
                 oldName = oldFood.name,
@@ -61,9 +65,9 @@ class FoodDiaryRepositoryImpl @Inject constructor(
             )
         }
 
-        if (foodToInsert.isNotEmpty()) {
+        if (foodsToInsert.isNotEmpty()) {
             foodDao.deleteAllFoods()
-            foodDao.insertFood(foodToInsert)
+            foodDao.insertFood(foodsToInsert)
         }
     }
 
@@ -75,19 +79,24 @@ class FoodDiaryRepositoryImpl @Inject constructor(
         configuration.setLocale(Locale.forLanguageTag(languageCode))
         val localizedContext = context.createConfigurationContext(configuration)
         val rawArray = localizedContext.resources.getStringArray(R.array.sample_foods_array)
+        val foods = mutableListOf<FoodEntity>()
 
-        return rawArray.mapNotNull { item ->
+        for (item in rawArray) {
             val parts = item.split("|")
-            if (parts.size == 3) {
-                FoodEntity(
-                    name = parts[0],
-                    calories = parts[1].toIntOrNull() ?: 100,
-                    servingSize = parts[2]
-                )
-            } else {
-                null
+            if (parts.size != 3) {
+                continue
             }
+
+            val calories = parts[1].toIntOrNull() ?: 100
+            val food = FoodEntity(
+                name = parts[0],
+                calories = calories,
+                servingSize = parts[2]
+            )
+            foods.add(food)
         }
+
+        return foods
     }
 
     override suspend fun getMealsByDateAndType(

@@ -16,17 +16,47 @@ class UserProfileRepositoryImpl @Inject constructor(
         if (email.isBlank()) return null
 
         val user = userDao.getUserByEmail(email) ?: return null
-        val userName = user.userName ?: return null
-        val birthDate = user.birthDate ?: return null
-        val gender = Gender.entries.firstOrNull { it.name == user.gender } ?: return null
-        val weight = user.weight?.takeIf { it > 0f } ?: return null
-        val height = user.height?.takeIf { it > 0f } ?: return null
+        val userName = user.userName
+        val birthDate = user.birthDate
+        val genderName = user.gender
+        val weight = user.weight
+        val height = user.height
+        val activityLevelName = user.activeLevel
+        val goalTypeName = user.goalType
+
+        if (userName == null || birthDate == null) {
+            return null
+        }
+        if (genderName == null || activityLevelName == null || goalTypeName == null) {
+            return null
+        }
+        if (weight == null || weight <= 0f) {
+            return null
+        }
+        if (height == null || height <= 0f) {
+            return null
+        }
+
+        val gender = Gender.entries.firstOrNull { gender ->
+            gender.name == genderName
+        }
+        if (gender == null) {
+            return null
+        }
+
         val activityLevel = ActivityLevel.entries.firstOrNull {
-            it.name == user.activeLevel
-        } ?: return null
+            it.name == activityLevelName
+        }
+        if (activityLevel == null) {
+            return null
+        }
+
         val goalType = GoalType.entries.firstOrNull {
-            it.name == user.goalType
-        } ?: return null
+            it.name == goalTypeName
+        }
+        if (goalType == null) {
+            return null
+        }
 
         return Profile(
             userName = userName,
@@ -42,8 +72,13 @@ class UserProfileRepositoryImpl @Inject constructor(
     override suspend fun getWeight(email: String): Float? {
         if (email.isBlank()) return null
 
-        return userDao.getUserByEmail(email)
-            ?.weight
-            ?.takeIf { it > 0f }
+        val user = userDao.getUserByEmail(email) ?: return null
+        val weight = user.weight ?: return null
+
+        if (weight <= 0f) {
+            return null
+        }
+
+        return weight
     }
 }

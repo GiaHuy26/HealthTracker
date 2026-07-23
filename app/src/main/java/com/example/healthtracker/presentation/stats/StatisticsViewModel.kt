@@ -81,7 +81,8 @@ class StatisticsViewModel @Inject constructor(
                     val meals = data.first
                     val activities = data.second
                     val dailyList = mutableListOf<DailyCalories>()
-                    val currentDate = firstDay.clone() as Calendar
+                    val currentDate = Calendar.getInstance()
+                    currentDate.time = firstDay.time
 
                     repeat(period.numberOfDays) {
                         val date = dateFormat.format(currentDate.time)

@@ -145,31 +145,34 @@ class AddFoodViewModel @Inject constructor(
     }
 
     fun onIncrementQuantity(item: SelectedFoodItem) {
-        _uiState.update { state ->
-            val index = state.selectedFoods.indexOfFirst { it.foods.id == item.foods.id }
-            if (index != -1) {
-                val updatedList = state.selectedFoods.toMutableList()
-                val currentItem = updatedList[index]
-                updatedList[index] = currentItem.copy(quantity = currentItem.quantity + 0.5f)
-                state.copy(selectedFoods = updatedList)
-            } else state
-        }
+        changeFoodQuantity(item, 0.5f)
     }
 
     fun onDecrementQuantity(item: SelectedFoodItem) {
+        changeFoodQuantity(item, -0.5f)
+    }
+
+    private fun changeFoodQuantity(
+        item: SelectedFoodItem,
+        quantityChange: Float
+    ) {
         _uiState.update { state ->
             val index = state.selectedFoods.indexOfFirst { it.foods.id == item.foods.id }
-            if (index != -1) {
+            if (index == -1) {
+                state
+            } else {
                 val updatedList = state.selectedFoods.toMutableList()
                 val currentItem = updatedList[index]
-                val newQuantity = currentItem.quantity - 0.5f
+                val newQuantity = currentItem.quantity + quantityChange
+
                 if (newQuantity <= 0f) {
                     updatedList.removeAt(index)
                 } else {
                     updatedList[index] = currentItem.copy(quantity = newQuantity)
                 }
+
                 state.copy(selectedFoods = updatedList)
-            } else state
+            }
         }
     }
 
@@ -182,11 +185,11 @@ class AddFoodViewModel @Inject constructor(
                 val mealTypeStr = (_uiState.value.selectedMealType ?: MealType.BREAKFAST).name
                 val previousMealType = initialMealType
 
-                previousMealType?.let { mealType ->
+                if (previousMealType != null) {
                     foodDiaryRepository.deleteMealsByType(
                         email,
                         selectedDate,
-                        mealType
+                        previousMealType
                     )
                 }
                 if (previousMealType == null ||
