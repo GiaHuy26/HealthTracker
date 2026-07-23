@@ -59,25 +59,44 @@ enum class BmiLevel(val titleResId: Int) {
 }
 
 fun String.toAge(): Int? {
-    if (!matches(Regex("\\d{2}/\\d{2}/\\d{4}"))) return null
+    val dateRegex = Regex("\\d{2}/\\d{2}/\\d{4}")
 
-    return try {
-        val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US).apply {
-            isLenient = false
-        }
-        val parsedDate = dateFormat.parse(this) ?: return null
-        val today = Calendar.getInstance()
-        val birthDate = Calendar.getInstance().apply { time = parsedDate }
+    if (!dateRegex.matches(this)) {
+        return null
+    }
 
-        if (birthDate.after(today)) return null
+    val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
+    dateFormat.isLenient = false
 
-        var age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR)
-        if (today.get(Calendar.DAY_OF_YEAR) < birthDate.get(Calendar.DAY_OF_YEAR)) {
-            age--
-        }
-
-        age.takeIf { it in 1..120 }
+    val parsedDate = try {
+        dateFormat.parse(this)
     } catch (exception: Exception) {
         null
     }
+
+    if (parsedDate == null) {
+        return null
+    }
+
+    val today = Calendar.getInstance()
+    val birthCalendar = Calendar.getInstance()
+    birthCalendar.time = parsedDate
+
+    if (birthCalendar.after(today)) {
+        return null
+    }
+
+    var age = today.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR)
+    val birthdayHasNotPassed =
+        today.get(Calendar.DAY_OF_YEAR) < birthCalendar.get(Calendar.DAY_OF_YEAR)
+
+    if (birthdayHasNotPassed) {
+        age--
+    }
+
+    if (age !in 1..120) {
+        return null
+    }
+
+    return age
 }
