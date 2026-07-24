@@ -23,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,10 +50,18 @@ fun GoalSelector(
                 shape = RoundedCornerShape(Dimens.CornerMedium),
                 border = BorderStroke(
                     width = if (isSelected) Dimens.BorderStrokeMedium else Dimens.BorderStrokeSmall,
-                    color = if (isSelected) MaterialTheme.colorScheme.secondary else Color.Gray
+                    color = if (isSelected) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.outline
+                    }
                 ),
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isSelected) MaterialTheme.colorScheme.secondary.copy(alpha = 0.05f) else MaterialTheme.colorScheme.onSecondary
+                    containerColor = if (isSelected) {
+                        MaterialTheme.colorScheme.primaryContainer
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant
+                    }
                 )
             ) {
                 Column(
@@ -71,7 +78,11 @@ fun GoalSelector(
                             GoalType.GAIN_WEIGHT -> Icons.AutoMirrored.Outlined.TrendingUp
                         },
                         contentDescription = null,
-                        tint = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
+                        tint = if (isSelected) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        },
                         modifier = Modifier.size(Dimens.IconNormal)
                     )
                     Spacer(Modifier.height(Dimens.SpaceSmall))

@@ -23,15 +23,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.healthtracker.domain.model.ActivityLevel
 import com.example.healthtracker.presentation.theme.Dimens
-import com.example.healthtracker.presentation.theme.HealthDividerLight
-import com.example.healthtracker.presentation.theme.HealthGreen
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
@@ -52,10 +49,18 @@ fun ActivityLevelSelector(
                 shape = RoundedCornerShape(Dimens.CornerMedium),
                 border = BorderStroke(
                     width = if (isSelected) Dimens.BorderStrokeMedium else Dimens.BorderStrokeSmall,
-                    color = if (isSelected) MaterialTheme.colorScheme.secondary else HealthDividerLight
+                    color = if (isSelected) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.outline
+                    }
                 ),
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.05f) else Color.White
+                    containerColor = if (isSelected) {
+                        MaterialTheme.colorScheme.primaryContainer
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant
+                    }
                 )
             ) {
                 Column(
@@ -90,7 +95,11 @@ fun ActivityLevelSelector(
                         Icon(
                             imageVector = if (isSelected) Icons.Filled.CheckCircle else Icons.Outlined.Circle,
                             contentDescription = null,
-                            tint = if (isSelected) HealthGreen else HealthDividerLight,
+                            tint = if (isSelected) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.outline
+                            },
                             modifier = Modifier.size(Dimens.IconNormal)
                         )
                     }

@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -52,7 +51,6 @@ import com.example.healthtracker.presentation.setup_profile.component.ActivityLe
 import com.example.healthtracker.presentation.setup_profile.component.GenderSelector
 import com.example.healthtracker.presentation.setup_profile.component.GoalSelector
 import com.example.healthtracker.presentation.theme.Dimens
-import com.example.healthtracker.presentation.theme.HealthGreen
 import com.example.healthtracker.presentation.theme.HealthTrackerTheme
 
 @Composable
@@ -104,7 +102,7 @@ fun SetupProfileContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.surface)
+                .background(color = MaterialTheme.colorScheme.background)
                 .verticalScroll(scrollState)
                 .safeContentPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -117,13 +115,15 @@ fun SetupProfileContent(
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                            contentDescription = stringResource(R.string.action_back)
+                            contentDescription = stringResource(R.string.action_back),
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
                     Text(
                         text = stringResource(R.string.settings_edit_profile),
                         style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                 }
             } else {
@@ -368,11 +368,11 @@ fun SetupProfileContent(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.3f))
+                    .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.3f))
                     .pointerInput(Unit) {},
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(color = HealthGreen)
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
         }
     }
