@@ -1,6 +1,7 @@
 package com.example.healthtracker.presentation.stats.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -19,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -44,7 +47,7 @@ fun CalorieBarChart(
         Column(modifier = Modifier.padding(Dimens.SpaceMedium)) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = stringResource(R.string.statistics_calorie_intake),
+                    text = stringResource(R.string.statistics_calorie_overview),
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium
@@ -60,6 +63,8 @@ fun CalorieBarChart(
                 )
             }
 
+            Spacer(modifier = Modifier.height(Dimens.SpaceSmall))
+            StatisticsChartLegend()
             Spacer(modifier = Modifier.height(Dimens.SpaceMedium))
 
             if (dailyCalories.isEmpty()) {
@@ -72,9 +77,11 @@ fun CalorieBarChart(
                 )
             } else {
                 val maxCalories = dailyCalories
-                    .maxOf { it.caloriesIn }
+                    .maxOf { maxOf(it.caloriesIn, it.caloriesBurned) }
                     .coerceAtLeast(1)
                 val showAllLabels = dailyCalories.size <= 7
+                val intakeColor = MaterialTheme.colorScheme.primary
+                val burnedColor = MaterialTheme.colorScheme.tertiary
 
                 Row(
                     modifier = Modifier
@@ -82,7 +89,8 @@ fun CalorieBarChart(
                         .height(Dimens.StatisticsChartHeight)
                 ) {
                     dailyCalories.forEach { day ->
-                        val barHeight = day.caloriesIn.toFloat() / maxCalories
+                        val intakeBarHeight = day.caloriesIn.toFloat() / maxCalories
+                        val burnedBarHeight = day.caloriesBurned.toFloat() / maxCalories
 
                         Column(
                             modifier = Modifier
@@ -90,45 +98,36 @@ fun CalorieBarChart(
                                 .fillMaxHeight(),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            if (showAllLabels) {
-                                Text(
-                                    text = day.caloriesIn.toString(),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            }
-
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
                                     .fillMaxWidth(),
                                 contentAlignment = Alignment.BottomCenter
                             ) {
-                                val barModifier = if (showAllLabels) {
+                                val barsModifier = if (showAllLabels) {
                                     Modifier.width(Dimens.StatisticsBarWidth)
                                 } else {
-                                    Modifier.fillMaxWidth(0.6f)
+                                    Modifier.fillMaxWidth(0.8f)
                                 }
 
-                                if (day.caloriesIn > 0) {
-                                    Box(
-                                        modifier = barModifier
-                                            .fillMaxHeight(barHeight)
-                                            .clip(
-                                                RoundedCornerShape(
-                                                    topStart = Dimens.CornerSmall,
-                                                    topEnd = Dimens.CornerSmall
-                                                )
-                                            )
-                                            .background(MaterialTheme.colorScheme.primary)
+                                Row(
+                                    modifier = barsModifier.fillMaxHeight(),
+                                    horizontalArrangement = Arrangement.spacedBy(
+                                        Dimens.SpaceExtraSmall
+                                    ),
+                                    verticalAlignment = Alignment.Bottom
+                                ) {
+                                    StatisticsBar(
+                                        value = day.caloriesIn,
+                                        heightRatio = intakeBarHeight,
+                                        color = intakeColor,
+                                        modifier = Modifier.weight(1f)
                                     )
-                                } else {
-                                    Box(
-                                        modifier = barModifier
-                                            .height(Dimens.BorderStrokeMedium)
-                                            .background(
-                                                MaterialTheme.colorScheme.outlineVariant
-                                            )
+                                    StatisticsBar(
+                                        value = day.caloriesBurned,
+                                        heightRatio = burnedBarHeight,
+                                        color = burnedColor,
+                                        modifier = Modifier.weight(1f)
                                     )
                                 }
                             }
@@ -166,6 +165,77 @@ fun CalorieBarChart(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun StatisticsBar(
+    value: Int,
+    heightRatio: Float,
+    color: Color,
+    modifier: Modifier = Modifier
+) {
+    val barModifier = if (value > 0) {
+        modifier.fillMaxHeight(heightRatio.coerceIn(0f, 1f))
+    } else {
+        modifier.height(Dimens.BorderStrokeMedium)
+    }
+
+    Box(
+        modifier = barModifier
+            .clip(
+                RoundedCornerShape(
+                    topStart = Dimens.CornerSmall,
+                    topEnd = Dimens.CornerSmall
+                )
+            )
+            .background(
+                if (value > 0) {
+                    color
+                } else {
+                    MaterialTheme.colorScheme.outlineVariant
+                }
+            )
+    )
+}
+
+@Composable
+internal fun StatisticsChartLegend() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        StatisticsLegendItem(
+            color = MaterialTheme.colorScheme.primary,
+            text = stringResource(R.string.statistics_calorie_intake)
+        )
+        Spacer(modifier = Modifier.width(Dimens.SpaceMedium))
+        StatisticsLegendItem(
+            color = MaterialTheme.colorScheme.tertiary,
+            text = stringResource(R.string.statistics_calories_burned)
+        )
+    }
+}
+
+@Composable
+private fun StatisticsLegendItem(
+    color: Color,
+    text: String
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Box(
+            modifier = Modifier
+                .size(Dimens.SpaceSmall)
+                .clip(RoundedCornerShape(Dimens.CornerSmall))
+                .background(color)
+        )
+        Spacer(modifier = Modifier.width(Dimens.SpaceExtraSmall))
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

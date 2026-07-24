@@ -220,6 +220,8 @@
     <string name="statistics_percent_value">%1$d%%</string>
     <string name="statistics_goal">Goal</string>
     <string name="statistics_calorie_intake">Calorie intake</string>
+    <string name="statistics_calorie_overview">Daily calories</string>
+    <string name="statistics_calories_burned">Calories burned</string>
     <string name="statistics_last_days">Last %1$d days</string>
     <string name="statistics_today">Today</string>
     <string name="statistics_trend">Calorie trend</string>

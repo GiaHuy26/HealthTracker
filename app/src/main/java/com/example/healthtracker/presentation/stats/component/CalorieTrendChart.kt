@@ -23,7 +23,8 @@ import com.example.healthtracker.presentation.theme.Dimens
 
 @Composable
 fun CalorieTrendChart(dailyCalories: List<DailyCalories>) {
-    val lineColor = MaterialTheme.colorScheme.primary
+    val intakeLineColor = MaterialTheme.colorScheme.primary
+    val burnedLineColor = MaterialTheme.colorScheme.tertiary
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -39,6 +40,8 @@ fun CalorieTrendChart(dailyCalories: List<DailyCalories>) {
                 style = MaterialTheme.typography.titleMedium
             )
 
+            Spacer(modifier = Modifier.height(Dimens.SpaceSmall))
+            StatisticsChartLegend()
             Spacer(modifier = Modifier.height(Dimens.SpaceMedium))
 
             if (dailyCalories.isEmpty()) {
@@ -56,7 +59,7 @@ fun CalorieTrendChart(dailyCalories: List<DailyCalories>) {
                         .height(Dimens.StatisticsTrendChartHeight)
                 ) {
                     val maxCalories = dailyCalories
-                        .maxOf { it.caloriesIn }
+                        .maxOf { maxOf(it.caloriesIn, it.caloriesBurned) }
                         .coerceAtLeast(1)
                     val padding = Dimens.SpaceSmall.toPx()
                     val chartHeight = size.height - padding * 2
@@ -66,7 +69,8 @@ fun CalorieTrendChart(dailyCalories: List<DailyCalories>) {
                         0f
                     }
 
-                    val points = mutableListOf<Offset>()
+                    val intakePoints = mutableListOf<Offset>()
+                    val burnedPoints = mutableListOf<Offset>()
 
                     dailyCalories.forEachIndexed { index, day ->
                         val x = if (dailyCalories.size == 1) {
@@ -74,24 +78,48 @@ fun CalorieTrendChart(dailyCalories: List<DailyCalories>) {
                         } else {
                             index * distance
                         }
-                        val progress = day.caloriesIn.toFloat() / maxCalories
-                        val y = padding + chartHeight * (1 - progress)
+                        val intakeProgress = day.caloriesIn.toFloat() / maxCalories
+                        val burnedProgress = day.caloriesBurned.toFloat() / maxCalories
 
-                        points.add(Offset(x, y))
+                        intakePoints.add(
+                            Offset(
+                                x = x,
+                                y = padding + chartHeight * (1 - intakeProgress)
+                            )
+                        )
+                        burnedPoints.add(
+                            Offset(
+                                x = x,
+                                y = padding + chartHeight * (1 - burnedProgress)
+                            )
+                        )
                     }
 
-                    for (index in 0 until points.lastIndex) {
+                    for (index in 0 until intakePoints.lastIndex) {
                         drawLine(
-                            color = lineColor,
-                            start = points[index],
-                            end = points[index + 1],
+                            color = intakeLineColor,
+                            start = intakePoints[index],
+                            end = intakePoints[index + 1],
+                            strokeWidth = Dimens.BorderStrokeMedium.toPx()
+                        )
+                        drawLine(
+                            color = burnedLineColor,
+                            start = burnedPoints[index],
+                            end = burnedPoints[index + 1],
                             strokeWidth = Dimens.BorderStrokeMedium.toPx()
                         )
                     }
 
-                    points.forEach { point ->
+                    intakePoints.forEach { point ->
                         drawCircle(
-                            color = lineColor,
+                            color = intakeLineColor,
+                            radius = Dimens.SpaceExtraSmall.toPx(),
+                            center = point
+                        )
+                    }
+                    burnedPoints.forEach { point ->
+                        drawCircle(
+                            color = burnedLineColor,
                             radius = Dimens.SpaceExtraSmall.toPx(),
                             center = point
                         )

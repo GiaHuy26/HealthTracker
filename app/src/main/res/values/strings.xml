@@ -218,6 +218,8 @@
     <string name="statistics_percent_value">%1$d%%</string>
     <string name="statistics_goal">Mục tiêu</string>
     <string name="statistics_calorie_intake">Calo nạp vào</string>
+    <string name="statistics_calorie_overview">Calo theo ngày</string>
+    <string name="statistics_calories_burned">Calo tiêu thụ</string>
     <string name="statistics_last_days">%1$d ngày gần nhất</string>
     <string name="statistics_today">Hôm nay</string>
     <string name="statistics_trend">Xu hướng calo</string>
