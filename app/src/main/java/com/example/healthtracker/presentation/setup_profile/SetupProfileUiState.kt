@@ -14,5 +14,11 @@ data class SetupProfileUiState(
     val activityLevel: ActivityLevel? = null,
     val goalType: GoalType? = null,
     val isLoading: Boolean = false,
-    val errorResId: Int? = null
+    val userNameErrorResId: Int? = null,
+    val birthDateErrorResId: Int? = null,
+    val weightErrorResId: Int? = null,
+    val heightErrorResId: Int? = null,
+    val activityLevelErrorResId: Int? = null,
+    val goalTypeErrorResId: Int? = null,
+    val generalErrorResId: Int? = null
 )

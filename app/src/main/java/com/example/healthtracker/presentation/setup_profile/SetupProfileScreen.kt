@@ -171,6 +171,7 @@ fun SetupProfileContent(
                         placeholder = stringResource(R.string.placeholder_name),
                         leadingIcon = Icons.Outlined.Person,
                     )
+                    ProfileErrorText(uiState.userNameErrorResId)
                     Spacer(Modifier.height(Dimens.SpaceMedium))
                     Spacer(Modifier.height(Dimens.SpaceSmall))
                     Text(
@@ -192,6 +193,7 @@ fun SetupProfileContent(
                             color = MaterialTheme.colorScheme.secondary
                         )
                     }
+                    ProfileErrorText(uiState.birthDateErrorResId)
                     Spacer(Modifier.height(Dimens.SpaceSmall))
                     Text(
                         text = stringResource(R.string.label_gender),
@@ -203,18 +205,6 @@ fun SetupProfileContent(
                         selectedGender = uiState.gender,
                         onGenderSelected = onGenderClick
                     )
-                    if (uiState.errorResId == R.string.error_name_empty ||
-                        uiState.errorResId == R.string.error_birthday_empty ||
-                        uiState.errorResId == R.string.error_birthday_invalid ||
-                        uiState.errorResId == R.string.error_unknown
-                    ) {
-                        Spacer(Modifier.height(Dimens.SpaceMedium))
-                        Text(
-                            text = stringResource(id = uiState.errorResId),
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
                 }
             }
             Spacer(Modifier.height(Dimens.SpaceSmall))
@@ -254,6 +244,7 @@ fun SetupProfileContent(
                                 placeholder = stringResource(R.string.weight),
                                 leadingIcon = Icons.Outlined.Scale
                             )
+                            ProfileErrorText(uiState.weightErrorResId)
                         }
                         Spacer(Modifier.width(Dimens.SpaceSmall))
                         Column(modifier = Modifier.weight(1f)) {
@@ -269,17 +260,8 @@ fun SetupProfileContent(
                                 placeholder = stringResource(R.string.height),
                                 leadingIcon = Icons.Outlined.Straighten
                             )
+                            ProfileErrorText(uiState.heightErrorResId)
                         }
-                    }
-                    if (uiState.errorResId == R.string.error_weight_invalid ||
-                        uiState.errorResId == R.string.error_height_invalid
-                    ) {
-                        Spacer(Modifier.height(Dimens.SpaceMedium))
-                        Text(
-                            text = stringResource(id = uiState.errorResId),
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
                     }
                 }
             }
@@ -307,14 +289,7 @@ fun SetupProfileContent(
                         selectedLevel = uiState.activityLevel,
                         onSelectedLevel = onActivityLevelClick
                     )
-                    if (uiState.errorResId == R.string.error_activity_level_empty) {
-                        Spacer(Modifier.height(Dimens.SpaceMedium))
-                        Text(
-                            text = stringResource(id = uiState.errorResId),
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
+                    ProfileErrorText(uiState.activityLevelErrorResId)
                 }
             }
             Spacer(Modifier.height(Dimens.SpaceSmall))
@@ -341,17 +316,11 @@ fun SetupProfileContent(
                         selectedGoal = uiState.goalType,
                         onGoalSelected = onGoalTypeClick
                     )
-                    if (uiState.errorResId == R.string.error_goal_empty) {
-                        Spacer(Modifier.height(Dimens.SpaceMedium))
-                        Text(
-                            text = stringResource(id = uiState.errorResId),
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
+                    ProfileErrorText(uiState.goalTypeErrorResId)
                 }
             }
             Spacer(Modifier.height(Dimens.SpaceMedium))
+            ProfileErrorText(uiState.generalErrorResId)
             Button(
                 text = if (isEditMode) {
                     stringResource(R.string.settings_save_changes)
@@ -376,6 +345,18 @@ fun SetupProfileContent(
             }
         }
     }
+}
+
+@Composable
+private fun ProfileErrorText(errorResId: Int?) {
+    if (errorResId == null) return
+
+    Spacer(Modifier.height(Dimens.SpaceSmall))
+    Text(
+        text = stringResource(errorResId),
+        color = MaterialTheme.colorScheme.error,
+        style = MaterialTheme.typography.bodyMedium
+    )
 }
 
 @Preview

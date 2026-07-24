@@ -64,14 +64,18 @@ class SetupProfileViewModel @Inject constructor(
 
     fun onUserNameChange(value: String) {
         _uiState.update {
-            it.copy(userName = value, errorResId = null)
+            it.copy(userName = value, userNameErrorResId = null)
         }
     }
 
     fun onBirthDateChange(value: String) {
         _uiState.update { state ->
             val age = value.toAge()
-            state.copy(birthDate = value, age = age, errorResId = null)
+            state.copy(
+                birthDate = value,
+                age = age,
+                birthDateErrorResId = null
+            )
         }
     }
 
@@ -83,78 +87,113 @@ class SetupProfileViewModel @Inject constructor(
 
     fun onWeightChange(value: String) {
         _uiState.update {
-            it.copy(weight = value, errorResId = null)
+            it.copy(weight = value, weightErrorResId = null)
         }
     }
 
     fun onHeightChange(value: String) {
         _uiState.update {
-            it.copy(height = value, errorResId = null)
+            it.copy(height = value, heightErrorResId = null)
         }
     }
 
     fun onActivityLevelChange(value: ActivityLevel) {
         _uiState.update {
-            it.copy(activityLevel = value, errorResId = null)
+            it.copy(
+                activityLevel = value,
+                activityLevelErrorResId = null
+            )
         }
     }
 
     fun onGoalChange(value: GoalType) {
         _uiState.update {
-            it.copy(goalType = value, errorResId = null)
+            it.copy(goalType = value, goalTypeErrorResId = null)
         }
     }
 
     fun onSaveProfile() {
+        val profile = validateProfile() ?: return
+
         viewModelScope.launch {
-            val state = _uiState.value
-            val activeLevel = state.activityLevel
-            val goalType = state.goalType
-
-            if (activeLevel == null) {
-                _uiState.update {
-                    it.copy(errorResId = R.string.error_activity_level_empty)
-                }
-                return@launch
-            }
-
-            if (goalType == null) {
-                _uiState.update {
-                    it.copy(errorResId = R.string.error_goal_empty)
-                }
-                return@launch
-            }
-
-            _uiState.update {
-                it.copy(isLoading = true, errorResId = null)
-            }
+            _uiState.update { it.copy(isLoading = true) }
             try {
                 val email = sessionManager.getCurrentUserEmail()
-                val profile = Profile(
-                    userName = state.userName.trim(),
-                    birthDate = state.birthDate.trim(),
-                    gender = state.gender,
-                    weight = state.weight.toFloatOrNull() ?: 0f,
-                    height = state.height.toFloatOrNull() ?: 0f,
-                    activeLevel = activeLevel,
-                    goalType = goalType
-                )
                 setupProfileUseCase(email, profile)
                 _uiState.update { it.copy(isLoading = false) }
                 _navigationEvent.emit(SetupProfileNavigationEvent.ProfileSaved)
             } catch (e: Exception) {
-                val errorResId = when (e.message) {
-                    "ERR_NAME_EMPTY" -> R.string.error_name_empty
-                    "ERR_BIRTHDAY_EMPTY" -> R.string.error_birthday_empty
-                    "ERR_BIRTHDAY_INVALID" -> R.string.error_birthday_invalid
-                    "ERR_WEIGHT_INVALID" -> R.string.error_weight_invalid
-                    "ERR_HEIGHT_INVALID" -> R.string.error_height_invalid
-                    else -> R.string.error_unknown
-                }
                 _uiState.update {
-                    it.copy(isLoading = false, errorResId = errorResId)
+                    it.copy(
+                        isLoading = false,
+                        generalErrorResId = R.string.error_unknown
+                    )
                 }
             }
         }
+    }
+
+    private fun validateProfile(): Profile? {
+        val state = _uiState.value
+        val userName = state.userName.trim()
+        val birthDate = state.birthDate.trim()
+        val weight = state.weight.trim().toFloatOrNull()
+        val height = state.height.trim().toFloatOrNull()
+        val activityLevel = state.activityLevel
+        val goalType = state.goalType
+
+        val userNameError =
+            if (userName.isBlank()) R.string.error_name_empty else null
+        val birthDateError = when {
+            birthDate.isBlank() -> R.string.error_birthday_empty
+            birthDate.toAge() == null -> R.string.error_birthday_invalid
+            else -> null
+        }
+        val weightError =
+            if (weight == null || weight !in 20f..300f) R.string.error_weight_invalid else null
+        val heightError =
+            if (height == null || height !in 80f..250f) R.string.error_height_invalid else null
+        val activityLevelError =
+            if (activityLevel == null) R.string.error_activity_level_empty else null
+        val goalTypeError =
+            if (goalType == null) R.string.error_goal_empty else null
+
+        _uiState.update {
+            it.copy(
+                userNameErrorResId = userNameError,
+                birthDateErrorResId = birthDateError,
+                weightErrorResId = weightError,
+                heightErrorResId = heightError,
+                activityLevelErrorResId = activityLevelError,
+                goalTypeErrorResId = goalTypeError,
+                generalErrorResId = null
+            )
+        }
+
+        if (weight == null ||
+            height == null ||
+            activityLevel == null ||
+            goalType == null
+        ) {
+            return null
+        }
+
+        if (userNameError != null ||
+            birthDateError != null ||
+            weightError != null ||
+            heightError != null
+        ) {
+            return null
+        }
+
+        return Profile(
+            userName = userName,
+            birthDate = birthDate,
+            gender = state.gender,
+            weight = weight,
+            height = height,
+            activeLevel = activityLevel,
+            goalType = goalType
+        )
     }
 }
